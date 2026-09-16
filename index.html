@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>Chorizos Admin V3</title>
+<title>Chorizos Admin V4</title>
 
 <style>
 *{box-sizing:border-box}
@@ -59,6 +59,7 @@ button{
 .warning{background:#f59e0b;color:white}
 .danger{background:#dc2626;color:white}
 .blue{background:#2563eb;color:white}
+.purple{background:#7c3aed;color:white}
 .row{display:flex;gap:8px;flex-wrap:wrap}
 .row>*{flex:1}
 .item{
@@ -80,6 +81,14 @@ button{
 .muted{color:#6b7280;font-size:13px}
 .empty{text-align:center;padding:30px;color:#6b7280}
 hr{border:0;border-top:1px solid #eee;margin:15px 0}
+.warningBox{
+ background:#fff7ed;border:1px solid #fed7aa;
+ color:#9a3412;padding:14px;border-radius:12px
+}
+.dangerBox{
+ background:#fef2f2;border:1px solid #fecaca;
+ color:#991b1b;padding:14px;border-radius:12px
+}
 @media(max-width:500px){
  .container{padding:10px}
  nav{top:66px}
@@ -139,12 +148,18 @@ hr{border:0;border-top:1px solid #eee;margin:15px 0}
 
  <div class="card">
   <h3>Crear nuevo lote</h3>
+
   <label>Nombre del lote</label>
   <input id="nuevoLoteNombre" placeholder="Ej: Lote 2">
+
   <label>Fecha</label>
   <input type="date" id="nuevoLoteFecha">
+
   <br><br>
-  <button class="btn success" onclick="crearLote()">➕ Crear lote</button>
+
+  <button class="btn success" onclick="crearLote()">
+   ➕ Crear lote
+  </button>
  </div>
 
  <div class="card">
@@ -155,6 +170,7 @@ hr{border:0;border-top:1px solid #eee;margin:15px 0}
 
 <!-- PEDIDOS -->
 <section id="pedidos">
+
  <div class="card">
   <h2>🧾 Nuevo pedido</h2>
 
@@ -168,6 +184,7 @@ hr{border:0;border-top:1px solid #eee;margin:15px 0}
   <input id="pDireccion" placeholder="Dirección">
 
   <div class="row">
+
    <div>
     <label>Presentación</label>
     <select id="pPack" onchange="actualizarTotalPedido()">
@@ -175,14 +192,21 @@ hr{border:0;border-top:1px solid #eee;margin:15px 0}
      <option value="x7">Pack x7 - $22.000</option>
     </select>
    </div>
+
    <div>
     <label>Cantidad</label>
-    <input id="pCantidad" type="number" min="1" value="1"
+    <input
+     id="pCantidad"
+     type="number"
+     min="1"
+     value="1"
      onchange="actualizarTotalPedido()">
    </div>
+
   </div>
 
   <label>Forma de pago</label>
+
   <select id="pPago">
    <option value="Pendiente">Pendiente</option>
    <option value="Nequi">Nequi</option>
@@ -192,6 +216,7 @@ hr{border:0;border-top:1px solid #eee;margin:15px 0}
   </select>
 
   <label>Estado</label>
+
   <select id="pEstado">
    <option value="Pendiente">Pendiente</option>
    <option value="Pagado">Pagado</option>
@@ -199,20 +224,26 @@ hr{border:0;border-top:1px solid #eee;margin:15px 0}
   </select>
 
   <div class="stat" style="margin:12px 0">
-   Total: <b id="pTotal">$17.000</b>
+   Total:
+   <b id="pTotal">$17.000</b>
   </div>
 
-  <button class="btn success" onclick="crearPedido()">Guardar pedido</button>
+  <button class="btn success" onclick="crearPedido()">
+   Guardar pedido
+  </button>
+
  </div>
 
  <div class="card">
   <h2>Pedidos del lote</h2>
   <div id="listaPedidos"></div>
  </div>
+
 </section>
 
 <!-- INVENTARIO -->
 <section id="inventario">
+
  <div class="card">
   <h2>📦 Inventario del lote</h2>
   <div id="inventarioVista"></div>
@@ -222,42 +253,64 @@ hr{border:0;border-top:1px solid #eee;margin:15px 0}
   <h3>Agregar inventario</h3>
 
   <div class="row">
+
    <div>
     <label>Presentación</label>
+
     <select id="invPack">
      <option value="x5">Pack x5</option>
      <option value="x7">Pack x7</option>
     </select>
    </div>
+
    <div>
     <label>Cantidad de packs</label>
-    <input id="invCantidad" type="number" min="1" value="1">
+
+    <input
+     id="invCantidad"
+     type="number"
+     min="1"
+     value="1">
    </div>
+
   </div>
 
   <br>
-  <button class="btn success" onclick="agregarInventario()">➕ Agregar</button>
-  <button class="danger" onclick="quitarInventario()">➖ Quitar</button>
+
+  <button class="btn success" onclick="agregarInventario()">
+   ➕ Agregar
+  </button>
+
+  <button class="danger" onclick="quitarInventario()">
+   ➖ Quitar
+  </button>
+
  </div>
+
 </section>
 
 <!-- CLIENTES -->
 <section id="clientes">
+
  <div class="card">
   <h2>👥 Clientes</h2>
   <div id="listaClientes"></div>
  </div>
+
 </section>
 
 <!-- FINANZAS -->
 <section id="finanzas">
+
  <div class="card">
   <h2>💰 Finanzas del lote</h2>
   <div id="finanzasVista"></div>
  </div>
 
  <div class="card">
+
   <h3>Agregar gasto</h3>
+
   <label>Descripción</label>
   <input id="gastoDesc" placeholder="Ej: Bolsas">
 
@@ -265,40 +318,78 @@ hr{border:0;border-top:1px solid #eee;margin:15px 0}
   <input id="gastoValor" type="number" min="0">
 
   <br><br>
-  <button class="btn" onclick="agregarGasto()">Agregar gasto</button>
+
+  <button class="btn" onclick="agregarGasto()">
+   Agregar gasto
+  </button>
+
  </div>
+
 </section>
 
 <!-- GENERAL -->
 <section id="general">
+
  <div class="card">
   <h2>📊 Resumen general</h2>
   <div id="generalVista"></div>
  </div>
+
 </section>
 
 <!-- DATOS -->
 <section id="datos">
+
  <div class="card">
+
   <h2>💾 Datos</h2>
-  <p class="muted">
-   Puedes guardar una copia de toda la información de la aplicación.
-  </p>
 
-  <button class="btn blue" onclick="exportarDatos()">⬇️ Exportar copia</button>
-  <br><br>
-
-  <input type="file" id="archivoImportar" accept=".json">
-  <br><br>
-  <button class="btn2" onclick="importarDatos()">⬆️ Restaurar copia</button>
- </div>
-
- <div class="card">
-  <h3>Información</h3>
   <p class="muted">
    Los datos se guardan localmente en este dispositivo/navegador.
   </p>
+
+  <button class="btn blue" onclick="exportarDatos()">
+   ⬇️ Exportar copia
+  </button>
+
+  <br><br>
+
+  <input
+   type="file"
+   id="archivoImportar"
+   accept=".json">
+
+  <br><br>
+
+  <button class="btn2" onclick="importarDatos()">
+   ⬆️ Restaurar copia
+  </button>
+
  </div>
+
+ <div class="card">
+
+  <h3>⚠️ Zona de mantenimiento</h3>
+
+  <div class="dangerBox">
+
+   <b>Reiniciar toda la aplicación</b>
+
+   <p>
+    Esta opción eliminará todos los lotes, pedidos,
+    inventarios, gastos y datos guardados.
+   </p>
+
+   <button
+    class="danger"
+    onclick="reiniciarAplicacion()">
+    🗑️ REINICIAR TODA LA APP
+   </button>
+
+  </div>
+
+ </div>
+
 </section>
 
 </div>
@@ -311,57 +402,120 @@ const PRECIO_X7 = 22000;
 const COSTO_X5 = 5 * 1500;
 const COSTO_X7 = 7 * 1500;
 
-const STORAGE = "chorizos_admin_v3";
+const STORAGE = "chorizos_admin_v4";
 
-let db = JSON.parse(localStorage.getItem(STORAGE)) || {
- lotes:[],
- loteActivo:null
-};
+let db;
 
-function guardar(){
- localStorage.setItem(STORAGE,JSON.stringify(db));
- actualizarTodo();
+try{
+
+ db=JSON.parse(localStorage.getItem(STORAGE));
+
+}catch(e){
+
+ db=null;
+
+}
+
+if(!db || !Array.isArray(db.lotes)){
+
+ db={
+  lotes:[],
+  loteActivo:null
+ };
+
 }
 
 function dinero(n){
+
  return "$" + Number(n||0).toLocaleString("es-CO");
+
 }
 
 function fechaHoy(){
+
  return new Date().toISOString().slice(0,10);
+
 }
 
 function nuevoId(){
- return Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+
+ return Date.now().toString(36)+
+        Math.random().toString(36).slice(2,7);
+
+}
+
+function esc(text){
+
+ return String(text??"")
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+
+}
+
+function guardar(){
+
+ localStorage.setItem(
+  STORAGE,
+  JSON.stringify(db)
+ );
+
+ actualizarTodo();
+
 }
 
 function obtenerLote(){
- return db.lotes.find(x=>x.id===db.loteActivo);
+
+ return db.lotes.find(
+  x=>x.id===db.loteActivo
+ );
+
 }
 
 function mostrar(id,boton){
- document.querySelectorAll("section").forEach(x=>x.classList.remove("active"));
- document.getElementById(id).classList.add("active");
 
- document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
- if(boton) boton.classList.add("active");
+ document.querySelectorAll("section")
+  .forEach(x=>x.classList.remove("active"));
+
+ document.getElementById(id)
+  .classList.add("active");
+
+ document.querySelectorAll("nav button")
+  .forEach(x=>x.classList.remove("active"));
+
+ if(boton){
+  boton.classList.add("active");
+ }
 
  actualizarTodo();
+
 }
 
 function crearLote(){
 
- let nombre=document.getElementById("nuevoLoteNombre").value.trim();
+ let nombre=
+  document.getElementById("nuevoLoteNombre")
+  .value.trim();
 
  if(!nombre){
+
   alert("Escribe un nombre para el lote.");
   return;
+
  }
 
  let lote={
+
   id:nuevoId(),
+
   nombre:nombre,
-  fecha:document.getElementById("nuevoLoteFecha").value || fechaHoy(),
+
+  fecha:
+   document.getElementById("nuevoLoteFecha")
+   .value || fechaHoy(),
+
   cerrado:false,
 
   inventario:{
@@ -371,17 +525,22 @@ function crearLote(){
 
   pedidos:[],
   gastos:[]
+
  };
 
  db.lotes.push(lote);
+
  db.loteActivo=lote.id;
 
- document.getElementById("nuevoLoteNombre").value="";
+ document.getElementById("nuevoLoteNombre")
+  .value="";
 
  guardar();
 
  alert("Lote creado correctamente.");
+
  mostrar("lotes");
+
 }
 
 function seleccionarLote(id){
@@ -391,8 +550,11 @@ function seleccionarLote(id){
  if(!lote)return;
 
  db.loteActivo=id;
+
  guardar();
+
  mostrar("inicio");
+
 }
 
 function cerrarLote(id){
@@ -402,17 +564,53 @@ function cerrarLote(id){
  if(!lote)return;
 
  if(lote.cerrado){
+
   alert("Este lote ya está cerrado.");
+
   return;
+
  }
 
  if(!confirm(
-  "¿Cerrar este lote?\n\nDespués podrás consultarlo, pero no podrás crear nuevos pedidos ni modificar inventario."
+  "¿Cerrar este lote?\n\n"+
+  "Podrás consultarlo y reabrirlo posteriormente."
  ))return;
 
  lote.cerrado=true;
 
  guardar();
+
+ alert("Lote cerrado correctamente.");
+
+}
+
+function reabrirLote(id){
+
+ let lote=db.lotes.find(x=>x.id===id);
+
+ if(!lote)return;
+
+ if(!lote.cerrado){
+
+  alert("Este lote ya está activo.");
+
+  return;
+
+ }
+
+ if(!confirm(
+  "¿Reabrir este lote?\n\n"+
+  "Podrás volver a modificar inventario, pedidos y gastos."
+ ))return;
+
+ lote.cerrado=false;
+
+ db.loteActivo=lote.id;
+
+ guardar();
+
+ alert("Lote reabierto correctamente.");
+
 }
 
 function crearPrimerLote(){
@@ -420,20 +618,47 @@ function crearPrimerLote(){
  if(db.lotes.length===0){
 
   let lote={
+
    id:nuevoId(),
+
    nombre:"Lote 1",
+
    fecha:fechaHoy(),
+
    cerrado:false,
-   inventario:{x5:0,x7:0},
+
+   inventario:{
+    x5:0,
+    x7:0
+   },
+
    pedidos:[],
    gastos:[]
+
   };
 
   db.lotes.push(lote);
+
   db.loteActivo=lote.id;
 
-  guardar();
+  localStorage.setItem(
+   STORAGE,
+   JSON.stringify(db)
+  );
+
  }
+
+ if(!db.loteActivo && db.lotes.length){
+
+  db.loteActivo=db.lotes[0].id;
+
+  localStorage.setItem(
+   STORAGE,
+   JSON.stringify(db)
+  );
+
+ }
+
 }
 
 function crearPedido(){
@@ -441,63 +666,113 @@ function crearPedido(){
  let lote=obtenerLote();
 
  if(!lote){
+
   alert("Primero crea un lote.");
+
   return;
+
  }
 
  if(lote.cerrado){
-  alert("Este lote está cerrado.");
+
+  alert("Este lote está cerrado. Reábrelo para modificarlo.");
+
   return;
+
  }
 
- let cliente=document.getElementById("pCliente").value.trim();
- let telefono=document.getElementById("pTelefono").value.trim();
- let direccion=document.getElementById("pDireccion").value.trim();
- let pack=document.getElementById("pPack").value;
- let cantidad=parseInt(document.getElementById("pCantidad").value)||0;
- let pago=document.getElementById("pPago").value;
- let estado=document.getElementById("pEstado").value;
+ let cliente=
+  document.getElementById("pCliente")
+  .value.trim();
+
+ let telefono=
+  document.getElementById("pTelefono")
+  .value.trim();
+
+ let direccion=
+  document.getElementById("pDireccion")
+  .value.trim();
+
+ let pack=
+  document.getElementById("pPack").value;
+
+ let cantidad=
+  parseInt(
+   document.getElementById("pCantidad").value
+  )||0;
+
+ let pago=
+  document.getElementById("pPago").value;
+
+ let estado=
+  document.getElementById("pEstado").value;
 
  if(!cliente){
+
   alert("Escribe el nombre del cliente.");
+
   return;
+
  }
 
  if(cantidad<1){
+
   alert("La cantidad debe ser mayor a 0.");
+
   return;
+
  }
 
- if(lote.inventario[pack] < cantidad){
+ if(lote.inventario[pack]<cantidad){
+
   alert(
-   "No hay suficiente inventario disponible de "+pack+
-   ".\n\nDisponible: "+lote.inventario[pack]
+   "No hay suficiente inventario disponible de "+
+   pack+
+   ".\n\nDisponible: "+
+   lote.inventario[pack]
   );
+
   return;
+
  }
 
- let precio=pack==="x5"?PRECIO_X5:PRECIO_X7;
+ let precio=
+  pack==="x5"
+  ?PRECIO_X5
+  :PRECIO_X7;
 
  let pedido={
+
   id:nuevoId(),
+
   fecha:new Date().toISOString(),
+
   cliente,
+
   telefono,
+
   direccion,
+
   pack,
+
   cantidad,
+
   precioUnitario:precio,
+
   total:precio*cantidad,
+
   pago,
+
   estado,
 
-  // IMPORTANTE:
-  // evita descontar el mismo pedido dos veces.
   inventarioDescontado:false
+
  };
 
- // Los tres estados consumen inventario.
- descontarInventario(lote,pedido);
+ descontarInventario(
+  lote,
+  pedido
+ );
 
  lote.pedidos.push(pedido);
 
@@ -508,29 +783,41 @@ function crearPedido(){
  document.getElementById("pDireccion").value="";
  document.getElementById("pCantidad").value=1;
 
+ actualizarTotalPedido();
+
  alert("Pedido guardado correctamente.");
+
 }
 
 function descontarInventario(lote,pedido){
 
  if(pedido.inventarioDescontado)return;
 
- if(lote.inventario[pedido.pack] < pedido.cantidad){
-  throw new Error("Inventario insuficiente.");
+ if(lote.inventario[pedido.pack]<
+    pedido.cantidad){
+
+  throw new Error(
+   "Inventario insuficiente."
+  );
+
  }
 
- lote.inventario[pedido.pack]-=pedido.cantidad;
+ lote.inventario[pedido.pack]-=
+  pedido.cantidad;
 
  pedido.inventarioDescontado=true;
+
 }
 
 function devolverInventario(lote,pedido){
 
  if(!pedido.inventarioDescontado)return;
 
- lote.inventario[pedido.pack]+=pedido.cantidad;
+ lote.inventario[pedido.pack]+=
+  pedido.cantidad;
 
  pedido.inventarioDescontado=false;
+
 }
 
 function cambiarEstado(id){
@@ -539,12 +826,16 @@ function cambiarEstado(id){
 
  if(!lote || lote.cerrado)return;
 
- let pedido=lote.pedidos.find(x=>x.id===id);
+ let pedido=
+  lote.pedidos.find(x=>x.id===id);
 
  if(!pedido)return;
 
  let nuevo=prompt(
-  "Nuevo estado:\n\nPendiente\nPagado\nEntregado",
+  "Nuevo estado:\n\n"+
+  "Pendiente\n"+
+  "Pagado\n"+
+  "Entregado",
   pedido.estado
  );
 
@@ -552,16 +843,22 @@ function cambiarEstado(id){
 
  nuevo=nuevo.trim();
 
- if(!["Pendiente","Pagado","Entregado"].includes(nuevo)){
+ if(![
+  "Pendiente",
+  "Pagado",
+  "Entregado"
+ ].includes(nuevo)){
+
   alert("Estado no válido.");
+
   return;
+
  }
 
- // Los tres estados consumen inventario.
- // Por eso cambiar entre ellos NO modifica inventario.
  pedido.estado=nuevo;
 
  guardar();
+
 }
 
 function cambiarPago(id){
@@ -570,12 +867,18 @@ function cambiarPago(id){
 
  if(!lote || lote.cerrado)return;
 
- let pedido=lote.pedidos.find(x=>x.id===id);
+ let pedido=
+  lote.pedidos.find(x=>x.id===id);
 
  if(!pedido)return;
 
  let nuevo=prompt(
-  "Forma de pago:\n\nPendiente\nNequi\nDaviplata\nEfectivo\nTransferencia",
+  "Forma de pago:\n\n"+
+  "Pendiente\n"+
+  "Nequi\n"+
+  "Daviplata\n"+
+  "Efectivo\n"+
+  "Transferencia",
   pedido.pago
  );
 
@@ -583,14 +886,24 @@ function cambiarPago(id){
 
  nuevo=nuevo.trim();
 
- if(!["Pendiente","Nequi","Daviplata","Efectivo","Transferencia"].includes(nuevo)){
+ if(![
+  "Pendiente",
+  "Nequi",
+  "Daviplata",
+  "Efectivo",
+  "Transferencia"
+ ].includes(nuevo)){
+
   alert("Forma de pago no válida.");
+
   return;
+
  }
 
  pedido.pago=nuevo;
 
  guardar();
+
 }
 
 function eliminarPedido(id){
@@ -599,18 +912,26 @@ function eliminarPedido(id){
 
  if(!lote || lote.cerrado)return;
 
- let pedido=lote.pedidos.find(x=>x.id===id);
+ let pedido=
+  lote.pedidos.find(x=>x.id===id);
 
  if(!pedido)return;
 
- if(!confirm("¿Eliminar este pedido?"))return;
+ if(!confirm(
+  "¿Eliminar este pedido?\n\n"+
+  "El inventario utilizado por el pedido será devuelto."
+ ))return;
 
- // Si había descontado inventario, lo devuelve.
- devolverInventario(lote,pedido);
+ devolverInventario(
+  lote,
+  pedido
+ );
 
- lote.pedidos=lote.pedidos.filter(x=>x.id!==id);
+ lote.pedidos=
+  lote.pedidos.filter(x=>x.id!==id);
 
  guardar();
+
 }
 
 function agregarInventario(){
@@ -618,26 +939,44 @@ function agregarInventario(){
  let lote=obtenerLote();
 
  if(!lote){
+
   alert("No hay lote activo.");
+
   return;
+
  }
 
  if(lote.cerrado){
-  alert("El lote está cerrado.");
+
+  alert(
+   "El lote está cerrado. "+
+   "Reábrelo para modificar el inventario."
+  );
+
   return;
+
  }
 
- let pack=document.getElementById("invPack").value;
- let cantidad=parseInt(document.getElementById("invCantidad").value)||0;
+ let pack=
+  document.getElementById("invPack").value;
+
+ let cantidad=
+  parseInt(
+   document.getElementById("invCantidad").value
+  )||0;
 
  if(cantidad<1){
+
   alert("Cantidad inválida.");
+
   return;
+
  }
 
  lote.inventario[pack]+=cantidad;
 
  guardar();
+
 }
 
 function quitarInventario(){
@@ -646,37 +985,52 @@ function quitarInventario(){
 
  if(!lote || lote.cerrado)return;
 
- let pack=document.getElementById("invPack").value;
- let cantidad=parseInt(document.getElementById("invCantidad").value)||0;
+ let pack=
+  document.getElementById("invPack").value;
+
+ let cantidad=
+  parseInt(
+   document.getElementById("invCantidad").value
+  )||0;
 
  if(cantidad<1)return;
 
  if(cantidad>lote.inventario[pack]){
-  alert("No puedes quitar más inventario del existente.");
+
+  alert(
+   "No puedes quitar más inventario del existente."
+  );
+
   return;
+
  }
 
  lote.inventario[pack]-=cantidad;
 
  guardar();
+
 }
 
 function calcular(){
 
  let lote=obtenerLote();
 
- if(!lote)return {
-  ventas:0,
-  costos:0,
-  ganancia:0,
-  pendiente:0,
-  pedidos:0,
-  vendidosX5:0,
-  vendidosX7:0,
-  chorizos:0,
-  gastos:0,
-  neta:0
- };
+ if(!lote){
+
+  return{
+   ventas:0,
+   costos:0,
+   ganancia:0,
+   pendiente:0,
+   pedidos:0,
+   vendidosX5:0,
+   vendidosX7:0,
+   chorizos:0,
+   gastos:0,
+   neta:0
+  };
+
+ }
 
  let ventas=0;
  let costos=0;
@@ -689,32 +1043,64 @@ function calcular(){
   ventas+=p.total;
 
   if(p.pago==="Pendiente"){
+
    pendiente+=p.total;
+
   }
 
   if(p.pack==="x5"){
+
    vendidosX5+=p.cantidad;
-   costos+=p.cantidad*COSTO_X5;
+
+   costos+=
+    p.cantidad*COSTO_X5;
+
   }else{
+
    vendidosX7+=p.cantidad;
-   costos+=p.cantidad*COSTO_X7;
+
+   costos+=
+    p.cantidad*COSTO_X7;
+
   }
+
  });
 
- let gastos=lote.gastos.reduce((a,g)=>a+g.valor,0);
+ let gastos=
+  lote.gastos.reduce(
+   (a,g)=>a+g.valor,
+   0
+  );
 
- return {
+ return{
+
   ventas,
+
   costos,
-  ganancia:ventas-costos,
+
+  ganancia:
+   ventas-costos,
+
   pendiente,
-  pedidos:lote.pedidos.length,
+
+  pedidos:
+   lote.pedidos.length,
+
   vendidosX5,
+
   vendidosX7,
-  chorizos:(vendidosX5*5)+(vendidosX7*7),
+
+  chorizos:
+   (vendidosX5*5)+
+   (vendidosX7*7),
+
   gastos,
-  neta:ventas-costos-gastos
+
+  neta:
+   ventas-costos-gastos
+
  };
+
 }
 
 function actualizarInicio(){
@@ -725,25 +1111,60 @@ function actualizarInicio(){
 
  let c=calcular();
 
- document.getElementById("loteHeader").textContent=
-  lote.nombre+(lote.cerrado?" · CERRADO":" · ACTIVO");
+ document.getElementById("loteHeader")
+  .textContent=
+   lote.nombre+
+   (lote.cerrado
+    ?" · CERRADO"
+    :" · ACTIVO");
 
- document.getElementById("iVentas").textContent=dinero(c.ventas);
- document.getElementById("iGanancia").textContent=dinero(c.ganancia);
- document.getElementById("iPendiente").textContent=dinero(c.pendiente);
- document.getElementById("iPedidos").textContent=c.pedidos;
+ document.getElementById("iVentas")
+  .textContent=dinero(c.ventas);
 
- document.getElementById("iX5").textContent=lote.inventario.x5;
- document.getElementById("iX7").textContent=lote.inventario.x7;
+ document.getElementById("iGanancia")
+  .textContent=dinero(c.ganancia);
 
- document.getElementById("inicioResumen").innerHTML=`
+ document.getElementById("iPendiente")
+  .textContent=dinero(c.pendiente);
+
+ document.getElementById("iPedidos")
+  .textContent=c.pedidos;
+
+ document.getElementById("iX5")
+  .textContent=lote.inventario.x5;
+
+ document.getElementById("iX7")
+  .textContent=lote.inventario.x7;
+
+ document.getElementById("inicioResumen")
+  .innerHTML=`
+
   <div class="grid">
-   <div class="stat">Fecha<b>${lote.fecha}</b></div>
-   <div class="stat">Chorizos vendidos<b>${c.chorizos}</b></div>
-   <div class="stat">x5 vendidos<b>${c.vendidosX5}</b></div>
-   <div class="stat">x7 vendidos<b>${c.vendidosX7}</b></div>
+
+   <div class="stat">
+    Fecha
+    <b>${lote.fecha}</b>
+   </div>
+
+   <div class="stat">
+    Chorizos vendidos
+    <b>${c.chorizos}</b>
+   </div>
+
+   <div class="stat">
+    x5 vendidos
+    <b>${c.vendidosX5}</b>
+   </div>
+
+   <div class="stat">
+    x7 vendidos
+    <b>${c.vendidosX7}</b>
+   </div>
+
   </div>
+
  `;
+
 }
 
 function actualizarLotes(){
@@ -751,62 +1172,139 @@ function actualizarLotes(){
  let html="";
 
  if(db.lotes.length===0){
-  html='<div class="empty">No hay lotes.</div>';
+
+  html=
+   '<div class="empty">No hay lotes.</div>';
+
  }else{
 
-  db.lotes.slice().reverse().forEach(l=>{
+  db.lotes
+   .slice()
+   .reverse()
+   .forEach(l=>{
 
-   let c=calcularLote(l);
+    let c=calcularLote(l);
 
-   html+=`
-   <div class="item">
-    <h3>${esc(l.nombre)}
-     ${l.cerrado?
-      '<span class="badge red">CERRADO</span>':
-      '<span class="badge green">ACTIVO</span>'}
-    </h3>
+    html+=`
 
-    <div class="muted">Fecha: ${l.fecha}</div>
+    <div class="item">
 
-    <hr>
+     <h3>
+      ${esc(l.nombre)}
 
-    <div class="grid">
-     <div>Ventas<br><b>${dinero(c.ventas)}</b></div>
-     <div>Pedidos<br><b>${c.pedidos}</b></div>
-     <div>Chorizos<br><b>${c.chorizos}</b></div>
+      ${
+       l.cerrado
+       ?'<span class="badge red">CERRADO</span>'
+       :'<span class="badge green">ACTIVO</span>'
+      }
+
+     </h3>
+
+     <div class="muted">
+      Fecha: ${l.fecha}
+     </div>
+
+     <hr>
+
+     <div class="grid">
+
+      <div>
+       Ventas<br>
+       <b>${dinero(c.ventas)}</b>
+      </div>
+
+      <div>
+       Pedidos<br>
+       <b>${c.pedidos}</b>
+      </div>
+
+      <div>
+       Chorizos<br>
+       <b>${c.chorizos}</b>
+      </div>
+
+     </div>
+
+     <br>
+
+     ${
+      db.loteActivo===l.id
+      ?
+      '<button class="success">✓ Lote seleccionado</button>'
+      :
+      '<button class="btn" onclick="seleccionarLote(\''+
+      l.id+
+      '\')">Seleccionar</button>'
+     }
+
+     ${
+      !l.cerrado
+      ?
+      '<button class="warning" onclick="cerrarLote(\''+
+      l.id+
+      '\')">🔒 Cerrar lote</button>'
+      :
+      '<button class="purple" onclick="reabrirLote(\''+
+      l.id+
+      '\')">🔓 Reabrir lote</button>'
+     }
+
     </div>
 
-    <br>
+    `;
 
-    ${
-     db.loteActivo===l.id
-     ? '<button class="success">✓ Lote seleccionado</button>'
-     : '<button class="btn" onclick="seleccionarLote(\''+l.id+'\')">Seleccionar</button>'
-    }
+   });
 
-    ${
-     !l.cerrado
-     ? '<button class="warning" onclick="cerrarLote(\''+l.id+'\')">🔒 Cerrar lote</button>'
-     : ''
-    }
-   </div>
-   `;
-  });
  }
 
- document.getElementById("listaLotes").innerHTML=html;
+ document.getElementById("listaLotes")
+  .innerHTML=html;
 
  let actual=obtenerLote();
 
- document.getElementById("loteActual").innerHTML=actual?`
-  <div class="stat">
-   Lote activo
-   <b>${esc(actual.nombre)}</b>
-   <span class="badge ${actual.cerrado?"red":"green"}">
-    ${actual.cerrado?"CERRADO":"ACTIVO"}
-   </span>
-  </div>
- `:'No hay lote activo.';
+ document.getElementById("loteActual")
+  .innerHTML=
+   actual
+   ?
+   `
+
+   <div class="stat">
+
+    Lote activo
+
+    <b>${esc(actual.nombre)}</b>
+
+    <span class="badge ${
+     actual.cerrado
+     ?"red"
+     :"green"
+    }">
+
+     ${
+      actual.cerrado
+      ?"CERRADO"
+      :"ACTIVO"
+     }
+
+    </span>
+
+   </div>
+
+   ${
+    actual.cerrado
+    ?
+    '<div class="warningBox" style="margin-top:10px">'+
+    'Este lote está cerrado. Puedes consultarlo, '+
+    'pero debes reabrirlo para modificar información.'+
+    '</div>'
+    :
+    ''
+   }
+
+   `
+   :
+   'No hay lote activo.';
+
 }
 
 function calcularLote(lote){
@@ -816,19 +1314,33 @@ function calcularLote(lote){
  let vendidosX7=0;
 
  lote.pedidos.forEach(p=>{
+
   ventas+=p.total;
 
-  if(p.pack==="x5")vendidosX5+=p.cantidad;
-  else vendidosX7+=p.cantidad;
+  if(p.pack==="x5")
+   vendidosX5+=p.cantidad;
+  else
+   vendidosX7+=p.cantidad;
+
  });
 
- return {
+ return{
+
   ventas,
-  pedidos:lote.pedidos.length,
+
+  pedidos:
+   lote.pedidos.length,
+
   vendidosX5,
+
   vendidosX7,
-  chorizos:vendidosX5*5+vendidosX7*7
+
+  chorizos:
+   vendidosX5*5+
+   vendidosX7*7
+
  };
+
 }
 
 function actualizarInventario(){
@@ -836,55 +1348,108 @@ function actualizarInventario(){
  let lote=obtenerLote();
 
  if(!lote){
-  document.getElementById("inventarioVista").innerHTML=
-   '<div class="empty">Crea un lote primero.</div>';
+
+  document.getElementById("inventarioVista")
+   .innerHTML=
+    '<div class="empty">Crea un lote primero.</div>';
+
   return;
+
  }
 
- // Como los pedidos descuentan directamente del físico,
- // el inventario actual ya representa lo que queda disponible.
- // "Reservado" se calcula como referencia de pedidos activos.
  let reservadoX5=0;
  let reservadoX7=0;
 
  lote.pedidos.forEach(p=>{
+
   if(p.estado!=="Entregado"){
-   if(p.pack==="x5")reservadoX5+=p.cantidad;
-   else reservadoX7+=p.cantidad;
+
+   if(p.pack==="x5")
+    reservadoX5+=p.cantidad;
+   else
+    reservadoX7+=p.cantidad;
+
   }
+
  });
 
- document.getElementById("inventarioVista").innerHTML=`
+ document.getElementById("inventarioVista")
+  .innerHTML=`
 
- <div class="grid">
+  <div class="grid">
 
-  <div class="pack">
-   <h3>📦 Pack x5</h3>
-   <div class="big">${lote.inventario.x5}</div>
-   <div class="muted">Disponibles</div>
-   <hr>
-   <div>Reservados: <b>${reservadoX5}</b></div>
-   <div>Chorizos disponibles: <b>${lote.inventario.x5*5}</b></div>
+   <div class="pack">
+
+    <h3>📦 Pack x5</h3>
+
+    <div class="big">
+     ${lote.inventario.x5}
+    </div>
+
+    <div class="muted">
+     Disponibles
+    </div>
+
+    <hr>
+
+    <div>
+     Reservados:
+     <b>${reservadoX5}</b>
+    </div>
+
+    <div>
+     Chorizos disponibles:
+     <b>${lote.inventario.x5*5}</b>
+    </div>
+
+   </div>
+
+   <div class="pack">
+
+    <h3>📦 Pack x7</h3>
+
+    <div class="big">
+     ${lote.inventario.x7}
+    </div>
+
+    <div class="muted">
+     Disponibles
+    </div>
+
+    <hr>
+
+    <div>
+     Reservados:
+     <b>${reservadoX7}</b>
+    </div>
+
+    <div>
+     Chorizos disponibles:
+     <b>${lote.inventario.x7*7}</b>
+    </div>
+
+   </div>
+
   </div>
 
-  <div class="pack">
-   <h3>📦 Pack x7</h3>
-   <div class="big">${lote.inventario.x7}</div>
-   <div class="muted">Disponibles</div>
-   <hr>
-   <div>Reservados: <b>${reservadoX7}</b></div>
-   <div>Chorizos disponibles: <b>${lote.inventario.x7*7}</b></div>
+  <div class="card">
+
+   <b>Total packs:</b>
+   ${lote.inventario.x5+
+     lote.inventario.x7}
+
+   <br>
+
+   <b>Total chorizos disponibles:</b>
+   ${
+    (lote.inventario.x5*5)+
+    (lote.inventario.x7*7)
+   }
+
   </div>
 
- </div>
-
- <div class="card">
-  <b>Total packs:</b> ${lote.inventario.x5+lote.inventario.x7}
-  <br>
-  <b>Total chorizos disponibles:</b>
-  ${(lote.inventario.x5*5)+(lote.inventario.x7*7)}
- </div>
  `;
+
 }
 
 function actualizarPedidos(){
@@ -892,77 +1457,125 @@ function actualizarPedidos(){
  let lote=obtenerLote();
 
  if(!lote){
-  document.getElementById("listaPedidos").innerHTML=
-   '<div class="empty">Crea un lote primero.</div>';
+
+  document.getElementById("listaPedidos")
+   .innerHTML=
+    '<div class="empty">Crea un lote primero.</div>';
+
   return;
+
  }
 
  if(lote.pedidos.length===0){
-  document.getElementById("listaPedidos").innerHTML=
-   '<div class="empty">No hay pedidos en este lote.</div>';
+
+  document.getElementById("listaPedidos")
+   .innerHTML=
+    '<div class="empty">No hay pedidos en este lote.</div>';
+
   return;
+
  }
 
  let html="";
 
- lote.pedidos.slice().reverse().forEach(p=>{
+ lote.pedidos
+  .slice()
+  .reverse()
+  .forEach(p=>{
 
-  let color=
-   p.estado==="Entregado"?"green":
-   p.estado==="Pagado"?"blue":"yellow";
+   let color=
+    p.estado==="Entregado"
+    ?"green"
+    :
+    p.estado==="Pagado"
+    ?"blue"
+    :
+    "yellow";
 
-  html+=`
-  <div class="item">
+   html+=`
 
-   <h3>${esc(p.cliente)}
-    <span class="badge ${color}">${p.estado}</span>
-   </h3>
+   <div class="item">
 
-   <div class="muted">
-    ${new Date(p.fecha).toLocaleString("es-CO")}
+    <h3>
+
+     ${esc(p.cliente)}
+
+     <span class="badge ${color}">
+      ${p.estado}
+     </span>
+
+    </h3>
+
+    <div class="muted">
+     ${new Date(p.fecha)
+      .toLocaleString("es-CO")}
+    </div>
+
+    <hr>
+
+    <b>
+     ${p.cantidad} × ${p.pack}
+    </b>
+
+    <br>
+
+    Total:
+    <b>${dinero(p.total)}</b>
+
+    <br>
+
+    Pago:
+    <b>${esc(p.pago)}</b>
+
+    ${
+     p.telefono
+     ?
+     '<br>📞 '+esc(p.telefono)
+     :
+     ''
+    }
+
+    ${
+     p.direccion
+     ?
+     '<br>📍 '+esc(p.direccion)
+     :
+     ''
+    }
+
+    <br><br>
+
+    <button
+     class="blue"
+     onclick="cambiarEstado('${p.id}')">
+     Cambiar estado
+    </button>
+
+    <button
+     class="btn2"
+     onclick="cambiarPago('${p.id}')">
+     Cambiar pago
+    </button>
+
+    ${
+     !lote.cerrado
+     ?
+     '<button class="danger" onclick="eliminarPedido(\''+
+     p.id+
+     '\')">Eliminar</button>'
+     :
+     ''
+    }
+
    </div>
 
-   <hr>
+   `;
 
-   <b>${p.cantidad} × ${p.pack}</b>
-   <br>
-   Total: <b>${dinero(p.total)}</b>
-   <br>
-   Pago: <b>${esc(p.pago)}</b>
+  });
 
-   ${
-    p.telefono
-    ? '<br>📞 '+esc(p.telefono)
-    :''
-   }
+ document.getElementById("listaPedidos")
+  .innerHTML=html;
 
-   ${
-    p.direccion
-    ? '<br>📍 '+esc(p.direccion)
-    :''
-   }
-
-   <br><br>
-
-   <button class="blue" onclick="cambiarEstado('${p.id}')">
-    Cambiar estado
-   </button>
-
-   <button class="btn2" onclick="cambiarPago('${p.id}')">
-    Cambiar pago
-   </button>
-
-   ${
-    !lote.cerrado
-    ? '<button class="danger" onclick="eliminarPedido(\''+p.id+'\')">Eliminar</button>'
-    :''
-   }
-
-  </div>
-  `;
- });
-
- document.getElementById("listaPedidos").innerHTML=html;
 }
 
 function actualizarClientes(){
@@ -970,66 +1583,126 @@ function actualizarClientes(){
  let mapa={};
 
  db.lotes.forEach(l=>{
+
   l.pedidos.forEach(p=>{
 
-   let key=p.telefono||p.cliente.toLowerCase();
+   let key=
+    p.telefono||
+    p.cliente.toLowerCase();
 
    if(!mapa[key]){
+
     mapa[key]={
+
      nombre:p.cliente,
+
      telefono:p.telefono,
+
      direccion:p.direccion,
+
      pedidos:0,
+
      total:0,
+
      ultimo:p.fecha,
+
      lotes:[]
+
     };
+
    }
 
    mapa[key].pedidos++;
+
    mapa[key].total+=p.total;
 
-   if(new Date(p.fecha)>new Date(mapa[key].ultimo)){
+   if(
+    new Date(p.fecha)>
+    new Date(mapa[key].ultimo)
+   ){
+
     mapa[key].ultimo=p.fecha;
+
    }
 
-   if(!mapa[key].lotes.includes(l.nombre)){
+   if(
+    !mapa[key].lotes.includes(l.nombre)
+   ){
+
     mapa[key].lotes.push(l.nombre);
+
    }
+
   });
+
  });
 
- let clientes=Object.values(mapa);
+ let clientes=
+  Object.values(mapa);
 
  if(!clientes.length){
-  document.getElementById("listaClientes").innerHTML=
-   '<div class="empty">Todavía no hay clientes.</div>';
+
+  document.getElementById("listaClientes")
+   .innerHTML=
+    '<div class="empty">Todavía no hay clientes.</div>';
+
   return;
+
  }
 
  let html="";
 
- clientes.sort((a,b)=>b.total-a.total).forEach(c=>{
+ clientes
+  .sort((a,b)=>b.total-a.total)
+  .forEach(c=>{
 
-  html+=`
-  <div class="item">
-   <h3>${esc(c.nombre)}</h3>
-   <div>📞 ${esc(c.telefono||"Sin teléfono")}</div>
-   <div>📍 ${esc(c.direccion||"Sin dirección")}</div>
-   <hr>
-   Pedidos: <b>${c.pedidos}</b>
-   <br>
-   Compras: <b>${dinero(c.total)}</b>
-   <br>
-   Última compra:
-   <b>${new Date(c.ultimo).toLocaleDateString("es-CO")}</b>
-   <br>
-   <span class="muted">Lotes: ${esc(c.lotes.join(", "))}</span>
-  </div>
-  `;
- });
+   html+=`
 
- document.getElementById("listaClientes").innerHTML=html;
+   <div class="item">
+
+    <h3>${esc(c.nombre)}</h3>
+
+    <div>
+     📞 ${esc(c.telefono||"Sin teléfono")}
+    </div>
+
+    <div>
+     📍 ${esc(c.direccion||"Sin dirección")}
+    </div>
+
+    <hr>
+
+    Pedidos:
+    <b>${c.pedidos}</b>
+
+    <br>
+
+    Compras:
+    <b>${dinero(c.total)}</b>
+
+    <br>
+
+    Última compra:
+    <b>
+     ${new Date(c.ultimo)
+      .toLocaleDateString("es-CO")}
+    </b>
+
+    <br>
+
+    <span class="muted">
+     Lotes: ${esc(c.lotes.join(", "))}
+    </span>
+
+   </div>
+
+   `;
+
+  });
+
+ document.getElementById("listaClientes")
+  .innerHTML=html;
+
 }
 
 function actualizarFinanzas(){
@@ -1040,104 +1713,165 @@ function actualizarFinanzas(){
 
  let c=calcular();
 
- document.getElementById("finanzasVista").innerHTML=`
+ document.getElementById("finanzasVista")
+  .innerHTML=`
 
- <div class="grid">
+  <div class="grid">
 
-  <div class="stat">
-   Ventas
-   <b>${dinero(c.ventas)}</b>
+   <div class="stat">
+    Ventas
+    <b>${dinero(c.ventas)}</b>
+   </div>
+
+   <div class="stat">
+    Costos de chorizos
+    <b>${dinero(c.costos)}</b>
+   </div>
+
+   <div class="stat">
+    Ganancia bruta
+    <b>${dinero(c.ganancia)}</b>
+   </div>
+
+   <div class="stat">
+    Gastos
+    <b>${dinero(c.gastos)}</b>
+   </div>
+
+   <div class="stat">
+    Ganancia neta
+    <b>${dinero(c.neta)}</b>
+   </div>
+
+   <div class="stat">
+    Por cobrar
+    <b>${dinero(c.pendiente)}</b>
+   </div>
+
   </div>
 
-  <div class="stat">
-   Costos de chorizos
-   <b>${dinero(c.costos)}</b>
+  <hr>
+
+  <h3>Ventas por presentación</h3>
+
+  <div class="grid">
+
+   <div class="stat">
+
+    x5 vendidos
+
+    <b>${c.vendidosX5}</b>
+
+    ${c.vendidosX5*5}
+    chorizos
+
+   </div>
+
+   <div class="stat">
+
+    x7 vendidos
+
+    <b>${c.vendidosX7}</b>
+
+    ${c.vendidosX7*7}
+    chorizos
+
+   </div>
+
   </div>
 
-  <div class="stat">
-   Ganancia bruta
-   <b>${dinero(c.ganancia)}</b>
-  </div>
+  <hr>
 
-  <div class="stat">
-   Gastos
-   <b>${dinero(c.gastos)}</b>
-  </div>
+  <h3>Gastos del lote</h3>
 
-  <div class="stat">
-   Ganancia neta
-   <b>${dinero(c.neta)}</b>
-  </div>
+  ${
+   lote.gastos.length
 
-  <div class="stat">
-   Por cobrar
-   <b>${dinero(c.pendiente)}</b>
-  </div>
+   ?
 
- </div>
+   lote.gastos.map(g=>`
 
- <hr>
-
- <h3>Ventas por presentación</h3>
-
- <div class="grid">
-  <div class="stat">
-   x5 vendidos
-   <b>${c.vendidosX5}</b>
-   ${c.vendidosX5*5} chorizos
-  </div>
-
-  <div class="stat">
-   x7 vendidos
-   <b>${c.vendidosX7}</b>
-   ${c.vendidosX7*7} chorizos
-  </div>
- </div>
-
- <hr>
-
- <h3>Gastos del lote</h3>
-
- ${
-  lote.gastos.length
-  ? lote.gastos.map(g=>`
     <div class="item">
+
      <b>${esc(g.descripcion)}</b>
-     <br>${dinero(g.valor)}
-     <button class="danger"
-      onclick="eliminarGasto('${g.id}')">Eliminar</button>
+
+     <br>
+
+     ${dinero(g.valor)}
+
+     <button
+      class="danger"
+      onclick="eliminarGasto('${g.id}')">
+      Eliminar
+     </button>
+
     </div>
+
    `).join("")
-  : '<div class="muted">No hay gastos registrados.</div>'
- }
+
+   :
+
+   '<div class="muted">No hay gastos registrados.</div>'
+  }
+
  `;
+
 }
 
 function agregarGasto(){
 
  let lote=obtenerLote();
 
- if(!lote || lote.cerrado)return;
+ if(!lote || lote.cerrado){
 
- let descripcion=document.getElementById("gastoDesc").value.trim();
- let valor=parseFloat(document.getElementById("gastoValor").value)||0;
+  alert(
+   "El lote está cerrado. "+
+   "Reábrelo para modificarlo."
+  );
+
+  return;
+
+ }
+
+ let descripcion=
+  document.getElementById("gastoDesc")
+  .value.trim();
+
+ let valor=
+  parseFloat(
+   document.getElementById("gastoValor").value
+  )||0;
 
  if(!descripcion || valor<=0){
-  alert("Completa descripción y valor.");
+
+  alert(
+   "Completa descripción y valor."
+  );
+
   return;
+
  }
 
  lote.gastos.push({
+
   id:nuevoId(),
+
   descripcion,
+
   valor,
+
   fecha:fechaHoy()
+
  });
 
- document.getElementById("gastoDesc").value="";
- document.getElementById("gastoValor").value="";
+ document.getElementById("gastoDesc")
+  .value="";
+
+ document.getElementById("gastoValor")
+  .value="";
 
  guardar();
+
 }
 
 function eliminarGasto(id){
@@ -1146,11 +1880,15 @@ function eliminarGasto(id){
 
  if(!lote || lote.cerrado)return;
 
- if(!confirm("¿Eliminar este gasto?"))return;
+ if(!confirm(
+  "¿Eliminar este gasto?"
+ ))return;
 
- lote.gastos=lote.gastos.filter(g=>g.id!==id);
+ lote.gastos=
+  lote.gastos.filter(g=>g.id!==id);
 
  guardar();
+
 }
 
 function actualizarGeneral(){
@@ -1172,107 +1910,166 @@ function actualizarGeneral(){
 
   l.pedidos.forEach(p=>{
 
-   if(p.pack==="x5")costos+=p.cantidad*COSTO_X5;
-   else costos+=p.cantidad*COSTO_X7;
+   if(p.pack==="x5")
+    costos+=p.cantidad*COSTO_X5;
+   else
+    costos+=p.cantidad*COSTO_X7;
 
-   if(p.pago==="Pendiente"){
+   if(p.pago==="Pendiente")
     pendiente+=p.total;
-   }
+
   });
 
-  gastos+=l.gastos.reduce((a,g)=>a+g.valor,0);
+  gastos+=
+   l.gastos.reduce(
+    (a,g)=>a+g.valor,
+    0
+   );
+
  });
 
- document.getElementById("generalVista").innerHTML=`
+ document.getElementById("generalVista")
+  .innerHTML=`
 
- <div class="grid">
+  <div class="grid">
 
-  <div class="stat">
-   Lotes
-   <b>${db.lotes.length}</b>
-  </div>
-
-  <div class="stat">
-   Pedidos
-   <b>${pedidos}</b>
-  </div>
-
-  <div class="stat">
-   Chorizos vendidos
-   <b>${chorizos}</b>
-  </div>
-
-  <div class="stat">
-   Ventas
-   <b>${dinero(ventas)}</b>
-  </div>
-
-  <div class="stat">
-   Costos
-   <b>${dinero(costos)}</b>
-  </div>
-
-  <div class="stat">
-   Gastos
-   <b>${dinero(gastos)}</b>
-  </div>
-
-  <div class="stat">
-   Ganancia neta
-   <b>${dinero(ventas-costos-gastos)}</b>
-  </div>
-
-  <div class="stat">
-   Pendiente
-   <b>${dinero(pendiente)}</b>
-  </div>
-
- </div>
-
- <hr>
-
- <h3>Resumen por lote</h3>
-
- ${db.lotes.map(l=>{
-
-  let c=calcularLote(l);
-
-  return `
-   <div class="item">
-    <h3>${esc(l.nombre)}</h3>
-    Ventas: <b>${dinero(c.ventas)}</b>
-    <br>
-    Pedidos: <b>${c.pedidos}</b>
-    <br>
-    Chorizos vendidos: <b>${c.chorizos}</b>
+   <div class="stat">
+    Lotes
+    <b>${db.lotes.length}</b>
    </div>
-  `;
 
- }).join("")}
+   <div class="stat">
+    Pedidos
+    <b>${pedidos}</b>
+   </div>
+
+   <div class="stat">
+    Chorizos vendidos
+    <b>${chorizos}</b>
+   </div>
+
+   <div class="stat">
+    Ventas
+    <b>${dinero(ventas)}</b>
+   </div>
+
+   <div class="stat">
+    Costos
+    <b>${dinero(costos)}</b>
+   </div>
+
+   <div class="stat">
+    Gastos
+    <b>${dinero(gastos)}</b>
+   </div>
+
+   <div class="stat">
+    Ganancia neta
+    <b>
+     ${dinero(ventas-costos-gastos)}
+    </b>
+   </div>
+
+   <div class="stat">
+    Pendiente
+    <b>${dinero(pendiente)}</b>
+   </div>
+
+  </div>
+
+  <hr>
+
+  <h3>Resumen por lote</h3>
+
+  ${db.lotes.map(l=>{
+
+   let c=calcularLote(l);
+
+   return `
+
+    <div class="item">
+
+     <h3>
+
+      ${esc(l.nombre)}
+
+      ${
+       l.cerrado
+       ?
+       '<span class="badge red">CERRADO</span>'
+       :
+       '<span class="badge green">ACTIVO</span>'
+      }
+
+     </h3>
+
+     Ventas:
+     <b>${dinero(c.ventas)}</b>
+
+     <br>
+
+     Pedidos:
+     <b>${c.pedidos}</b>
+
+     <br>
+
+     Chorizos vendidos:
+     <b>${c.chorizos}</b>
+
+    </div>
+
+   `;
+
+  }).join("")}
+
  `;
+
 }
 
 function exportarDatos(){
 
- let contenido=JSON.stringify(db,null,2);
- let blob=new Blob([contenido],{type:"application/json"});
- let url=URL.createObjectURL(blob);
+ let contenido=
+  JSON.stringify(db,null,2);
+
+ let blob=
+  new Blob(
+   [contenido],
+   {type:"application/json"}
+  );
+
+ let url=
+  URL.createObjectURL(blob);
 
  let a=document.createElement("a");
+
  a.href=url;
- a.download="chorizos-backup-"+fechaHoy()+".json";
+
+ a.download=
+  "chorizos-backup-"+
+  fechaHoy()+
+  ".json";
+
  a.click();
 
  URL.revokeObjectURL(url);
+
 }
 
 function importarDatos(){
 
- let archivo=document.getElementById("archivoImportar").files[0];
+ let archivo=
+  document.getElementById(
+   "archivoImportar"
+  ).files[0];
 
  if(!archivo){
-  alert("Selecciona primero un archivo JSON.");
+
+  alert(
+   "Selecciona primero un archivo JSON."
+  );
+
   return;
+
  }
 
  let lector=new FileReader();
@@ -1281,48 +2078,128 @@ function importarDatos(){
 
   try{
 
-   let nuevo=JSON.parse(e.target.result);
+   let nuevo=
+    JSON.parse(e.target.result);
 
-   if(!nuevo.lotes || !Array.isArray(nuevo.lotes)){
+   if(
+    !nuevo.lotes ||
+    !Array.isArray(nuevo.lotes)
+   ){
+
     throw new Error();
+
    }
 
-   if(!confirm("Esto reemplazará los datos actuales. ¿Continuar?")){
+   if(!confirm(
+    "Esto reemplazará los datos actuales. ¿Continuar?"
+   )){
+
     return;
+
    }
 
    db=nuevo;
 
+   if(
+    !db.loteActivo &&
+    db.lotes.length
+   ){
+
+    db.loteActivo=
+     db.lotes[0].id;
+
+   }
+
    guardar();
 
-   alert("Datos restaurados correctamente.");
+   alert(
+    "Datos restaurados correctamente."
+   );
 
   }catch(err){
-   alert("El archivo no es una copia válida.");
+
+   alert(
+    "El archivo no es una copia válida."
+   );
+
   }
+
  };
 
  lector.readAsText(archivo);
+
+}
+
+function reiniciarAplicacion(){
+
+ let confirmar=
+  confirm(
+   "⚠️ ATENCIÓN\n\n"+
+   "Esto eliminará TODOS los datos actuales:\n\n"+
+   "• Todos los lotes\n"+
+   "• Todos los pedidos\n"+
+   "• Todo el inventario\n"+
+   "• Todos los gastos\n"+
+   "• Toda la información guardada\n\n"+
+   "La aplicación quedará completamente nueva.\n\n"+
+   "¿Quieres continuar?"
+  );
+
+ if(!confirmar)return;
+
+ let confirmar2=
+  confirm(
+   "ÚLTIMA CONFIRMACIÓN\n\n"+
+   "Se borrarán las pruebas y comenzaremos desde cero.\n\n"+
+   "¿BORRAR TODO?"
+  );
+
+ if(!confirmar2)return;
+
+ localStorage.removeItem(STORAGE);
+
+ db={
+  lotes:[],
+  loteActivo:null
+ };
+
+ crearPrimerLote();
+
+ localStorage.setItem(
+  STORAGE,
+  JSON.stringify(db)
+ );
+
+ actualizarTodo();
+
+ alert(
+  "✅ Aplicación reiniciada.\n\n"+
+  "Ahora tienes un Lote 1 completamente vacío."
+ );
+
+ mostrar("inicio");
+
 }
 
 function actualizarTotalPedido(){
 
- let pack=document.getElementById("pPack").value;
- let cantidad=parseInt(document.getElementById("pCantidad").value)||0;
+ let pack=
+  document.getElementById("pPack").value;
 
- let precio=pack==="x5"?PRECIO_X5:PRECIO_X7;
+ let cantidad=
+  parseInt(
+   document.getElementById("pCantidad").value
+  )||0;
 
- document.getElementById("pTotal").textContent=dinero(precio*cantidad);
-}
+ let precio=
+  pack==="x5"
+  ?PRECIO_X5
+  :PRECIO_X7;
 
-function esc(text){
+ document.getElementById("pTotal")
+  .textContent=
+   dinero(precio*cantidad);
 
- return String(text??"")
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
 }
 
 function actualizarTodo(){
@@ -1330,16 +2207,26 @@ function actualizarTodo(){
  crearPrimerLote();
 
  actualizarInicio();
+
  actualizarLotes();
+
  actualizarInventario();
+
  actualizarPedidos();
+
  actualizarClientes();
+
  actualizarFinanzas();
+
  actualizarGeneral();
+
  actualizarTotalPedido();
+
 }
 
-document.getElementById("nuevoLoteFecha").value=fechaHoy();
+document.getElementById(
+ "nuevoLoteFecha"
+).value=fechaHoy();
 
 actualizarTodo();
 
