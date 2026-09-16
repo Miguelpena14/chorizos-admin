@@ -1,4 +1,4 @@
-const CACHE_NAME = "chorizos-admin-v5";
+const CACHE_NAME = "chorizos-admin-v6";
 
 const FILES_TO_CACHE = [
   "./",
@@ -10,8 +10,7 @@ self.addEventListener("install", event => {
 
   event.waitUntil(
 
-    caches
-      .open(CACHE_NAME)
+    caches.open(CACHE_NAME)
       .then(cache =>
         cache.addAll(FILES_TO_CACHE)
       )
@@ -50,11 +49,13 @@ self.addEventListener("fetch", event => {
 
   event.respondWith(
 
-    caches
-      .match(event.request)
-      .then(cached => {
+    caches.match(event.request)
+      .then(cachedResponse => {
 
-        return cached || fetch(event.request);
+        return (
+          cachedResponse ||
+          fetch(event.request)
+        );
 
       })
 
