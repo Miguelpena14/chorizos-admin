@@ -4,166 +4,283 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111827">
-<link rel="manifest" href="./manifest.json">
+<link rel="manifest" href="manifest.json">
 
-<title>Chorizos Admin V5</title>
+<title>Chorizos Admin</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
   background:#f3f4f6;
   color:#111827;
 }
+
 header{
   background:#111827;
   color:white;
   padding:18px;
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:20;
 }
-header h1{margin:0;font-size:22px}
-.container{
+
+header h1{
+  margin:0 0 5px;
+  font-size:22px;
+}
+
+header small{
+  color:#d1d5db;
+}
+
+nav{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:10px;
+  background:white;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:76px;
+  z-index:19;
+}
+
+nav button{
+  border:0;
+  background:#e5e7eb;
+  padding:10px 13px;
+  border-radius:10px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+nav button.active{
+  background:#111827;
+  color:white;
+}
+
+main{
   max-width:1100px;
   margin:auto;
   padding:15px;
 }
-nav{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:10px 0;
-}
-nav button{
-  white-space:nowrap;
-}
-button{
-  border:0;
-  border-radius:8px;
-  padding:11px 14px;
-  cursor:pointer;
-  font-weight:bold;
-  background:#111827;
-  color:white;
-}
-button.secondary{background:#6b7280}
-button.success{background:#15803d}
-button.warning{background:#b45309}
-button.danger{background:#b91c1c}
-button.light{
-  background:white;
-  color:#111827;
-  border:1px solid #d1d5db;
-}
-section{
+
+.section{
   display:none;
 }
-section.active{
+
+.section.active{
   display:block;
 }
+
 .card{
   background:white;
-  border-radius:12px;
-  padding:16px;
+  border-radius:15px;
+  padding:18px;
   margin-bottom:15px;
   box-shadow:0 2px 8px rgba(0,0,0,.07);
 }
+
+.card h2,
+.card h3{
+  margin-top:0;
+}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
   gap:12px;
 }
+
 .stat{
   background:white;
-  border-radius:12px;
-  padding:16px;
+  padding:18px;
+  border-radius:15px;
   box-shadow:0 2px 8px rgba(0,0,0,.07);
 }
-.stat strong{
-  display:block;
-  font-size:24px;
-  margin-top:5px;
+
+.stat .label{
+  color:#6b7280;
+  font-size:14px;
 }
-label{
-  display:block;
-  margin-top:10px;
+
+.stat .value{
+  font-size:25px;
   font-weight:bold;
+  margin-top:7px;
 }
-input,select,textarea{
+
+input,
+select,
+textarea{
   width:100%;
   padding:11px;
-  margin-top:5px;
   border:1px solid #d1d5db;
-  border-radius:8px;
+  border-radius:9px;
   font-size:15px;
+  margin-top:5px;
+  margin-bottom:12px;
+  background:white;
 }
-textarea{min-height:80px}
+
+label{
+  font-size:14px;
+  font-weight:bold;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:11px 15px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.btn{
+  background:#111827;
+  color:white;
+}
+
+.btn.secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.btn.danger{
+  background:#dc2626;
+  color:white;
+}
+
+.btn.success{
+  background:#16a34a;
+  color:white;
+}
+
+.btn.warning{
+  background:#d97706;
+  color:white;
+}
+
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:10px;
+  min-width:650px;
 }
-th,td{
-  padding:9px;
+
+th,
+td{
+  padding:10px;
   border-bottom:1px solid #e5e7eb;
   text-align:left;
-  vertical-align:top;
+  font-size:14px;
 }
-.small{font-size:13px}
-.muted{color:#6b7280}
-.ok{color:#15803d;font-weight:bold}
-.pending{color:#b45309;font-weight:bold}
-.dangerText{color:#b91c1c;font-weight:bold}
-.actions{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-top:10px;
+
+th{
+  background:#f9fafb;
 }
+
 .badge{
   display:inline-block;
   padding:5px 8px;
-  border-radius:999px;
-  background:#e5e7eb;
+  border-radius:8px;
   font-size:12px;
   font-weight:bold;
+  background:#e5e7eb;
 }
-.loginScreen{
-  min-height:100vh;
+
+.badge.pendiente{
+  background:#fef3c7;
+}
+
+.badge.pagado{
+  background:#dcfce7;
+}
+
+.badge.entregado{
+  background:#dbeafe;
+}
+
+.lote-selector{
   display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:end;
 }
-.loginCard{
-  width:100%;
-  max-width:420px;
-  background:white;
-  padding:25px;
-  border-radius:15px;
-  box-shadow:0 4px 20px rgba(0,0,0,.12);
+
+.lote-selector > div{
+  flex:1;
+  min-width:180px;
 }
-.dangerBox{
-  color:#b91c1c;
-  margin-top:10px;
-  font-size:14px;
+
+.notice{
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:15px;
 }
-#appContent{
-  display:none;
+
+.warning-box{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:15px;
 }
+
 .sync{
-  font-size:12px;
-  margin-top:5px;
+  font-size:13px;
   color:#d1d5db;
 }
-@media(max-width:650px){
-  table{
-    font-size:13px;
+
+.empty{
+  color:#6b7280;
+  padding:15px 0;
+}
+
+.money{
+  font-weight:bold;
+}
+
+@media(max-width:600px){
+  header{
+    padding:14px;
   }
-  th,td{
-    padding:7px 5px;
+
+  nav{
+    top:68px;
+  }
+
+  main{
+    padding:10px;
+  }
+
+  .card{
+    padding:14px;
+  }
+
+  .stat .value{
+    font-size:21px;
   }
 }
 </style>
@@ -171,137 +288,77 @@ th,td{
 
 <body>
 
-<!-- ================= LOGIN ================= -->
-
-<div id="loginScreen" class="loginScreen">
-
-  <div class="loginCard">
-
-    <div style="text-align:center;font-size:55px">🌭</div>
-
-    <h2 style="text-align:center">Chorizos Admin</h2>
-
-    <p class="muted" style="text-align:center">
-      Ingresa para acceder a tus datos.
-    </p>
-
-    <label>Correo electrónico</label>
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="Tu correo"
-      autocomplete="username"
-    >
-
-    <label>Contraseña</label>
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="Tu contraseña"
-      autocomplete="current-password"
-    >
-
-    <br>
-
-    <button
-      onclick="iniciarSesion()"
-      style="width:100%"
-    >
-      🔐 Iniciar sesión
-    </button>
-
-    <div id="loginError" class="dangerBox"></div>
-
-  </div>
-
-</div>
-
-
-<!-- ================= APP ================= -->
-
-<div id="appContent">
-
 <header>
-
   <h1>🌭 Chorizos Admin</h1>
-
-  <div class="sync" id="syncStatus">
-    ☁️ Conectando...
-  </div>
-
+  <small id="loteHeader">Cargando lote...</small>
+  <div class="sync" id="syncStatus">☁️ Conectando...</div>
 </header>
 
-<div class="container">
-
 <nav>
-
-  <button onclick="mostrarSeccion('inicio')">
-    🏠 Inicio
-  </button>
-
-  <button onclick="mostrarSeccion('lotes')">
-    🏭 Lotes
-  </button>
-
-  <button onclick="mostrarSeccion('pedidos')">
-    🧾 Pedidos
-  </button>
-
-  <button onclick="mostrarSeccion('inventario')">
-    📦 Inventario
-  </button>
-
-  <button onclick="mostrarSeccion('clientes')">
-    👥 Clientes
-  </button>
-
-  <button onclick="mostrarSeccion('finanzas')">
-    💰 Finanzas
-  </button>
-
-  <button onclick="mostrarSeccion('general')">
-    📊 General
-  </button>
-
-  <button onclick="mostrarSeccion('datos')">
-    💾 Datos
-  </button>
-
+  <button onclick="mostrarSeccion('inicio',this)" class="active">🏠 Inicio</button>
+  <button onclick="mostrarSeccion('lotes',this)">📦 Lotes</button>
+  <button onclick="mostrarSeccion('pedidos',this)">🛒 Pedidos</button>
+  <button onclick="mostrarSeccion('inventario',this)">📊 Inventario</button>
+  <button onclick="mostrarSeccion('clientes',this)">👥 Clientes</button>
+  <button onclick="mostrarSeccion('finanzas',this)">💰 Finanzas</button>
+  <button onclick="mostrarSeccion('general',this)">📈 General</button>
+  <button onclick="mostrarSeccion('datos',this)">💾 Datos</button>
 </nav>
 
+<main>
 
-<!-- ================= INICIO ================= -->
-
-<section id="inicio" class="active">
+<!-- INICIO -->
+<section id="inicio" class="section active">
 
   <div class="card">
-
-    <h2>🏠 Inicio</h2>
-
+    <h2>Resumen del lote</h2>
     <div id="inicioLote"></div>
-
   </div>
 
   <div class="grid">
 
     <div class="stat">
-      Pedidos
-      <strong id="statPedidos">0</strong>
+      <div class="label">Ventas</div>
+      <div class="value" id="statVentas">$0</div>
     </div>
 
     <div class="stat">
-      Ventas
-      <strong id="statVentas">$0</strong>
+      <div class="label">Ganancia bruta</div>
+      <div class="value" id="statBruta">$0</div>
     </div>
 
     <div class="stat">
-      Pendiente
-      <strong id="statPendiente">$0</strong>
+      <div class="label">Ganancia neta</div>
+      <div class="value" id="statNeta">$0</div>
     </div>
 
     <div class="stat">
-      Ganancia
-      <strong id="statGanancia">$0</strong>
+      <div class="label">Pendiente por cobrar</div>
+      <div class="value" id="statPendiente">$0</div>
+    </div>
+
+  </div>
+
+  <div class="grid" style="margin-top:15px">
+
+    <div class="stat">
+      <div class="label">Pack x5 disponibles</div>
+      <div class="value" id="statX5">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="label">Pack x7 disponibles</div>
+      <div class="value" id="statX7">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="label">Pedidos</div>
+      <div class="value" id="statPedidos">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="label">Reservados</div>
+      <div class="value" id="statReservados">0</div>
     </div>
 
   </div>
@@ -309,228 +366,279 @@ th,td{
 </section>
 
 
-<!-- ================= LOTES ================= -->
-
-<section id="lotes">
+<!-- LOTES -->
+<section id="lotes" class="section">
 
   <div class="card">
+    <h2>📦 Lotes</h2>
 
-    <h2>🏭 Lotes</h2>
+    <div class="notice">
+      Cada lote conserva su propio inventario, pedidos, gastos y resultados.
+    </div>
 
-    <label>Nombre del nuevo lote</label>
+    <div class="lote-selector">
 
-    <input
-      id="nuevoLoteNombre"
-      placeholder="Ej: Lote septiembre 2026"
-    >
+      <div>
+        <label>Lote activo</label>
+        <select id="selectorLote" onchange="cambiarLote()"></select>
+      </div>
 
-    <div class="actions">
+      <div>
+        <button class="btn" onclick="crearLote()">
+          + Crear lote
+        </button>
+      </div>
 
-      <button onclick="crearLote()">
-        ➕ Crear lote
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>Información del lote</h3>
+    <div id="detalleLote"></div>
+
+    <div class="actions" style="margin-top:15px">
+      <button class="btn warning" onclick="cerrarLote()">
+        🔒 Cerrar lote
       </button>
 
+      <button class="btn success" onclick="reabrirLote()">
+        🔓 Reabrir lote
+      </button>
     </div>
-
   </div>
 
   <div class="card">
-
-    <h3>Lote activo</h3>
-
-    <div id="loteActivoInfo"></div>
-
-  </div>
-
-  <div class="card">
-
-    <h3>Historial de lotes</h3>
-
+    <h3>Todos los lotes</h3>
     <div id="listaLotes"></div>
-
   </div>
 
 </section>
 
 
-<!-- ================= PEDIDOS ================= -->
-
-<section id="pedidos">
+<!-- PEDIDOS -->
+<section id="pedidos" class="section">
 
   <div class="card">
 
-    <h2>🧾 Nuevo pedido</h2>
+    <h2>🛒 Nuevo pedido</h2>
+
+    <div id="pedidoBloqueado"></div>
 
     <label>Cliente</label>
-    <input id="pedidoCliente" placeholder="Nombre">
+    <input id="pedidoCliente" placeholder="Nombre del cliente">
 
     <label>Teléfono</label>
     <input id="pedidoTelefono" placeholder="Teléfono">
 
     <label>Dirección</label>
-    <textarea id="pedidoDireccion" placeholder="Dirección"></textarea>
+    <input id="pedidoDireccion" placeholder="Dirección">
 
     <label>Pack</label>
-
     <select id="pedidoPack" onchange="actualizarPrecioPedido()">
-
-      <option value="5">
-        Pack x5 — $17.000
-      </option>
-
-      <option value="7">
-        Pack x7 — $22.000
-      </option>
-
+      <option value="x5">Pack x5 — $17.000</option>
+      <option value="x7">Pack x7 — $22.000</option>
     </select>
 
     <label>Cantidad de packs</label>
+    <input id="pedidoCantidad" type="number" min="1" value="1">
 
-    <input
-      id="pedidoCantidad"
-      type="number"
-      min="1"
-      value="1"
-    >
-
-    <div id="pedidoPrecioInfo" class="muted">
-      Total: $17.000
+    <div class="notice">
+      Total: <strong id="pedidoTotal">$17.000</strong>
     </div>
 
     <label>Pago</label>
-
     <select id="pedidoPago">
-
-      <option value="Pendiente">
-        Pendiente
-      </option>
-
-      <option value="Pagado">
-        Pagado
-      </option>
-
+      <option value="Pendiente">Pendiente</option>
+      <option value="Pagado">Pagado</option>
     </select>
 
     <label>Estado</label>
-
     <select id="pedidoEstado">
-
-      <option value="Pendiente">
-        Pendiente
-      </option>
-
-      <option value="Entregado">
-        Entregado
-      </option>
-
+      <option value="Pendiente">Pendiente</option>
+      <option value="Pagado">Pagado</option>
+      <option value="Entregado">Entregado</option>
     </select>
 
-    <div class="actions">
-
-      <button
-        class="success"
-        onclick="crearPedido()"
-      >
-        ➕ Guardar pedido
-      </button>
-
-    </div>
+    <button class="btn" onclick="crearPedido()">
+      Registrar pedido
+    </button>
 
   </div>
 
 
   <div class="card">
 
-    <h2>Pedidos</h2>
+    <h2>Pedidos del lote</h2>
 
-    <div id="listaPedidos"></div>
+    <div class="table-wrap">
+      <table>
+
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Pack</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Pago</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody id="tablaPedidos"></tbody>
+
+      </table>
+    </div>
 
   </div>
 
 </section>
 
 
-<!-- ================= INVENTARIO ================= -->
-
-<section id="inventario">
+<!-- INVENTARIO -->
+<section id="inventario" class="section">
 
   <div class="card">
 
-    <h2>📦 Inventario</h2>
+    <h2>📊 Inventario</h2>
 
-    <div id="inventarioInfo"></div>
+    <div class="warning-box">
+      El inventario se descuenta al crear el pedido.
+      Al eliminar un pedido, el inventario vuelve automáticamente.
+    </div>
+
+    <div class="grid">
+
+      <div class="stat">
+        <div class="label">Pack x5</div>
+        <div class="value" id="inventarioX5">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Pack x7</div>
+        <div class="value" id="inventarioX7">0</div>
+      </div>
+
+    </div>
 
   </div>
+
 
   <div class="card">
 
     <h3>Agregar inventario</h3>
 
-    <label>Pack</label>
-
-    <select id="inventarioPack">
-
-      <option value="5">Pack x5</option>
-      <option value="7">Pack x7</option>
-
+    <label>Tipo</label>
+    <select id="invTipoAgregar">
+      <option value="x5">Pack x5</option>
+      <option value="x7">Pack x7</option>
     </select>
 
-    <label>Cantidad de packs</label>
+    <label>Cantidad</label>
+    <input id="invCantidadAgregar" type="number" min="1" value="1">
 
-    <input
-      id="inventarioCantidad"
-      type="number"
-      min="1"
-      value="1"
-    >
+    <button class="btn success" onclick="agregarInventario()">
+      + Agregar
+    </button>
 
-    <div class="actions">
+  </div>
 
-      <button
-        class="success"
-        onclick="agregarInventario()"
-      >
-        ➕ Agregar
-      </button>
 
-      <button
-        class="danger"
-        onclick="quitarInventario()"
-      >
-        ➖ Quitar
-      </button>
+  <div class="card">
 
-    </div>
+    <h3>Retirar inventario</h3>
+
+    <label>Tipo</label>
+    <select id="invTipoRetirar">
+      <option value="x5">Pack x5</option>
+      <option value="x7">Pack x7</option>
+    </select>
+
+    <label>Cantidad</label>
+    <input id="invCantidadRetirar" type="number" min="1" value="1">
+
+    <button class="btn danger" onclick="retirarInventario()">
+      − Retirar
+    </button>
 
   </div>
 
 </section>
 
 
-<!-- ================= CLIENTES ================= -->
-
-<section id="clientes">
+<!-- CLIENTES -->
+<section id="clientes" class="section">
 
   <div class="card">
-
     <h2>👥 Clientes</h2>
 
-    <div id="listaClientes"></div>
+    <div class="table-wrap">
 
+      <table>
+
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Pedidos</th>
+            <th>Compras</th>
+            <th>Pendiente</th>
+          </tr>
+        </thead>
+
+        <tbody id="tablaClientes"></tbody>
+
+      </table>
+
+    </div>
   </div>
 
 </section>
 
 
-<!-- ================= FINANZAS ================= -->
-
-<section id="finanzas">
+<!-- FINANZAS -->
+<section id="finanzas" class="section">
 
   <div class="card">
 
-    <h2>💰 Finanzas del lote</h2>
+    <h2>💰 Finanzas</h2>
 
-    <div id="finanzasInfo"></div>
+    <div class="grid">
+
+      <div class="stat">
+        <div class="label">Ventas</div>
+        <div class="value" id="finVentas">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Costo producto</div>
+        <div class="value" id="finCostos">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Ganancia bruta</div>
+        <div class="value" id="finBruta">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Gastos</div>
+        <div class="value" id="finGastos">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Ganancia neta</div>
+        <div class="value" id="finNeta">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Pendiente</div>
+        <div class="value" id="finPendiente">$0</div>
+      </div>
+
+    </div>
 
   </div>
 
@@ -539,30 +647,89 @@ th,td{
 
     <h3>Registrar gasto</h3>
 
-    <label>Concepto</label>
-
-    <input
-      id="gastoConcepto"
-      placeholder="Ej: Bolsas"
-    >
+    <label>Descripción</label>
+    <input id="gastoDescripcion" placeholder="Ej: bolsas, transporte, ingredientes">
 
     <label>Valor</label>
+    <input id="gastoValor" type="number" min="0">
 
-    <input
-      id="gastoValor"
-      type="number"
-      min="0"
-      placeholder="0"
-    >
+    <button class="btn" onclick="crearGasto()">
+      Registrar gasto
+    </button>
 
-    <div class="actions">
+  </div>
 
-      <button
-        class="success"
-        onclick="agregarGasto()"
-      >
-        ➕ Registrar gasto
-      </button>
+
+  <div class="card">
+
+    <h3>Gastos del lote</h3>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Valor</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody id="tablaGastos"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GENERAL -->
+<section id="general" class="section">
+
+  <div class="card">
+
+    <h2>📈 Resumen general</h2>
+
+    <div class="notice">
+      Aquí se acumulan los resultados de todos los lotes guardados.
+    </div>
+
+    <div class="grid">
+
+      <div class="stat">
+        <div class="label">Ventas totales</div>
+        <div class="value" id="generalVentas">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Costos totales</div>
+        <div class="value" id="generalCostos">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Gastos totales</div>
+        <div class="value" id="generalGastos">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Ganancia neta</div>
+        <div class="value" id="generalNeta">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Pedidos</div>
+        <div class="value" id="generalPedidos">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="label">Lotes</div>
+        <div class="value" id="generalLotes">0</div>
+      </div>
 
     </div>
 
@@ -571,105 +738,112 @@ th,td{
 
   <div class="card">
 
-    <h3>Gastos registrados</h3>
+    <h3>Resultados por lote</h3>
 
-    <div id="listaGastos"></div>
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Lote</th>
+            <th>Estado</th>
+            <th>Pedidos</th>
+            <th>Ventas</th>
+            <th>Costos</th>
+            <th>Gastos</th>
+            <th>Neto</th>
+          </tr>
+        </thead>
+
+        <tbody id="tablaGeneralLotes"></tbody>
+
+      </table>
+
+    </div>
 
   </div>
 
 </section>
 
 
-<!-- ================= GENERAL ================= -->
-
-<section id="general">
-
-  <div class="card">
-
-    <h2>📊 Resumen general</h2>
-
-    <div id="resumenGeneral"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= DATOS ================= -->
-
-<section id="datos">
+<!-- DATOS -->
+<section id="datos" class="section">
 
   <div class="card">
 
-    <h2>💾 Datos y cuenta</h2>
+    <h2>💾 Datos y respaldo</h2>
 
-    <p>
-      Los datos se sincronizan automáticamente con Firebase.
-    </p>
-
-    <p>
-      Cuenta:
-      <strong id="usuarioEmail"></strong>
-    </p>
+    <div class="notice">
+      Puedes descargar una copia completa de tus datos o restaurarla posteriormente.
+    </div>
 
     <div class="actions">
 
-      <button onclick="exportarDatos()">
-        ⬇️ Descargar copia
+      <button class="btn" onclick="exportarDatos()">
+        ⬇️ Descargar respaldo
       </button>
 
-      <label
-        class="light"
-        style="display:inline-block;padding:11px 14px;border:1px solid #d1d5db;border-radius:8px;cursor:pointer"
-      >
-        ⬆️ Restaurar copia
-
+      <label class="btn secondary" style="display:inline-block">
+        ⬆️ Restaurar respaldo
         <input
-          id="archivoImportar"
           type="file"
+          id="archivoImportar"
           accept=".json"
           onchange="importarDatos(event)"
           style="display:none"
         >
-
       </label>
-
-      <button
-        class="danger"
-        onclick="resetearAplicacion()"
-      >
-        🗑️ Reiniciar datos
-      </button>
-
-      <button
-        class="secondary"
-        onclick="cerrarSesion()"
-      >
-        🚪 Cerrar sesión
-      </button>
 
     </div>
 
   </div>
 
+
+  <div class="card">
+
+    <h3>Restablecer aplicación</h3>
+
+    <p>
+      Esto elimina todos los lotes, pedidos, inventario y gastos guardados
+      y crea nuevamente un Lote 1 vacío.
+    </p>
+
+    <button class="btn danger" onclick="reiniciarAplicacion()">
+      ⚠️ Restablecer a cero
+    </button>
+
+  </div>
+
 </section>
 
-</div>
-</div>
+</main>
 
 
-<!-- ================= FIREBASE ================= -->
-
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
-
 
 <script>
 
-/* =====================================================
-   CONFIGURACIÓN
-===================================================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyBrilLSqnN_eL7qStOzKyw9vEOIecuE",
+  authDomain: "chorizos-admin.firebaseapp.com",
+  projectId: "chorizos-admin",
+  storageBucket: "chorizos-admin.firebasestorage.app",
+  messagingSenderId: "385796778072",
+  appId: "1:385796778072:web:1adfa8b0486a1402a3822d",
+  measurementId: "G-V4YQWDSKWK6"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const firestore = firebase.firestore();
+
+const CLOUD_DOC = firestore.doc(
+  "appData/chorizosAdmin"
+);
+
 
 const PRECIO_X5 = 17000;
 const PRECIO_X7 = 22000;
@@ -677,61 +851,18 @@ const PRECIO_X7 = 22000;
 const COSTO_X5 = 7500;
 const COSTO_X7 = 10500;
 
-const STORAGE = "chorizos_admin_v5";
+const STORAGE = "chorizos_admin_v6";
 
 
-const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyBrilLSqnN_eL7qStOzKyw9vEOIecuE",
-
-  authDomain:
-    "chorizos-admin.firebaseapp.com",
-
-  projectId:
-    "chorizos-admin",
-
-  storageBucket:
-    "chorizos-admin.firebasestorage.app",
-
-  messagingSenderId:
-    "385796778072",
-
-  appId:
-    "1:385796778072:web:1adfa8b0486a1402a3822d",
-
-  measurementId:
-    "G-V4YQWDSKWK6"
-
-};
-
-
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-
-const firestore = firebase.firestore();
-
-
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let db = {
-  lotes: [],
-  loteActivo: null
-};
-
-let usuario = null;
-
+let db = null;
+let cargandoNube = false;
+let guardadoPendiente = false;
 let unsubscribeCloud = null;
 
-let cargandoDesdeNube = false;
 
-
-/* =====================================================
+/* =========================
    UTILIDADES
-===================================================== */
+========================= */
 
 function dinero(valor){
 
@@ -742,46 +873,41 @@ function dinero(valor){
       currency:"COP",
       maximumFractionDigits:0
     }
-  ).format(Number(valor)||0);
+  ).format(valor || 0);
 
 }
 
 
-function generarId(){
+function fechaActual(){
 
-  return Date.now().toString(36)
-    + Math.random().toString(36).substring(2,8);
+  const ahora = new Date();
 
-}
-
-
-function hoy(){
-
-  return new Date().toISOString();
+  return ahora.toISOString();
 
 }
 
 
-/* =====================================================
+function crearId(){
+
+  return Date.now().toString(36) +
+         Math.random().toString(36).substring(2,8);
+
+}
+
+
+/* =========================
    BASE DE DATOS
-===================================================== */
+========================= */
 
 function crearDBVacia(){
-
-  const id = generarId();
 
   return {
 
     lotes:[
-
       {
-
-        id:id,
-
+        id:crearId(),
         nombre:"Lote 1",
-
-        fecha:hoy(),
-
+        fecha:fechaActual(),
         cerrado:false,
 
         inventario:{
@@ -790,14 +916,11 @@ function crearDBVacia(){
         },
 
         pedidos:[],
-
         gastos:[]
-
       }
-
     ],
 
-    loteActivo:id
+    loteActivo:null
 
   };
 
@@ -807,79 +930,59 @@ function crearDBVacia(){
 function normalizarDB(data){
 
   if(!data || typeof data !== "object"){
-
     return crearDBVacia();
-
   }
 
   if(!Array.isArray(data.lotes)){
-
     data.lotes=[];
-
   }
 
   data.lotes.forEach(lote=>{
 
     if(!lote.inventario){
-
       lote.inventario={
         x5:0,
         x7:0
       };
-
     }
 
     if(!Array.isArray(lote.pedidos)){
-
       lote.pedidos=[];
-
     }
 
     if(!Array.isArray(lote.gastos)){
-
       lote.gastos=[];
-
     }
 
-    lote.cerrado=Boolean(lote.cerrado);
+    lote.pedidos.forEach(p=>{
 
-    lote.pedidos.forEach(pedido=>{
-
-      if(typeof pedido.inventarioDescontado==="undefined"){
-
-        pedido.inventarioDescontado=true;
-
+      if(typeof p.inventarioDescontado !== "boolean"){
+        p.inventarioDescontado=true;
       }
 
     });
 
   });
 
+  if(!data.lotes.length){
 
-  if(!data.loteActivo && data.lotes.length){
+    return crearDBVacia();
+
+  }
+
+  if(
+    !data.loteActivo ||
+    !data.lotes.some(x=>x.id===data.loteActivo)
+  ){
 
     data.loteActivo=data.lotes[0].id;
 
   }
 
-
   return data;
 
 }
 
-
-function obtenerLoteActivo(){
-
-  return db.lotes.find(
-    lote=>lote.id===db.loteActivo
-  );
-
-}
-
-
-/* =====================================================
-   LOCAL
-===================================================== */
 
 function guardarLocal(){
 
@@ -899,11 +1002,145 @@ function guardarLocal(){
 }
 
 
+/* =========================
+   FIREBASE
+========================= */
+
+async function guardarNube(){
+
+  if(cargandoNube){
+    guardadoPendiente=true;
+    return;
+  }
+
+  if(!db){
+    return;
+  }
+
+  try{
+
+    guardadoPendiente=false;
+
+    document.getElementById("syncStatus")
+      .textContent="☁️ Guardando...";
+
+    await CLOUD_DOC.set({
+
+      data:db,
+
+      updatedAt:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
+    document.getElementById("syncStatus")
+      .textContent="☁️ Sincronizado";
+
+  }catch(e){
+
+    console.error(e);
+
+    document.getElementById("syncStatus")
+      .textContent="⚠️ Error de conexión";
+
+  }
+
+}
+
+
+function guardar(){
+
+  guardarLocal();
+
+  guardarNube();
+
+}
+
+
+function iniciarNube(){
+
+  if(unsubscribeCloud){
+
+    unsubscribeCloud();
+
+  }
+
+  document.getElementById("syncStatus")
+    .textContent="☁️ Conectando...";
+
+
+  unsubscribeCloud =
+    CLOUD_DOC.onSnapshot(
+
+      snapshot=>{
+
+        cargandoNube=true;
+
+        try{
+
+          if(snapshot.exists){
+
+            const datos =
+              snapshot.data().data;
+
+            db=normalizarDB(datos);
+
+            guardarLocal();
+
+            actualizarTodo();
+
+            document.getElementById("syncStatus")
+              .textContent="☁️ Sincronizado";
+
+          }else{
+
+            db=crearDBVacia();
+
+            db.loteActivo=db.lotes[0].id;
+
+            guardarLocal();
+
+            actualizarTodo();
+
+            guardarNube();
+
+          }
+
+        }finally{
+
+          cargandoNube=false;
+
+        }
+
+        if(guardadoPendiente){
+
+          guardarNube();
+
+        }
+
+      },
+
+      error=>{
+
+        console.error(error);
+
+        document.getElementById("syncStatus")
+          .textContent="⚠️ Sin conexión";
+
+        cargarLocal();
+
+      }
+
+    );
+
+}
+
+
 function cargarLocal(){
 
   try{
 
-    const guardado=
+    const guardado =
       localStorage.getItem(STORAGE);
 
     if(guardado){
@@ -912,6 +1149,8 @@ function cargarLocal(){
         JSON.parse(guardado)
       );
 
+      actualizarTodo();
+
     }
 
   }catch(e){
@@ -923,353 +1162,108 @@ function cargarLocal(){
 }
 
 
-/* =====================================================
-   CLOUD
-===================================================== */
+/* =========================
+   LOTE ACTIVO
+========================= */
 
-async function guardar(){
+function obtenerLote(){
 
-  guardarLocal();
+  if(!db || !db.lotes.length){
+    return null;
+  }
 
-  actualizarTodo();
+  let lote =
+    db.lotes.find(
+      x=>x.id===db.loteActivo
+    );
 
-  if(
-    !usuario ||
-    cargandoDesdeNube
-  ){
+  if(!lote){
 
-    return;
+    lote=db.lotes[0];
+
+    db.loteActivo=lote.id;
 
   }
 
+  return lote;
 
-  const ref=firestore.doc(
-    `users/${usuario.uid}/app/main`
-  );
-
-
-  try{
-
-    document.getElementById(
-      "syncStatus"
-    ).textContent="☁️ Guardando...";
+}
 
 
-    await ref.set({
+/* =========================
+   NAVEGACIÓN
+========================= */
 
-      data:db,
+function mostrarSeccion(id, boton){
 
-      updatedAt:
-        firebase.firestore
-        .FieldValue
-        .serverTimestamp()
+  document
+    .querySelectorAll(".section")
+    .forEach(s=>{
+      s.classList.remove("active");
+    });
 
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll("nav button")
+    .forEach(b=>{
+      b.classList.remove("active");
     });
 
 
-    document.getElementById(
-      "syncStatus"
-    ).textContent="☁️ Sincronizado";
+  if(boton){
 
-  }catch(error){
-
-    console.error(error);
-
-    document.getElementById(
-      "syncStatus"
-    ).textContent=
-      "⚠️ Error de sincronización";
-
-    alert(
-      "No se pudo guardar en la nube. Revisa tu conexión a Internet."
-    );
+    boton.classList.add("active");
 
   }
 
 }
 
 
-/* =====================================================
-   LOGIN
-===================================================== */
+/* =========================
+   LOTES
+========================= */
 
-async function iniciarSesion(){
+function cambiarLote(){
 
-  const email=
-    document.getElementById(
-      "loginEmail"
-    ).value.trim();
+  const id =
+    document.getElementById("selectorLote").value;
 
-  const password=
-    document.getElementById(
-      "loginPassword"
-    ).value;
-
-
-  const error=
-    document.getElementById(
-      "loginError"
-    );
-
-  error.textContent="";
-
-
-  if(!email || !password){
-
-    error.textContent=
-      "Escribe tu correo y contraseña.";
-
+  if(!id){
     return;
-
   }
 
+  db.loteActivo=id;
 
-  try{
-
-    await auth.signInWithEmailAndPassword(
-      email,
-      password
-    );
-
-  }catch(e){
-
-    console.error(e);
-
-    error.textContent=
-      "No se pudo iniciar sesión. Verifica el correo y la contraseña.";
-
-  }
-
-}
-
-
-async function cerrarSesion(){
-
-  if(unsubscribeCloud){
-
-    unsubscribeCloud();
-
-    unsubscribeCloud=null;
-
-  }
-
-  await auth.signOut();
-
-}
-
-
-/* =====================================================
-   FIREBASE AUTH
-===================================================== */
-
-auth.onAuthStateChanged(async user=>{
-
-  if(!user){
-
-    usuario=null;
-
-    document.getElementById(
-      "loginScreen"
-    ).style.display="flex";
-
-    document.getElementById(
-      "appContent"
-    ).style.display="none";
-
-    return;
-
-  }
-
-
-  usuario=user;
-
-
-  document.getElementById(
-    "loginScreen"
-  ).style.display="none";
-
-
-  document.getElementById(
-    "appContent"
-  ).style.display="block";
-
-
-  document.getElementById(
-    "usuarioEmail"
-  ).textContent=user.email || "";
-
-
-  iniciarNube(user);
-
-});
-
-
-/* =====================================================
-   SINCRONIZACIÓN
-===================================================== */
-
-function iniciarNube(user){
-
-  if(unsubscribeCloud){
-
-    unsubscribeCloud();
-
-  }
-
-
-  const ref=firestore.doc(
-    `users/${user.uid}/app/main`
-  );
-
-
-  document.getElementById(
-    "syncStatus"
-  ).textContent=
-    "☁️ Cargando datos...";
-
-
-  cargarLocal();
-
-
-  unsubscribeCloud=ref.onSnapshot(
-
-    async snapshot=>{
-
-      cargandoDesdeNube=true;
-
-      try{
-
-        if(snapshot.exists){
-
-          const remote=snapshot.data();
-
-          db=normalizarDB(
-            remote.data
-          );
-
-          guardarLocal();
-
-          actualizarTodo();
-
-          document.getElementById(
-            "syncStatus"
-          ).textContent=
-            "☁️ Sincronizado";
-
-        }else{
-
-          db=crearDBVacia();
-
-          guardarLocal();
-
-          await ref.set({
-
-            data:db,
-
-            updatedAt:
-              firebase.firestore
-              .FieldValue
-              .serverTimestamp()
-
-          });
-
-          actualizarTodo();
-
-          document.getElementById(
-            "syncStatus"
-          ).textContent=
-            "☁️ Sincronizado";
-
-        }
-
-      }catch(error){
-
-        console.error(error);
-
-        document.getElementById(
-          "syncStatus"
-        ).textContent=
-          "⚠️ Error";
-
-      }finally{
-
-        cargandoDesdeNube=false;
-
-      }
-
-    },
-
-    error=>{
-
-      console.error(error);
-
-      document.getElementById(
-        "syncStatus"
-      ).textContent=
-        "⚠️ Error de conexión";
-
-    }
-
-  );
-
-}
-
-
-/* =====================================================
-   NAVEGACIÓN
-===================================================== */
-
-function mostrarSeccion(id){
-
-  document
-    .querySelectorAll("section")
-    .forEach(s=>s.classList.remove("active"));
-
-
-  const section=
-    document.getElementById(id);
-
-
-  if(section){
-
-    section.classList.add("active");
-
-  }
-
+  guardar();
 
   actualizarTodo();
 
 }
 
 
-/* =====================================================
-   LOTES
-===================================================== */
-
 function crearLote(){
 
-  const nombre=
-    document.getElementById(
-      "nuevoLoteNombre"
-    ).value.trim();
-
+  const nombre =
+    prompt(
+      "Nombre del nuevo lote:",
+      "Lote " + (db.lotes.length+1)
+    );
 
   if(!nombre){
-
-    alert("Escribe el nombre del lote.");
-
     return;
-
   }
-
 
   const lote={
 
-    id:generarId(),
+    id:crearId(),
 
     nombre:nombre,
 
-    fecha:hoy(),
+    fecha:fechaActual(),
 
     cerrado:false,
 
@@ -1289,13 +1283,148 @@ function crearLote(){
 
   db.loteActivo=lote.id;
 
+  guardar();
 
-  document.getElementById(
-    "nuevoLoteNombre"
-  ).value="";
+  actualizarTodo();
 
+}
+
+
+function cerrarLote(){
+
+  const lote=obtenerLote();
+
+  if(!lote){
+    return;
+  }
+
+  if(lote.cerrado){
+    alert("Este lote ya está cerrado.");
+    return;
+  }
+
+  if(
+    !confirm(
+      "¿Cerrar este lote? Podrás reabrirlo después."
+    )
+  ){
+    return;
+  }
+
+  lote.cerrado=true;
 
   guardar();
+
+  actualizarTodo();
+
+}
+
+
+function reabrirLote(){
+
+  const lote=obtenerLote();
+
+  if(!lote){
+    return;
+  }
+
+  lote.cerrado=false;
+
+  guardar();
+
+  actualizarTodo();
+
+}
+
+
+function renderLotes(){
+
+  const lote=obtenerLote();
+
+  const selector =
+    document.getElementById("selectorLote");
+
+  selector.innerHTML="";
+
+
+  db.lotes.forEach(l=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=l.id;
+
+    option.textContent =
+      l.nombre +
+      (l.cerrado ? " 🔒" : " 🟢");
+
+    if(l.id===db.loteActivo){
+
+      option.selected=true;
+
+    }
+
+    selector.appendChild(option);
+
+  });
+
+
+  if(lote){
+
+    document.getElementById("loteHeader")
+      .textContent =
+      lote.nombre +
+      (lote.cerrado ? " · 🔒 Cerrado" : " · 🟢 Activo");
+
+
+    document.getElementById("detalleLote")
+      .innerHTML=`
+
+        <p><strong>Nombre:</strong> ${escapeHTML(lote.nombre)}</p>
+
+        <p><strong>Fecha:</strong>
+        ${new Date(lote.fecha).toLocaleString("es-CO")}
+        </p>
+
+        <p><strong>Estado:</strong>
+        ${lote.cerrado ? "🔒 Cerrado" : "🟢 Abierto"}
+        </p>
+
+        <p><strong>Pedidos:</strong>
+        ${lote.pedidos.length}
+        </p>
+
+      `;
+
+  }
+
+
+  document.getElementById("listaLotes")
+    .innerHTML =
+    db.lotes.map(l=>`
+
+      <div class="card" style="margin-bottom:10px">
+
+        <strong>${escapeHTML(l.nombre)}</strong>
+
+        <br>
+
+        <small>
+          ${new Date(l.fecha).toLocaleDateString("es-CO")}
+          · ${l.cerrado ? "🔒 Cerrado" : "🟢 Abierto"}
+        </small>
+
+        <br><br>
+
+        <button
+          class="btn secondary"
+          onclick="seleccionarLote('${l.id}')">
+          Abrir
+        </button>
+
+      </div>
+
+    `).join("");
 
 }
 
@@ -1306,74 +1435,22 @@ function seleccionarLote(id){
 
   guardar();
 
-}
-
-
-function cerrarLote(id){
-
-  const lote=
-    db.lotes.find(
-      l=>l.id===id
-    );
-
-
-  if(!lote)return;
-
-
-  if(
-    !confirm(
-      `¿Cerrar el lote "${lote.nombre}"?`
-    )
-  ){
-
-    return;
-
-  }
-
-
-  lote.cerrado=true;
-
-  guardar();
+  actualizarTodo();
 
 }
 
 
-function reabrirLote(id){
-
-  const lote=
-    db.lotes.find(
-      l=>l.id===id
-    );
-
-
-  if(!lote)return;
-
-
-  lote.cerrado=false;
-
-  db.loteActivo=id;
-
-  guardar();
-
-}
-
-
-/* =====================================================
+/* =========================
    INVENTARIO
-===================================================== */
+========================= */
 
 function agregarInventario(){
 
-  const lote=obtenerLoteActivo();
+  const lote=obtenerLote();
 
   if(!lote){
-
-    alert("No hay lote activo.");
-
     return;
-
   }
-
 
   if(lote.cerrado){
 
@@ -1384,23 +1461,16 @@ function agregarInventario(){
   }
 
 
-  const pack=
-    Number(
-      document.getElementById(
-        "inventarioPack"
-      ).value
+  const tipo =
+    document.getElementById("invTipoAgregar").value;
+
+  const cantidad =
+    parseInt(
+      document.getElementById("invCantidadAgregar").value
     );
 
 
-  const cantidad=
-    Number(
-      document.getElementById(
-        "inventarioCantidad"
-      ).value
-    );
-
-
-  if(cantidad<=0){
+  if(!cantidad || cantidad<1){
 
     alert("Cantidad inválida.");
 
@@ -1409,22 +1479,22 @@ function agregarInventario(){
   }
 
 
-  lote.inventario[
-    pack===5 ? "x5" : "x7"
-  ] += cantidad;
-
+  lote.inventario[tipo]+=cantidad;
 
   guardar();
+
+  actualizarTodo();
 
 }
 
 
-function quitarInventario(){
+function retirarInventario(){
 
-  const lote=obtenerLoteActivo();
+  const lote=obtenerLote();
 
-  if(!lote)return;
-
+  if(!lote){
+    return;
+  }
 
   if(lote.cerrado){
 
@@ -1435,156 +1505,120 @@ function quitarInventario(){
   }
 
 
-  const pack=
-    Number(
-      document.getElementById(
-        "inventarioPack"
-      ).value
+  const tipo =
+    document.getElementById("invTipoRetirar").value;
+
+  const cantidad =
+    parseInt(
+      document.getElementById("invCantidadRetirar").value
     );
 
 
-  const cantidad=
-    Number(
-      document.getElementById(
-        "inventarioCantidad"
-      ).value
-    );
+  if(!cantidad || cantidad<1){
 
-
-  const key=
-    pack===5 ? "x5" : "x7";
-
-
-  if(
-    cantidad >
-    lote.inventario[key]
-  ){
-
-    alert("No puedes quitar más inventario del disponible.");
+    alert("Cantidad inválida.");
 
     return;
 
   }
 
 
-  lote.inventario[key]-=cantidad;
+  if(lote.inventario[tipo]<cantidad){
+
+    alert("No hay suficiente inventario.");
+
+    return;
+
+  }
+
+
+  lote.inventario[tipo]-=cantidad;
 
   guardar();
+
+  actualizarTodo();
 
 }
 
 
-/* =====================================================
+/* =========================
    PEDIDOS
-===================================================== */
+========================= */
 
 function actualizarPrecioPedido(){
 
-  const pack=
-    Number(
-      document.getElementById(
-        "pedidoPack"
-      ).value
-    );
+  const pack =
+    document.getElementById("pedidoPack").value;
 
-
-  const cantidad=
-    Number(
-      document.getElementById(
-        "pedidoCantidad"
-      ).value
+  const cantidad =
+    parseInt(
+      document.getElementById("pedidoCantidad").value
     ) || 1;
 
 
-  const precio=
-    pack===5
+  const precio =
+    pack==="x5"
       ? PRECIO_X5
       : PRECIO_X7;
 
 
-  document.getElementById(
-    "pedidoPrecioInfo"
-  ).textContent=
-    `Total: ${dinero(precio*cantidad)}`;
+  document.getElementById("pedidoTotal")
+    .textContent =
+    dinero(precio*cantidad);
 
 }
 
 
-document.getElementById(
-  "pedidoCantidad"
-).addEventListener(
-  "input",
-  actualizarPrecioPedido
-);
+document
+  .getElementById("pedidoCantidad")
+  .addEventListener(
+    "input",
+    actualizarPrecioPedido
+  );
 
 
 function crearPedido(){
 
-  const lote=obtenerLoteActivo();
-
+  const lote=obtenerLote();
 
   if(!lote){
-
-    alert("No hay lote activo.");
-
     return;
-
   }
-
 
   if(lote.cerrado){
 
-    alert("El lote está cerrado.");
+    alert("Este lote está cerrado.");
 
     return;
 
   }
 
 
-  const cliente=
-    document.getElementById(
-      "pedidoCliente"
-    ).value.trim();
+  const cliente =
+    document.getElementById("pedidoCliente")
+      .value.trim();
 
+  const telefono =
+    document.getElementById("pedidoTelefono")
+      .value.trim();
 
-  const telefono=
-    document.getElementById(
-      "pedidoTelefono"
-    ).value.trim();
+  const direccion =
+    document.getElementById("pedidoDireccion")
+      .value.trim();
 
+  const pack =
+    document.getElementById("pedidoPack").value;
 
-  const direccion=
-    document.getElementById(
-      "pedidoDireccion"
-    ).value.trim();
-
-
-  const pack=
-    Number(
-      document.getElementById(
-        "pedidoPack"
-      ).value
+  const cantidad =
+    parseInt(
+      document.getElementById("pedidoCantidad").value
     );
 
+  const pago =
+    document.getElementById("pedidoPago").value;
 
-  const cantidad=
-    Number(
-      document.getElementById(
-        "pedidoCantidad"
-      ).value
-    );
-
-
-  const pago=
-    document.getElementById(
-      "pedidoPago"
-    ).value;
-
-
-  const estado=
-    document.getElementById(
-      "pedidoEstado"
-    ).value;
+  const estado =
+    document.getElementById("pedidoEstado").value;
 
 
   if(!cliente){
@@ -1596,26 +1630,21 @@ function crearPedido(){
   }
 
 
-  if(!cantidad || cantidad<=0){
+  if(!cantidad || cantidad<1){
 
-    alert("Cantidad inválida.");
+    alert("La cantidad debe ser mayor que cero.");
 
     return;
 
   }
 
 
-  const key=
-    pack===5 ? "x5" : "x7";
-
-
-  if(
-    lote.inventario[key] <
-    cantidad
-  ){
+  if(lote.inventario[pack]<cantidad){
 
     alert(
-      `No hay suficiente inventario para ${cantidad} pack(s) x${pack}.`
+      "No hay suficiente inventario de " +
+      pack.toUpperCase() +
+      "."
     );
 
     return;
@@ -1623,154 +1652,144 @@ function crearPedido(){
   }
 
 
-  const precioUnitario=
-    pack===5
+  const precioUnitario =
+    pack==="x5"
       ? PRECIO_X5
       : PRECIO_X7;
 
 
+  const total =
+    precioUnitario*cantidad;
+
+
+  lote.inventario[pack]-=cantidad;
+
+
   const pedido={
 
-    id:generarId(),
+    id:crearId(),
 
-    fecha:hoy(),
+    fecha:fechaActual(),
 
-    cliente,
+    cliente:cliente,
 
-    telefono,
+    telefono:telefono,
 
-    direccion,
+    direccion:direccion,
 
-    pack,
+    pack:pack,
 
-    cantidad,
+    cantidad:cantidad,
 
-    precioUnitario,
+    precioUnitario:precioUnitario,
 
-    total:
-      precioUnitario*cantidad,
+    total:total,
 
-    pago,
+    pago:pago,
 
-    estado,
+    estado:estado,
 
     inventarioDescontado:true
 
   };
 
 
-  lote.inventario[key]-=cantidad;
-
   lote.pedidos.push(pedido);
 
 
-  limpiarFormularioPedido();
+  document.getElementById("pedidoCliente").value="";
+  document.getElementById("pedidoTelefono").value="";
+  document.getElementById("pedidoDireccion").value="";
+  document.getElementById("pedidoCantidad").value=1;
+  document.getElementById("pedidoPago").value="Pendiente";
+  document.getElementById("pedidoEstado").value="Pendiente";
+
 
   guardar();
 
-}
+  actualizarTodo();
 
-
-function limpiarFormularioPedido(){
-
-  document.getElementById(
-    "pedidoCliente"
-  ).value="";
-
-  document.getElementById(
-    "pedidoTelefono"
-  ).value="";
-
-  document.getElementById(
-    "pedidoDireccion"
-  ).value="";
-
-  document.getElementById(
-    "pedidoCantidad"
-  ).value=1;
-
-  document.getElementById(
-    "pedidoPago"
-  ).value="Pendiente";
-
-  document.getElementById(
-    "pedidoEstado"
-  ).value="Pendiente";
-
-  actualizarPrecioPedido();
+  alert("Pedido registrado correctamente.");
 
 }
 
 
-function cambiarPago(id,valor){
+function cambiarPago(id, valor){
 
-  const lote=obtenerLoteActivo();
+  const lote=obtenerLote();
 
-  if(!lote)return;
-
-
-  const pedido=
+  const pedido =
     lote.pedidos.find(
       p=>p.id===id
     );
 
-
-  if(!pedido)return;
-
+  if(!pedido){
+    return;
+  }
 
   if(lote.cerrado){
 
     alert("El lote está cerrado.");
 
+    actualizarTodo();
+
     return;
 
   }
-
 
   pedido.pago=valor;
 
   guardar();
 
+  actualizarTodo();
+
 }
 
 
-function cambiarEstado(id,valor){
+function cambiarEstado(id, valor){
 
-  const lote=obtenerLoteActivo();
+  const lote=obtenerLote();
 
-  if(!lote)return;
-
-
-  const pedido=
+  const pedido =
     lote.pedidos.find(
       p=>p.id===id
     );
 
-
-  if(!pedido)return;
-
+  if(!pedido){
+    return;
+  }
 
   if(lote.cerrado){
 
     alert("El lote está cerrado.");
 
+    actualizarTodo();
+
     return;
 
   }
 
-
   pedido.estado=valor;
 
   guardar();
+
+  actualizarTodo();
 
 }
 
 
 function eliminarPedido(id){
 
-  const lote=obtenerLoteActivo();
+  const lote=obtenerLote();
 
-  if(!lote)return;
+  const pedido =
+    lote.pedidos.find(
+      p=>p.id===id
+    );
+
+  if(!pedido){
+    return;
+  }
 
 
   if(lote.cerrado){
@@ -1782,22 +1801,9 @@ function eliminarPedido(id){
   }
 
 
-  const indice=
-    lote.pedidos.findIndex(
-      p=>p.id===id
-    );
-
-
-  if(indice===-1)return;
-
-
-  const pedido=
-    lote.pedidos[indice];
-
-
   if(
     !confirm(
-      "¿Eliminar este pedido y devolver el inventario?"
+      "¿Eliminar este pedido? El inventario será devuelto."
     )
   ){
 
@@ -1806,44 +1812,319 @@ function eliminarPedido(id){
   }
 
 
-  if(pedido.inventarioDescontado){
+  if(
+    pedido.inventarioDescontado
+  ){
 
-    const key=
-      pedido.pack===5
-        ? "x5"
-        : "x7";
-
-
-    lote.inventario[key]
+    lote.inventario[pedido.pack]
       += pedido.cantidad;
-
-
-    pedido.inventarioDescontado=false;
 
   }
 
 
-  lote.pedidos.splice(
-    indice,
-    1
-  );
+  lote.pedidos =
+    lote.pedidos.filter(
+      p=>p.id!==id
+    );
 
 
   guardar();
 
+  actualizarTodo();
+
 }
 
 
-/* =====================================================
-   GASTOS
-===================================================== */
+function renderPedidos(){
 
-function agregarGasto(){
+  const lote=obtenerLote();
 
-  const lote=obtenerLoteActivo();
+  const tbody =
+    document.getElementById("tablaPedidos");
 
-  if(!lote)return;
+  if(!lote || !lote.pedidos.length){
 
+    tbody.innerHTML=`
+
+      <tr>
+        <td colspan="8" class="empty">
+          No hay pedidos registrados.
+        </td>
+      </tr>
+
+    `;
+
+    return;
+
+  }
+
+
+  tbody.innerHTML =
+    lote.pedidos.map(p=>`
+
+      <tr>
+
+        <td>
+          ${new Date(p.fecha).toLocaleDateString("es-CO")}
+        </td>
+
+        <td>
+          <strong>${escapeHTML(p.cliente)}</strong>
+          <br>
+          <small>${escapeHTML(p.telefono || "")}</small>
+        </td>
+
+        <td>${p.pack.toUpperCase()}</td>
+
+        <td>${p.cantidad}</td>
+
+        <td class="money">${dinero(p.total)}</td>
+
+        <td>
+
+          <select
+            onchange="cambiarPago('${p.id}',this.value)">
+
+            <option
+              value="Pendiente"
+              ${p.pago==="Pendiente"?"selected":""}>
+              Pendiente
+            </option>
+
+            <option
+              value="Pagado"
+              ${p.pago==="Pagado"?"selected":""}>
+              Pagado
+            </option>
+
+          </select>
+
+        </td>
+
+        <td>
+
+          <select
+            onchange="cambiarEstado('${p.id}',this.value)">
+
+            <option
+              value="Pendiente"
+              ${p.estado==="Pendiente"?"selected":""}>
+              Pendiente
+            </option>
+
+            <option
+              value="Pagado"
+              ${p.estado==="Pagado"?"selected":""}>
+              Pagado
+            </option>
+
+            <option
+              value="Entregado"
+              ${p.estado==="Entregado"?"selected":""}>
+              Entregado
+            </option>
+
+          </select>
+
+        </td>
+
+        <td>
+
+          <button
+            class="btn danger"
+            onclick="eliminarPedido('${p.id}')">
+            Eliminar
+          </button>
+
+        </td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+/* =========================
+   CLIENTES
+========================= */
+
+function renderClientes(){
+
+  const mapa={};
+
+  db.lotes.forEach(lote=>{
+
+    lote.pedidos.forEach(p=>{
+
+      const key =
+        (p.telefono || p.cliente)
+          .toLowerCase();
+
+      if(!mapa[key]){
+
+        mapa[key]={
+
+          cliente:p.cliente,
+
+          telefono:p.telefono || "",
+
+          direccion:p.direccion || "",
+
+          pedidos:0,
+
+          compras:0,
+
+          pendiente:0
+
+        };
+
+      }
+
+
+      mapa[key].pedidos++;
+
+      mapa[key].compras+=p.total;
+
+
+      if(p.pago!=="Pagado"){
+
+        mapa[key].pendiente+=p.total;
+
+      }
+
+    });
+
+  });
+
+
+  const clientes =
+    Object.values(mapa);
+
+
+  const tbody =
+    document.getElementById("tablaClientes");
+
+
+  if(!clientes.length){
+
+    tbody.innerHTML=`
+
+      <tr>
+        <td colspan="6" class="empty">
+          No hay clientes registrados.
+        </td>
+      </tr>
+
+    `;
+
+    return;
+
+  }
+
+
+  tbody.innerHTML =
+    clientes.map(c=>`
+
+      <tr>
+
+        <td>${escapeHTML(c.cliente)}</td>
+
+        <td>${escapeHTML(c.telefono)}</td>
+
+        <td>${escapeHTML(c.direccion)}</td>
+
+        <td>${c.pedidos}</td>
+
+        <td class="money">${dinero(c.compras)}</td>
+
+        <td class="money">${dinero(c.pendiente)}</td>
+
+      </tr>
+
+    `).join("");
+
+}
+
+
+/* =========================
+   FINANZAS
+========================= */
+
+function calcularLote(lote){
+
+  let ventas=0;
+
+  let costos=0;
+
+  let pendiente=0;
+
+
+  lote.pedidos.forEach(p=>{
+
+    ventas+=p.total;
+
+
+    const costoUnitario =
+      p.pack==="x5"
+        ? COSTO_X5
+        : COSTO_X7;
+
+
+    costos+=
+      costoUnitario*p.cantidad;
+
+
+    if(p.pago!=="Pagado"){
+
+      pendiente+=p.total;
+
+    }
+
+  });
+
+
+  const gastos =
+    lote.gastos.reduce(
+      (s,g)=>s+(Number(g.valor)||0),
+      0
+    );
+
+
+  const bruta =
+    ventas-costos;
+
+
+  const neta =
+    bruta-gastos;
+
+
+  return {
+
+    ventas,
+
+    costos,
+
+    gastos,
+
+    bruta,
+
+    neta,
+
+    pendiente
+
+  };
+
+}
+
+
+function crearGasto(){
+
+  const lote=obtenerLote();
+
+  if(!lote){
+    return;
+  }
 
   if(lote.cerrado){
 
@@ -1854,30 +2135,26 @@ function agregarGasto(){
   }
 
 
-  const concepto=
-    document.getElementById(
-      "gastoConcepto"
-    ).value.trim();
+  const descripcion =
+    document.getElementById("gastoDescripcion")
+      .value.trim();
 
-
-  const valor=
+  const valor =
     Number(
-      document.getElementById(
-        "gastoValor"
-      ).value
+      document.getElementById("gastoValor").value
     );
 
 
-  if(!concepto){
+  if(!descripcion){
 
-    alert("Escribe el concepto.");
+    alert("Escribe una descripción.");
 
     return;
 
   }
 
 
-  if(!valor || valor<=0){
+  if(!valor || valor<0){
 
     alert("Valor inválido.");
 
@@ -1888,38 +2165,31 @@ function agregarGasto(){
 
   lote.gastos.push({
 
-    id:generarId(),
+    id:crearId(),
 
-    fecha:hoy(),
+    fecha:fechaActual(),
 
-    concepto,
+    descripcion:descripcion,
 
-    valor
+    valor:valor
 
   });
 
 
-  document.getElementById(
-    "gastoConcepto"
-  ).value="";
-
-
-  document.getElementById(
-    "gastoValor"
-  ).value="";
+  document.getElementById("gastoDescripcion").value="";
+  document.getElementById("gastoValor").value="";
 
 
   guardar();
+
+  actualizarTodo();
 
 }
 
 
 function eliminarGasto(id){
 
-  const lote=obtenerLoteActivo();
-
-  if(!lote)return;
-
+  const lote=obtenerLote();
 
   if(lote.cerrado){
 
@@ -1930,7 +2200,7 @@ function eliminarGasto(id){
   }
 
 
-  lote.gastos=
+  lote.gastos =
     lote.gastos.filter(
       g=>g.id!==id
     );
@@ -1938,852 +2208,163 @@ function eliminarGasto(id){
 
   guardar();
 
-}
-
-
-/* =====================================================
-   FINANZAS
-===================================================== */
-
-function calcularFinanzas(lote){
-
-  let ventas=0;
-
-  let costos=0;
-
-  let pendientes=0;
-
-
-  lote.pedidos.forEach(p=>{
-
-    ventas+=Number(p.total)||0;
-
-
-    if(
-      p.pago!=="Pagado"
-    ){
-
-      pendientes+=
-        Number(p.total)||0;
-
-    }
-
-
-    const costoUnitario=
-      p.pack===5
-        ? COSTO_X5
-        : COSTO_X7;
-
-
-    costos +=
-      costoUnitario*
-      p.cantidad;
-
-  });
-
-
-  const gastos=
-    lote.gastos.reduce(
-      (sum,g)=>
-        sum+(Number(g.valor)||0),
-      0
-    );
-
-
-  const gananciaBruta=
-    ventas-costos;
-
-
-  const gananciaNeta=
-    gananciaBruta-gastos;
-
-
-  return{
-
-    ventas,
-
-    costos,
-
-    gastos,
-
-    gananciaBruta,
-
-    gananciaNeta,
-
-    pendientes
-
-  };
+  actualizarTodo();
 
 }
 
 
-/* =====================================================
-   CLIENTES
-===================================================== */
+function renderFinanzas(){
 
-function obtenerClientes(){
+  const lote=obtenerLote();
 
-  const mapa={};
+  const f=calcularLote(lote);
 
 
-  db.lotes.forEach(lote=>{
+  document.getElementById("finVentas")
+    .textContent=dinero(f.ventas);
 
-    lote.pedidos.forEach(p=>{
+  document.getElementById("finCostos")
+    .textContent=dinero(f.costos);
 
-      const key=
-        (p.telefono || p.cliente)
-        .trim()
-        .toLowerCase();
+  document.getElementById("finBruta")
+    .textContent=dinero(f.bruta);
 
+  document.getElementById("finGastos")
+    .textContent=dinero(f.gastos);
 
-      if(!key)return;
+  document.getElementById("finNeta")
+    .textContent=dinero(f.neta);
 
-
-      if(!mapa[key]){
-
-        mapa[key]={
-
-          nombre:p.cliente,
-
-          telefono:p.telefono,
-
-          direccion:p.direccion,
-
-          pedidos:0,
-
-          total:0
-
-        };
-
-      }
+  document.getElementById("finPendiente")
+    .textContent=dinero(f.pendiente);
 
 
-      mapa[key].pedidos++;
-
-      mapa[key].total+=
-        Number(p.total)||0;
+  const tbody =
+    document.getElementById("tablaGastos");
 
 
-      if(p.direccion){
+  if(!lote.gastos.length){
 
-        mapa[key].direccion=
-          p.direccion;
+    tbody.innerHTML=`
 
-      }
+      <tr>
+        <td colspan="4" class="empty">
+          No hay gastos registrados.
+        </td>
+      </tr>
 
-    });
-
-  });
-
-
-  return Object.values(mapa);
-
-}
-
-
-/* =====================================================
-   ACTUALIZACIÓN DE INTERFAZ
-===================================================== */
-
-function actualizarTodo(){
-
-  actualizarInicio();
-
-  actualizarLotes();
-
-  actualizarPedidos();
-
-  actualizarInventario();
-
-  actualizarClientes();
-
-  actualizarFinanzas();
-
-  actualizarGeneral();
-
-}
-
-
-/* =====================================================
-   INICIO
-===================================================== */
-
-function actualizarInicio(){
-
-  const lote=obtenerLoteActivo();
-
-
-  if(!lote){
-
-    document.getElementById(
-      "inicioLote"
-    ).innerHTML=
-      "<p>No hay lote activo.</p>";
+    `;
 
     return;
 
   }
 
 
-  const f=
-    calcularFinanzas(lote);
+  tbody.innerHTML =
+    lote.gastos.map(g=>`
 
+      <tr>
 
-  document.getElementById(
-    "inicioLote"
-  ).innerHTML=`
+        <td>
+          ${new Date(g.fecha).toLocaleDateString("es-CO")}
+        </td>
 
-    <h3>${lote.nombre}</h3>
+        <td>
+          ${escapeHTML(g.descripcion)}
+        </td>
 
-    <p>
-      Estado:
-      ${
-        lote.cerrado
-          ? '<span class="badge">🔒 Cerrado</span>'
-          : '<span class="badge">🟢 Abierto</span>'
-      }
-    </p>
+        <td class="money">
+          ${dinero(g.valor)}
+        </td>
 
-    <p class="muted">
-      Creado:
-      ${new Date(lote.fecha).toLocaleString("es-CO")}
-    </p>
-
-  `;
-
-
-  document.getElementById(
-    "statPedidos"
-  ).textContent=
-    lote.pedidos.length;
-
-
-  document.getElementById(
-    "statVentas"
-  ).textContent=
-    dinero(f.ventas);
-
-
-  document.getElementById(
-    "statPendiente"
-  ).textContent=
-    dinero(f.pendientes);
-
-
-  document.getElementById(
-    "statGanancia"
-  ).textContent=
-    dinero(f.gananciaNeta);
-
-}
-
-
-/* =====================================================
-   LOTES UI
-===================================================== */
-
-function actualizarLotes(){
-
-  const lote=obtenerLoteActivo();
-
-
-  document.getElementById(
-    "loteActivoInfo"
-  ).innerHTML=
-    lote
-      ? `
-
-        <h3>${lote.nombre}</h3>
-
-        <p>
-          ${
-            lote.cerrado
-              ? "🔒 Lote cerrado"
-              : "🟢 Lote abierto"
-          }
-        </p>
-
-        <p>
-          Inventario x5:
-          <strong>${lote.inventario.x5}</strong>
-        </p>
-
-        <p>
-          Inventario x7:
-          <strong>${lote.inventario.x7}</strong>
-        </p>
-
-      `
-      : "No hay lote activo.";
-
-
-  document.getElementById(
-    "listaLotes"
-  ).innerHTML=
-
-    db.lotes.map(l=>`
-
-      <div class="card">
-
-        <strong>${l.nombre}</strong>
-
-        <p class="small muted">
-          ${new Date(l.fecha).toLocaleDateString("es-CO")}
-        </p>
-
-        <p>
-          ${
-            l.cerrado
-              ? "🔒 Cerrado"
-              : "🟢 Abierto"
-          }
-        </p>
-
-        <div class="actions">
+        <td>
 
           <button
-            onclick="seleccionarLote('${l.id}')"
-          >
-            Seleccionar
+            class="btn danger"
+            onclick="eliminarGasto('${g.id}')">
+            Eliminar
           </button>
 
-          ${
-            l.cerrado
+        </td>
 
-            ? `
-
-              <button
-                class="warning"
-                onclick="reabrirLote('${l.id}')"
-              >
-                🔓 Reabrir
-              </button>
-
-            `
-
-            : `
-
-              <button
-                class="secondary"
-                onclick="cerrarLote('${l.id}')"
-              >
-                🔒 Cerrar
-              </button>
-
-            `
-          }
-
-        </div>
-
-      </div>
+      </tr>
 
     `).join("");
 
 }
 
 
-/* =====================================================
-   PEDIDOS UI
-===================================================== */
+/* =========================
+   INICIO
+========================= */
 
-function actualizarPedidos(){
+function renderInicio(){
 
-  const lote=obtenerLoteActivo();
+  const lote=obtenerLote();
 
-
-  if(!lote){
-
-    document.getElementById(
-      "listaPedidos"
-    ).innerHTML=
-      "No hay lote activo.";
-
-    return;
-
-  }
+  const f=calcularLote(lote);
 
 
-  if(!lote.pedidos.length){
+  document.getElementById("inicioLote")
+    .innerHTML=`
 
-    document.getElementById(
-      "listaPedidos"
-    ).innerHTML=
-      "<p>No hay pedidos registrados.</p>";
+      <strong>${escapeHTML(lote.nombre)}</strong>
 
-    return;
+      <br>
 
-  }
+      Estado:
+      ${lote.cerrado ? "🔒 Cerrado" : "🟢 Activo"}
+
+    `;
 
 
-  document.getElementById(
-    "listaPedidos"
-  ).innerHTML=`
+  document.getElementById("statVentas")
+    .textContent=dinero(f.ventas);
 
-    <div style="overflow-x:auto">
+  document.getElementById("statBruta")
+    .textContent=dinero(f.bruta);
 
-    <table>
+  document.getElementById("statNeta")
+    .textContent=dinero(f.neta);
 
-      <thead>
+  document.getElementById("statPendiente")
+    .textContent=dinero(f.pendiente);
 
-        <tr>
 
-          <th>Cliente</th>
-          <th>Pack</th>
-          <th>Cant.</th>
-          <th>Total</th>
-          <th>Pago</th>
-          <th>Estado</th>
-          <th>Acciones</th>
+  document.getElementById("statX5")
+    .textContent=lote.inventario.x5;
 
-        </tr>
+  document.getElementById("statX7")
+    .textContent=lote.inventario.x7;
 
-      </thead>
+  document.getElementById("inventarioX5")
+    .textContent=lote.inventario.x5;
 
-      <tbody>
+  document.getElementById("inventarioX7")
+    .textContent=lote.inventario.x7;
 
-      ${
-        lote.pedidos.map(p=>`
 
-          <tr>
+  document.getElementById("statPedidos")
+    .textContent=lote.pedidos.length;
 
-            <td>
 
-              <strong>${p.cliente}</strong>
+  const reservados =
+    lote.pedidos.filter(
+      p=>p.estado!=="Entregado"
+    ).length;
 
-              <br>
 
-              <span class="small">
-                ${p.telefono || ""}
-              </span>
-
-              <br>
-
-              <span class="small">
-                ${p.direccion || ""}
-              </span>
-
-            </td>
-
-            <td>
-              x${p.pack}
-            </td>
-
-            <td>
-              ${p.cantidad}
-            </td>
-
-            <td>
-              ${dinero(p.total)}
-            </td>
-
-            <td>
-
-              <select
-                onchange="
-                  cambiarPago(
-                    '${p.id}',
-                    this.value
-                  )
-                "
-                ${lote.cerrado ? "disabled":""}
-              >
-
-                <option
-                  ${p.pago==="Pendiente"?"selected":""}
-                >
-                  Pendiente
-                </option>
-
-                <option
-                  ${p.pago==="Pagado"?"selected":""}
-                >
-                  Pagado
-                </option>
-
-              </select>
-
-            </td>
-
-            <td>
-
-              <select
-                onchange="
-                  cambiarEstado(
-                    '${p.id}',
-                    this.value
-                  )
-                "
-                ${lote.cerrado ? "disabled":""}
-              >
-
-                <option
-                  ${p.estado==="Pendiente"?"selected":""}
-                >
-                  Pendiente
-                </option>
-
-                <option
-                  ${p.estado==="Entregado"?"selected":""}
-                >
-                  Entregado
-                </option>
-
-              </select>
-
-            </td>
-
-            <td>
-
-              <button
-                class="danger"
-                onclick="
-                  eliminarPedido('${p.id}')
-                "
-                ${lote.cerrado ? "disabled":""}
-              >
-                🗑️
-              </button>
-
-            </td>
-
-          </tr>
-
-        `).join("")
-      }
-
-      </tbody>
-
-    </table>
-
-    </div>
-
-  `;
+  document.getElementById("statReservados")
+    .textContent=reservados;
 
 }
 
 
-/* =====================================================
-   INVENTARIO UI
-===================================================== */
-
-function actualizarInventario(){
-
-  const lote=obtenerLoteActivo();
-
-
-  if(!lote){
-
-    document.getElementById(
-      "inventarioInfo"
-    ).innerHTML=
-      "No hay lote activo.";
-
-    return;
-
-  }
-
-
-  const totalX5=
-    lote.inventario.x5;
-
-  const totalX7=
-    lote.inventario.x7;
-
-
-  document.getElementById(
-    "inventarioInfo"
-  ).innerHTML=`
-
-    <div class="grid">
-
-      <div class="stat">
-
-        <span>Pack x5 disponible</span>
-
-        <strong>
-          ${totalX5}
-        </strong>
-
-      </div>
-
-      <div class="stat">
-
-        <span>Pack x7 disponible</span>
-
-        <strong>
-          ${totalX7}
-        </strong>
-
-      </div>
-
-      <div class="stat">
-
-        <span>Chorizos disponibles</span>
-
-        <strong>
-          ${(totalX5*5)+(totalX7*7)}
-        </strong>
-
-      </div>
-
-    </div>
-
-    <p class="muted small">
-      Los pedidos descuentan inventario inmediatamente.
-      Al eliminar un pedido, el inventario se devuelve.
-    </p>
-
-  `;
-
-}
-
-
-/* =====================================================
-   CLIENTES UI
-===================================================== */
-
-function actualizarClientes(){
-
-  const clientes=
-    obtenerClientes();
-
-
-  if(!clientes.length){
-
-    document.getElementById(
-      "listaClientes"
-    ).innerHTML=
-      "<p>Aún no hay clientes.</p>";
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "listaClientes"
-  ).innerHTML=`
-
-    <div style="overflow-x:auto">
-
-    <table>
-
-      <thead>
-
-        <tr>
-
-          <th>Cliente</th>
-          <th>Teléfono</th>
-          <th>Dirección</th>
-          <th>Pedidos</th>
-          <th>Total</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-      ${
-        clientes.map(c=>`
-
-          <tr>
-
-            <td>
-              ${c.nombre}
-            </td>
-
-            <td>
-              ${c.telefono || ""}
-            </td>
-
-            <td>
-              ${c.direccion || ""}
-            </td>
-
-            <td>
-              ${c.pedidos}
-            </td>
-
-            <td>
-              ${dinero(c.total)}
-            </td>
-
-          </tr>
-
-        `).join("")
-      }
-
-      </tbody>
-
-    </table>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   FINANZAS UI
-===================================================== */
-
-function actualizarFinanzas(){
-
-  const lote=obtenerLoteActivo();
-
-
-  if(!lote){
-
-    document.getElementById(
-      "finanzasInfo"
-    ).innerHTML=
-      "No hay lote activo.";
-
-    return;
-
-  }
-
-
-  const f=
-    calcularFinanzas(lote);
-
-
-  document.getElementById(
-    "finanzasInfo"
-  ).innerHTML=`
-
-    <div class="grid">
-
-      <div class="stat">
-        Ventas
-        <strong>
-          ${dinero(f.ventas)}
-        </strong>
-      </div>
-
-      <div class="stat">
-        Costo de producto
-        <strong>
-          ${dinero(f.costos)}
-        </strong>
-      </div>
-
-      <div class="stat">
-        Ganancia bruta
-        <strong>
-          ${dinero(f.gananciaBruta)}
-        </strong>
-      </div>
-
-      <div class="stat">
-        Gastos
-        <strong>
-          ${dinero(f.gastos)}
-        </strong>
-      </div>
-
-      <div class="stat">
-        Ganancia neta
-        <strong>
-          ${dinero(f.gananciaNeta)}
-        </strong>
-      </div>
-
-      <div class="stat">
-        Dinero pendiente
-        <strong>
-          ${dinero(f.pendientes)}
-        </strong>
-      </div>
-
-    </div>
-
-  `;
-
-
-  document.getElementById(
-    "listaGastos"
-  ).innerHTML=
-
-    lote.gastos.length
-
-      ? `
-
-        <div style="overflow-x:auto">
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>Fecha</th>
-              <th>Concepto</th>
-              <th>Valor</th>
-              <th></th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-          ${
-            lote.gastos.map(g=>`
-
-              <tr>
-
-                <td>
-                  ${new Date(g.fecha).toLocaleDateString("es-CO")}
-                </td>
-
-                <td>
-                  ${g.concepto}
-                </td>
-
-                <td>
-                  ${dinero(g.valor)}
-                </td>
-
-                <td>
-
-                  <button
-                    class="danger"
-                    onclick="
-                      eliminarGasto('${g.id}')
-                    "
-                    ${lote.cerrado ? "disabled":""}
-                  >
-                    🗑️
-                  </button>
-
-                </td>
-
-              </tr>
-
-            `).join("")
-          }
-
-          </tbody>
-
-        </table>
-
-        </div>
-
-      `
-
-      : "<p>No hay gastos registrados.</p>";
-
-}
-
-
-/* =====================================================
+/* =========================
    GENERAL
-===================================================== */
+========================= */
 
-function actualizarGeneral(){
+function renderGeneral(){
 
   let ventas=0;
 
@@ -2793,14 +2374,10 @@ function actualizarGeneral(){
 
   let pedidos=0;
 
-  let pendientes=0;
 
+  db.lotes.forEach(l=>{
 
-  db.lotes.forEach(lote=>{
-
-    const f=
-      calcularFinanzas(lote);
-
+    const f=calcularLote(l);
 
     ventas+=f.ventas;
 
@@ -2808,97 +2385,79 @@ function actualizarGeneral(){
 
     gastos+=f.gastos;
 
-    pedidos+=lote.pedidos.length;
-
-    pendientes+=f.pendientes;
+    pedidos+=l.pedidos.length;
 
   });
 
 
-  const bruta=
-    ventas-costos;
+  const neta =
+    ventas-costos-gastos;
 
 
-  const neta=
-    bruta-gastos;
+  document.getElementById("generalVentas")
+    .textContent=dinero(ventas);
+
+  document.getElementById("generalCostos")
+    .textContent=dinero(costos);
+
+  document.getElementById("generalGastos")
+    .textContent=dinero(gastos);
+
+  document.getElementById("generalNeta")
+    .textContent=dinero(neta);
+
+  document.getElementById("generalPedidos")
+    .textContent=pedidos;
+
+  document.getElementById("generalLotes")
+    .textContent=db.lotes.length;
 
 
-  document.getElementById(
-    "resumenGeneral"
-  ).innerHTML=`
+  const tbody =
+    document.getElementById("tablaGeneralLotes");
 
-    <div class="grid">
 
-      <div class="stat">
-        Lotes
-        <strong>
-          ${db.lotes.length}
-        </strong>
-      </div>
+  tbody.innerHTML =
+    db.lotes.map(l=>{
 
-      <div class="stat">
-        Pedidos
-        <strong>
-          ${pedidos}
-        </strong>
-      </div>
+      const f=calcularLote(l);
 
-      <div class="stat">
-        Ventas
-        <strong>
-          ${dinero(ventas)}
-        </strong>
-      </div>
+      return `
 
-      <div class="stat">
-        Costos
-        <strong>
-          ${dinero(costos)}
-        </strong>
-      </div>
+        <tr>
 
-      <div class="stat">
-        Ganancia bruta
-        <strong>
-          ${dinero(bruta)}
-        </strong>
-      </div>
+          <td>${escapeHTML(l.nombre)}</td>
 
-      <div class="stat">
-        Gastos
-        <strong>
-          ${dinero(gastos)}
-        </strong>
-      </div>
+          <td>
+            ${l.cerrado ? "🔒 Cerrado" : "🟢 Abierto"}
+          </td>
 
-      <div class="stat">
-        Ganancia neta
-        <strong>
-          ${dinero(neta)}
-        </strong>
-      </div>
+          <td>${l.pedidos.length}</td>
 
-      <div class="stat">
-        Pendiente de pago
-        <strong>
-          ${dinero(pendientes)}
-        </strong>
-      </div>
+          <td class="money">${dinero(f.ventas)}</td>
 
-    </div>
+          <td class="money">${dinero(f.costos)}</td>
 
-  `;
+          <td class="money">${dinero(f.gastos)}</td>
+
+          <td class="money">${dinero(f.neta)}</td>
+
+        </tr>
+
+      `;
+
+    }).join("");
 
 }
 
 
-/* =====================================================
-   EXPORTAR
-===================================================== */
+/* =========================
+   DATOS
+========================= */
 
 function exportarDatos(){
 
-  const contenido=
+  const contenido =
     JSON.stringify(
       db,
       null,
@@ -2906,7 +2465,7 @@ function exportarDatos(){
     );
 
 
-  const blob=
+  const blob =
     new Blob(
       [contenido],
       {
@@ -2915,54 +2474,51 @@ function exportarDatos(){
     );
 
 
-  const url=
+  const url =
     URL.createObjectURL(blob);
 
 
-  const a=
+  const a =
     document.createElement("a");
-
 
   a.href=url;
 
-  a.download=
-    "chorizos-admin-backup.json";
+  a.download =
+    "respaldo-chorizos-admin-" +
+    new Date()
+      .toISOString()
+      .slice(0,10) +
+    ".json";
 
 
   a.click();
-
 
   URL.revokeObjectURL(url);
 
 }
 
 
-/* =====================================================
-   IMPORTAR
-===================================================== */
-
 function importarDatos(event){
 
-  const archivo=
+  const archivo =
     event.target.files[0];
 
+  if(!archivo){
+    return;
+  }
 
-  if(!archivo)return;
 
-
-  const lector=
+  const lector =
     new FileReader();
 
 
-  lector.onload=
-    function(){
+  lector.onload =
+    async function(e){
 
       try{
 
-        const datos=
-          JSON.parse(
-            lector.result
-          );
+        const datos =
+          JSON.parse(e.target.result);
 
 
         if(
@@ -2970,14 +2526,16 @@ function importarDatos(event){
           !Array.isArray(datos.lotes)
         ){
 
-          throw new Error();
+          throw new Error(
+            "Formato inválido"
+          );
 
         }
 
 
         if(
           !confirm(
-            "Esto reemplazará los datos actuales. ¿Continuar?"
+            "¿Restaurar este respaldo? Los datos actuales serán reemplazados."
           )
         ){
 
@@ -2986,21 +2544,23 @@ function importarDatos(event){
         }
 
 
-        db=
-          normalizarDB(datos);
-
+        db=normalizarDB(datos);
 
         guardar();
 
+        actualizarTodo();
 
         alert(
-          "Copia restaurada correctamente."
+          "Respaldo restaurado correctamente."
         );
 
-      }catch(e){
+
+      }catch(error){
+
+        console.error(error);
 
         alert(
-          "El archivo no es una copia válida."
+          "No se pudo restaurar el respaldo."
         );
 
       }
@@ -3013,15 +2573,11 @@ function importarDatos(event){
 }
 
 
-/* =====================================================
-   REINICIAR
-===================================================== */
-
-async function resetearAplicacion(){
+function reiniciarAplicacion(){
 
   if(
     !confirm(
-      "¿ESTÁS SEGURO? Se eliminarán los datos actuales de la nube."
+      "ATENCIÓN: esto eliminará todos los datos actuales. ¿Continuar?"
     )
   ){
 
@@ -3032,7 +2588,7 @@ async function resetearAplicacion(){
 
   if(
     !confirm(
-      "Última confirmación: esto dejará la aplicación nuevamente con Lote 1 vacío."
+      "Última confirmación: se perderán pedidos, lotes, inventario y gastos."
     )
   ){
 
@@ -3041,27 +2597,90 @@ async function resetearAplicacion(){
   }
 
 
-  db=
-    crearDBVacia();
+  db=crearDBVacia();
 
+  db.loteActivo=db.lotes[0].id;
 
   guardar();
+
+  actualizarTodo();
+
+
+  alert(
+    "Aplicación restablecida. Lote 1 está vacío."
+  );
 
 }
 
 
-/* =====================================================
-   INICIO
-===================================================== */
+/* =========================
+   HTML SEGURO
+========================= */
 
-actualizarPrecioPedido();
+function escapeHTML(text){
+
+  return String(text ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   ACTUALIZAR TODO
+========================= */
+
+function actualizarTodo(){
+
+  if(!db){
+    return;
+  }
+
+  db=normalizarDB(db);
+
+  renderLotes();
+
+  renderInicio();
+
+  renderPedidos();
+
+  renderClientes();
+
+  renderFinanzas();
+
+  renderGeneral();
+
+  actualizarPrecioPedido();
+
+}
+
+
+/* =========================
+   INICIO
+========================= */
+
+cargarLocal();
+
+if(!db){
+
+  db=crearDBVacia();
+
+  db.loteActivo=db.lotes[0].id;
+
+}
+
 
 actualizarTodo();
 
+iniciarNube();
 
-/* =====================================================
+
+/* =========================
    SERVICE WORKER
-===================================================== */
+========================= */
 
 if(
   "serviceWorker" in navigator
@@ -3074,11 +2693,12 @@ if(
       navigator.serviceWorker
         .register("./sw.js")
         .catch(
-          error=>
+          error=>{
             console.error(
               "Service Worker:",
               error
-            )
+            );
+          }
         );
 
     }
