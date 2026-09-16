@@ -8,46 +8,14 @@
 
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f3f4f6;
-  color:#111827;
-}
-header{
-  background:#111827;
-  color:white;
-  padding:18px 20px;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
+header{background:#111827;color:white;padding:18px 20px;position:sticky;top:0;z-index:10}
 header h1{margin:0;font-size:22px}
 header small{color:#d1d5db}
 
-nav{
-  display:flex;
-  gap:6px;
-  overflow-x:auto;
-  background:white;
-  padding:10px;
-  position:sticky;
-  top:70px;
-  z-index:9;
-  border-bottom:1px solid #ddd;
-}
-nav button{
-  border:0;
-  background:#e5e7eb;
-  padding:10px 14px;
-  border-radius:10px;
-  white-space:nowrap;
-  cursor:pointer;
-}
-nav button.active{
-  background:#111827;
-  color:white;
-}
+nav{display:flex;gap:6px;overflow-x:auto;background:white;padding:10px;position:sticky;top:70px;z-index:9;border-bottom:1px solid #ddd}
+nav button{border:0;background:#e5e7eb;padding:10px 14px;border-radius:10px;white-space:nowrap;cursor:pointer}
+nav button.active{background:#111827;color:white}
 
 main{padding:18px;max-width:1100px;margin:auto}
 section{display:none}
@@ -55,107 +23,40 @@ section.active{display:block}
 
 h2{margin-top:5px}
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:12px;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
 
-.card{
-  background:white;
-  padding:18px;
-  border-radius:14px;
-  box-shadow:0 2px 8px #00000010;
-}
-.card .number{
-  font-size:25px;
-  font-weight:bold;
-  margin-top:8px;
-}
+.card{background:white;padding:18px;border-radius:14px;box-shadow:0 2px 8px #00000010}
+.card .number{font-size:25px;font-weight:bold;margin-top:8px}
 
-form{
-  background:white;
-  padding:18px;
-  border-radius:14px;
-  margin-bottom:18px;
-}
+form{background:white;padding:18px;border-radius:14px;margin-bottom:18px}
 
-label{
-  display:block;
-  font-weight:bold;
-  margin-top:12px;
-  margin-bottom:5px;
-}
+label{display:block;font-weight:bold;margin-top:12px;margin-bottom:5px}
 
-input,select{
-  width:100%;
-  padding:11px;
-  border:1px solid #d1d5db;
-  border-radius:9px;
-  font-size:16px;
-}
+input,select{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:9px;font-size:16px}
 
-button.primary{
-  background:#111827;
-  color:white;
-  border:0;
-  padding:12px 18px;
-  border-radius:9px;
-  margin-top:16px;
-  cursor:pointer;
-}
+button.primary{background:#111827;color:white;border:0;padding:12px 18px;border-radius:9px;margin-top:16px;cursor:pointer}
 
-button.danger{
-  background:#dc2626;
-  color:white;
-  border:0;
-  padding:8px 12px;
-  border-radius:7px;
-  cursor:pointer;
-}
+button.danger{background:#dc2626;color:white;border:0;padding:8px 12px;border-radius:7px;cursor:pointer}
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  background:white;
-  border-radius:12px;
-  overflow:hidden;
-}
-th,td{
-  padding:11px;
-  border-bottom:1px solid #eee;
-  text-align:left;
-}
+button.secondary{background:#e5e7eb;color:#111827;border:0;padding:8px 12px;border-radius:7px;cursor:pointer}
+
+table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden}
+th,td{padding:11px;border-bottom:1px solid #eee;text-align:left}
 th{background:#f9fafb}
 
-.badge{
-  display:inline-block;
-  padding:5px 8px;
-  border-radius:20px;
-  background:#e5e7eb;
-  font-size:12px;
-}
+.badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#e5e7eb;font-size:12px}
 .green{background:#dcfce7;color:#166534}
 .yellow{background:#fef3c7;color:#92400e}
 .red{background:#fee2e2;color:#991b1b}
 
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
+.alert{background:#fee2e2;color:#991b1b;padding:12px;border-radius:10px;margin:12px 0;font-weight:bold}
 
-.info{
-  background:#eff6ff;
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:15px;
-}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
 
 @media(max-width:600px){
-  main{padding:12px}
-  table{font-size:13px}
-  th,td{padding:8px}
+main{padding:12px}
+table{font-size:13px}
+th,td{padding:8px}
 }
 </style>
 </head>
@@ -163,59 +64,55 @@ th{background:#f9fafb}
 <body>
 
 <header>
-  <h1>🌭 Chorizos Admin</h1>
-  <small>Control de pedidos, pagos, inventario y finanzas</small>
+<h1>🌭 Chorizos Admin</h1>
+<small>Control de pedidos, inventario, clientes y finanzas</small>
 </header>
 
 <nav>
-  <button onclick="mostrar('inicio')" class="active">🏠 Inicio</button>
-  <button onclick="mostrar('pedidos')">📦 Pedidos</button>
-  <button onclick="mostrar('inventario')">📊 Inventario</button>
-  <button onclick="mostrar('clientes')">👥 Clientes</button>
-  <button onclick="mostrar('finanzas')">💰 Finanzas</button>
+<button onclick="mostrar('inicio',this)" class="active">🏠 Inicio</button>
+<button onclick="mostrar('pedidos',this)">📦 Pedidos</button>
+<button onclick="mostrar('inventario',this)">📊 Inventario</button>
+<button onclick="mostrar('clientes',this)">👥 Clientes</button>
+<button onclick="mostrar('finanzas',this)">💰 Finanzas</button>
 </nav>
 
 <main>
 
 <!-- INICIO -->
 <section id="inicio" class="active">
+
 <h2>Resumen</h2>
 
 <div class="grid">
 
 <div class="card">
-  Ventas
-  <div class="number" id="ventas">$0</div>
+Ventas
+<div class="number" id="ventas">$0</div>
 </div>
 
 <div class="card">
-  Utilidad bruta
-  <div class="number" id="utilidad">$0</div>
+Utilidad bruta
+<div class="number" id="utilidad">$0</div>
 </div>
 
 <div class="card">
-  Por cobrar
-  <div class="number" id="pendiente">$0</div>
+Por cobrar
+<div class="number" id="pendiente">$0</div>
 </div>
 
 <div class="card">
-  Pedidos pendientes
-  <div class="number" id="pedidosPendientes">0</div>
+Pedidos pendientes
+<div class="number" id="pedidosPendientes">0</div>
 </div>
 
 <div class="card">
-  Inventario físico
-  <div class="number" id="stockFisico">0</div>
+Packs x5 disponibles
+<div class="number" id="inicio5">0</div>
 </div>
 
 <div class="card">
-  Reservados
-  <div class="number" id="stockReservado">0</div>
-</div>
-
-<div class="card">
-  Disponibles
-  <div class="number" id="stockDisponible">0</div>
+Packs x7 disponibles
+<div class="number" id="inicio7">0</div>
 </div>
 
 </div>
@@ -224,16 +121,20 @@ th{background:#f9fafb}
 
 <div class="card">
 <h3>Acciones rápidas</h3>
+
 <div class="actions">
 <button class="primary" onclick="mostrar('pedidos')">➕ Crear pedido</button>
 <button class="primary" onclick="mostrar('inventario')">📦 Agregar inventario</button>
 </div>
+
 </div>
+
 </section>
 
 
 <!-- PEDIDOS -->
 <section id="pedidos">
+
 <h2>Pedidos</h2>
 
 <form onsubmit="crearPedido(event)">
@@ -258,116 +159,198 @@ th{background:#f9fafb}
 
 <label>Forma de pago</label>
 <select id="pago">
-<option>Pendiente</option>
-<option>Nequi</option>
-<option>Daviplata</option>
-<option>Efectivo</option>
-<option>Transferencia</option>
+<option value="Pendiente">Pendiente</option>
+<option value="Nequi">Nequi</option>
+<option value="Daviplata">Daviplata</option>
+<option value="Efectivo">Efectivo</option>
+<option value="Transferencia">Transferencia</option>
 </select>
 
 <label>Estado</label>
 <select id="estado">
-<option>Pendiente</option>
-<option>Pagado</option>
-<option>Entregado</option>
+<option value="Pendiente">Pendiente</option>
+<option value="Pagado">Pagado</option>
+<option value="Entregado">Entregado</option>
 </select>
 
 <button class="primary" type="submit">Guardar pedido</button>
+
 </form>
 
 <div class="card">
+
 <h3>Listado de pedidos</h3>
+
 <div style="overflow-x:auto">
 
 <table>
+
 <thead>
 <tr>
 <th>Cliente</th>
-<th>Producto</th>
+<th>Pack</th>
 <th>Cantidad</th>
 <th>Total</th>
 <th>Pago</th>
 <th>Estado</th>
-<th></th>
+<th>Acciones</th>
 </tr>
 </thead>
 
 <tbody id="tablaPedidos"></tbody>
+
 </table>
 
 </div>
+
 </div>
+
 </section>
 
 
 <!-- INVENTARIO -->
 <section id="inventario">
+
 <h2>Inventario</h2>
 
 <div class="grid">
 
 <div class="card">
-  Físico
-  <div class="number" id="invFisico">0</div>
+<strong>Pack x5</strong>
+<div class="number" id="fisico5">0</div>
+<small>Físicos</small>
 </div>
 
 <div class="card">
-  Reservado
-  <div class="number" id="invReservado">0</div>
+<strong>Pack x5</strong>
+<div class="number" id="reservado5">0</div>
+<small>Reservados</small>
 </div>
 
 <div class="card">
-  Disponible
-  <div class="number" id="invDisponible">0</div>
+<strong>Pack x5</strong>
+<div class="number" id="disponible5">0</div>
+<small>Disponibles</small>
+</div>
+
+<div class="card">
+<strong>Pack x7</strong>
+<div class="number" id="fisico7">0</div>
+<small>Físicos</small>
+</div>
+
+<div class="card">
+<strong>Pack x7</strong>
+<div class="number" id="reservado7">0</div>
+<small>Reservados</small>
+</div>
+
+<div class="card">
+<strong>Pack x7</strong>
+<div class="number" id="disponible7">0</div>
+<small>Disponibles</small>
 </div>
 
 </div>
 
 <br>
 
+<div class="card">
+
+<h3>Resumen de chorizos</h3>
+
+<p>
+<strong>Chorizos en packs x5:</strong>
+<span id="chorizos5">0</span>
+</p>
+
+<p>
+<strong>Chorizos en packs x7:</strong>
+<span id="chorizos7">0</span>
+</p>
+
+<p>
+<strong>Total de chorizos:</strong>
+<span id="chorizosTotal">0</span>
+</p>
+
+</div>
+
+<br>
+
 <form onsubmit="agregarInventario(event)">
-<h3>Movimiento de inventario</h3>
 
-<label>Cantidad de chorizos</label>
-<input id="movCantidad" type="number" min="1" required>
+<h3>Agregar o retirar inventario</h3>
 
-<label>Tipo</label>
-<select id="movTipo">
-<option value="entrada">Entrada de inventario</option>
-<option value="salida">Salida / ajuste</option>
+<label>Presentación</label>
+
+<select id="invProducto">
+
+<option value="5">Pack x5</option>
+<option value="7">Pack x7</option>
+
 </select>
 
-<button class="primary">Guardar movimiento</button>
+<label>Cantidad de packs</label>
+
+<input id="movCantidad" type="number" min="1" required>
+
+<label>Movimiento</label>
+
+<select id="movTipo">
+
+<option value="entrada">Entrada de inventario</option>
+<option value="salida">Salida / ajuste</option>
+
+</select>
+
+<button class="primary">
+Guardar movimiento
+</button>
+
 </form>
 
+<div id="alertaInventario"></div>
+
 <div class="card">
-<h3>Historial</h3>
+
+<h3>Historial de inventario</h3>
+
 <div style="overflow-x:auto">
 
 <table>
+
 <thead>
 <tr>
 <th>Fecha</th>
-<th>Tipo</th>
+<th>Producto</th>
+<th>Movimiento</th>
 <th>Cantidad</th>
 </tr>
 </thead>
+
 <tbody id="tablaInventario"></tbody>
+
 </table>
 
 </div>
+
 </div>
+
 </section>
 
 
 <!-- CLIENTES -->
 <section id="clientes">
+
 <h2>Clientes</h2>
 
 <div class="card">
+
 <div style="overflow-x:auto">
 
 <table>
+
 <thead>
 <tr>
 <th>Cliente</th>
@@ -378,15 +361,19 @@ th{background:#f9fafb}
 </thead>
 
 <tbody id="tablaClientes"></tbody>
+
 </table>
 
 </div>
+
 </div>
+
 </section>
 
 
 <!-- FINANZAS -->
 <section id="finanzas">
+
 <h2>Finanzas</h2>
 
 <div class="grid">
@@ -412,12 +399,12 @@ Chorizos vendidos
 </div>
 
 <div class="card">
-Packs x5
+Packs x5 vendidos
 <div class="number" id="finPack5">0</div>
 </div>
 
 <div class="card">
-Packs x7
+Packs x7 vendidos
 <div class="number" id="finPack7">0</div>
 </div>
 
@@ -426,17 +413,26 @@ Packs x7
 <br>
 
 <div class="card">
-<h3>Datos</h3>
 
-<button class="primary" onclick="exportar()">💾 Exportar respaldo</button>
+<h3>Respaldo de información</h3>
 
-<input type="file" id="archivoImportar" accept=".json" style="margin-top:15px">
-
-<button class="primary" onclick="importar()">📥 Importar respaldo</button>
+<button class="primary" onclick="exportar()">
+💾 Exportar respaldo
+</button>
 
 <br><br>
 
-<button class="danger" onclick="borrarTodo()">⚠️ Borrar todos los datos</button>
+<input type="file" id="archivoImportar" accept=".json">
+
+<button class="primary" onclick="importar()">
+📥 Importar respaldo
+</button>
+
+<br><br>
+
+<button class="danger" onclick="borrarTodo()">
+⚠️ Borrar todos los datos
+</button>
 
 </div>
 
@@ -447,375 +443,751 @@ Packs x7
 
 <script>
 
-const PRECIO5 = 17000;
-const PRECIO7 = 22000;
-const COSTO_CHORIZO = 1500;
+const PRECIO5=17000;
+const PRECIO7=22000;
+const COSTO_CHORIZO=1500;
 
-let datos = JSON.parse(
- localStorage.getItem("chorizos_admin_v1")
-) || {
- pedidos:[],
- inventario:0,
- movimientos:[]
+let datos=JSON.parse(
+localStorage.getItem("chorizos_admin_v2")
+)||{
+pedidos:[],
+inventario:{
+x5:0,
+x7:0
+},
+movimientos:[]
 };
 
-function guardar(){
- localStorage.setItem(
-  "chorizos_admin_v1",
-  JSON.stringify(datos)
- );
- actualizar();
+
+/* Compatibilidad con datos de la versión anterior */
+
+if(!datos.inventario ||
+typeof datos.inventario!=="object"){
+
+datos.inventario={
+x5:0,
+x7:0
+};
+
 }
+
+
+function guardar(){
+
+localStorage.setItem(
+"chorizos_admin_v2",
+JSON.stringify(datos)
+);
+
+actualizar();
+
+}
+
 
 function dinero(numero){
- return "$" + Number(numero).toLocaleString("es-CO");
+
+return "$"+Number(numero).toLocaleString("es-CO");
+
 }
 
-function mostrar(id){
 
- document.querySelectorAll("section")
- .forEach(s=>s.classList.remove("active"));
+function mostrar(id,boton){
 
- document.getElementById(id)
- .classList.add("active");
+document.querySelectorAll("section")
+.forEach(s=>s.classList.remove("active"));
 
- document.querySelectorAll("nav button")
- .forEach(b=>b.classList.remove("active"));
+document.getElementById(id)
+.classList.add("active");
 
- event.currentTarget.classList.add("active");
+document.querySelectorAll("nav button")
+.forEach(b=>b.classList.remove("active"));
 
- actualizar();
+if(boton) boton.classList.add("active");
+
+actualizar();
+
 }
+
 
 function crearPedido(e){
 
- e.preventDefault();
+e.preventDefault();
 
- let pack = Number(document.getElementById("producto").value);
- let cantidad = Number(document.getElementById("cantidad").value);
+let pack=Number(
+document.getElementById("producto").value
+);
 
- let precio = pack === 5 ? PRECIO5 : PRECIO7;
+let cantidad=Number(
+document.getElementById("cantidad").value
+);
 
- let unidades = pack * cantidad;
+let precio=pack===5?PRECIO5:PRECIO7;
 
- let pedido = {
-   id:Date.now(),
-   fecha:new Date().toISOString(),
-   cliente:document.getElementById("cliente").value,
-   telefono:document.getElementById("telefono").value,
-   direccion:document.getElementById("direccion").value,
-   pack,
-   cantidad,
-   unidades,
-   total:precio*cantidad,
-   pago:document.getElementById("pago").value,
-   estado:document.getElementById("estado").value
- };
+let disponibles=
+pack===5
+?inventarioDisponible5()
+:inventarioDisponible7();
 
- datos.pedidos.push(pedido);
 
- document.querySelector("form").reset();
+if(cantidad>disponibles){
 
- guardar();
+alert(
+"No hay suficientes packs disponibles. Actualmente tienes "+
+disponibles+
+" packs x"+pack+
+" disponibles."
+);
 
- alert("Pedido guardado correctamente");
+return;
+
 }
+
+
+let pedido={
+
+id:Date.now(),
+
+fecha:new Date().toISOString(),
+
+cliente:
+document.getElementById("cliente").value,
+
+telefono:
+document.getElementById("telefono").value,
+
+direccion:
+document.getElementById("direccion").value,
+
+pack:pack,
+
+cantidad:cantidad,
+
+unidades:pack*cantidad,
+
+total:precio*cantidad,
+
+pago:
+document.getElementById("pago").value,
+
+estado:
+document.getElementById("estado").value
+
+};
+
+
+datos.pedidos.push(pedido);
+
+document.getElementById("cliente").value="";
+document.getElementById("telefono").value="";
+document.getElementById("direccion").value="";
+document.getElementById("cantidad").value=1;
+
+guardar();
+
+alert("Pedido guardado y packs reservados.");
+
+}
+
 
 function eliminarPedido(id){
 
- if(!confirm("¿Eliminar este pedido?")) return;
+let pedido=
+datos.pedidos.find(p=>p.id===id);
 
- datos.pedidos =
- datos.pedidos.filter(p=>p.id!==id);
+if(!pedido)return;
 
- guardar();
+if(!confirm(
+"¿Eliminar este pedido? La reserva de los packs será liberada."
+))return;
+
+datos.pedidos=
+datos.pedidos.filter(p=>p.id!==id);
+
+guardar();
+
 }
+
+
+function cambiarEstado(id){
+
+let pedido=
+datos.pedidos.find(p=>p.id===id);
+
+if(!pedido)return;
+
+let nuevo=
+prompt(
+"Escribe el nuevo estado:\n\nPendiente\nPagado\nEntregado",
+pedido.estado
+);
+
+if(!nuevo)return;
+
+if(
+nuevo!=="Pendiente" &&
+nuevo!=="Pagado" &&
+nuevo!=="Entregado"
+){
+
+alert("Estado no válido.");
+return;
+
+}
+
+pedido.estado=nuevo;
+
+guardar();
+
+}
+
+
+function inventarioDisponible5(){
+
+let reservado=
+datos.pedidos
+.filter(p=>p.pack===5 && p.estado!=="Entregado")
+.reduce((s,p)=>s+p.cantidad,0);
+
+return Math.max(
+0,
+datos.inventario.x5-reservado
+);
+
+}
+
+
+function inventarioDisponible7(){
+
+let reservado=
+datos.pedidos
+.filter(p=>p.pack===7 && p.estado!=="Entregado")
+.reduce((s,p)=>s+p.cantidad,0);
+
+return Math.max(
+0,
+datos.inventario.x7-reservado
+);
+
+}
+
+
+function reservado5(){
+
+return datos.pedidos
+.filter(p=>p.pack===5 && p.estado!=="Entregado")
+.reduce((s,p)=>s+p.cantidad,0);
+
+}
+
+
+function reservado7(){
+
+return datos.pedidos
+.filter(p=>p.pack===7 && p.estado!=="Entregado")
+.reduce((s,p)=>s+p.cantidad,0);
+
+}
+
+
+function vendidos5(){
+
+return datos.pedidos
+.filter(p=>p.pack===5 && p.estado==="Entregado")
+.reduce((s,p)=>s+p.cantidad,0);
+
+}
+
+
+function vendidos7(){
+
+return datos.pedidos
+.filter(p=>p.pack===7 && p.estado==="Entregado")
+.reduce((s,p)=>s+p.cantidad,0);
+
+}
+
 
 function agregarInventario(e){
 
- e.preventDefault();
+e.preventDefault();
 
- let cantidad =
- Number(document.getElementById("movCantidad").value);
+let pack=
+Number(
+document.getElementById("invProducto").value
+);
 
- let tipo =
- document.getElementById("movTipo").value;
+let cantidad=
+Number(
+document.getElementById("movCantidad").value
+);
 
- if(tipo==="entrada"){
-   datos.inventario += cantidad;
- }else{
+let tipo=
+document.getElementById("movTipo").value;
 
-   if(cantidad > datos.inventario){
-     alert("No puedes retirar más inventario del disponible.");
-     return;
-   }
+let clave=
+pack===5?"x5":"x7";
 
-   datos.inventario -= cantidad;
- }
 
- datos.movimientos.push({
-   fecha:new Date().toLocaleString("es-CO"),
-   tipo,
-   cantidad
- });
+if(tipo==="entrada"){
 
- e.target.reset();
+datos.inventario[clave]+=cantidad;
 
- guardar();
+}else{
 
- alert("Inventario actualizado");
+let disponible=
+pack===5
+?inventarioDisponible5()
+:inventarioDisponible7();
+
+if(cantidad>disponible){
+
+alert(
+"No puedes retirar "+cantidad+
+" packs. Solo hay "+
+disponible+
+" packs disponibles."
+);
+
+return;
+
 }
 
-function calcularReservado(){
+datos.inventario[clave]-=cantidad;
 
- return datos.pedidos
- .filter(p=>p.estado!=="Entregado")
- .reduce((total,p)=>total+p.unidades,0);
 }
 
-function calcularVendidos(){
 
- return datos.pedidos
- .filter(p=>p.estado==="Entregado")
- .reduce((total,p)=>total+p.unidades,0);
+datos.movimientos.push({
+
+fecha:new Date().toLocaleString("es-CO"),
+
+producto:"Pack x"+pack,
+
+tipo:tipo,
+
+cantidad:cantidad
+
+});
+
+
+document.getElementById("movCantidad").value="";
+
+guardar();
+
+alert("Inventario actualizado.");
+
 }
+
 
 function actualizar(){
 
- let ventas =
- datos.pedidos.reduce((s,p)=>s+p.total,0);
+let ventas=
+datos.pedidos
+.reduce((s,p)=>s+p.total,0);
 
- let costos =
- datos.pedidos.reduce(
-  (s,p)=>s+(p.unidades*COSTO_CHORIZO),0
- );
+let costos=
+datos.pedidos
+.reduce(
+(s,p)=>s+(p.unidades*COSTO_CHORIZO),
+0
+);
 
- let utilidad = ventas-costos;
+let utilidad=ventas-costos;
 
- let reservado = calcularReservado();
+let porCobrar=
+datos.pedidos
+.filter(p=>p.pago==="Pendiente")
+.reduce((s,p)=>s+p.total,0);
 
- let disponible =
- Math.max(0,datos.inventario-reservado);
+let pendientes=
+datos.pedidos
+.filter(p=>p.estado==="Pendiente")
+.length;
 
- let porCobrar =
- datos.pedidos
- .filter(p=>p.pago==="Pendiente")
- .reduce((s,p)=>s+p.total,0);
 
- let pendientes =
- datos.pedidos
- .filter(p=>p.estado==="Pendiente").length;
+document.getElementById("ventas").textContent=
+dinero(ventas);
 
- document.getElementById("ventas").textContent=dinero(ventas);
- document.getElementById("utilidad").textContent=dinero(utilidad);
- document.getElementById("pendiente").textContent=dinero(porCobrar);
- document.getElementById("pedidosPendientes").textContent=pendientes;
+document.getElementById("utilidad").textContent=
+dinero(utilidad);
 
- document.getElementById("stockFisico").textContent=datos.inventario;
- document.getElementById("stockReservado").textContent=reservado;
- document.getElementById("stockDisponible").textContent=disponible;
+document.getElementById("pendiente").textContent=
+dinero(porCobrar);
 
- document.getElementById("invFisico").textContent=datos.inventario;
- document.getElementById("invReservado").textContent=reservado;
- document.getElementById("invDisponible").textContent=disponible;
+document.getElementById("pedidosPendientes").textContent=
+pendientes;
 
- document.getElementById("finVentas").textContent=dinero(ventas);
- document.getElementById("finCostos").textContent=dinero(costos);
- document.getElementById("finUtilidad").textContent=dinero(utilidad);
- document.getElementById("finChorizos").textContent=calcularVendidos();
 
- document.getElementById("finPack5").textContent =
- datos.pedidos
- .filter(p=>p.pack===5)
- .reduce((s,p)=>s+p.cantidad,0);
+/* Inventario */
 
- document.getElementById("finPack7").textContent =
- datos.pedidos
- .filter(p=>p.pack===7)
- .reduce((s,p)=>s+p.cantidad,0);
+document.getElementById("fisico5").textContent=
+datos.inventario.x5;
 
- cargarPedidos();
- cargarInventario();
- cargarClientes();
+document.getElementById("fisico7").textContent=
+datos.inventario.x7;
+
+document.getElementById("reservado5").textContent=
+reservado5();
+
+document.getElementById("reservado7").textContent=
+reservado7();
+
+document.getElementById("disponible5").textContent=
+inventarioDisponible5();
+
+document.getElementById("disponible7").textContent=
+inventarioDisponible7();
+
+
+document.getElementById("inicio5").textContent=
+inventarioDisponible5();
+
+document.getElementById("inicio7").textContent=
+inventarioDisponible7();
+
+
+let ch5=
+datos.inventario.x5*5;
+
+let ch7=
+datos.inventario.x7*7;
+
+document.getElementById("chorizos5").textContent=
+ch5;
+
+document.getElementById("chorizos7").textContent=
+ch7;
+
+document.getElementById("chorizosTotal").textContent=
+ch5+ch7;
+
+
+/* Finanzas */
+
+document.getElementById("finVentas").textContent=
+dinero(ventas);
+
+document.getElementById("finCostos").textContent=
+dinero(costos);
+
+document.getElementById("finUtilidad").textContent=
+dinero(utilidad);
+
+document.getElementById("finChorizos").textContent=
+vendidos5()*5+vendidos7()*7;
+
+document.getElementById("finPack5").textContent=
+vendidos5();
+
+document.getElementById("finPack7").textContent=
+vendidos7();
+
+
+cargarPedidos();
+cargarInventario();
+cargarClientes();
+
 }
+
 
 function cargarPedidos(){
 
- let html="";
+let html="";
 
- datos.pedidos
- .slice()
- .reverse()
- .forEach(p=>{
+datos.pedidos
+.slice()
+.reverse()
+.forEach(p=>{
 
-   let estadoClass =
-   p.estado==="Entregado" ? "green" :
-   p.estado==="Pagado" ? "yellow" : "red";
+let clase=
+p.estado==="Entregado"
+?"green":
+p.estado==="Pagado"
+?"yellow":
+"red";
 
-   html += `
-   <tr>
-   <td>
-   <b>${p.cliente}</b><br>
-   <small>${p.telefono}</small>
-   </td>
 
-   <td>x${p.pack}</td>
+html+=`
 
-   <td>${p.cantidad}</td>
+<tr>
 
-   <td>${dinero(p.total)}</td>
+<td>
+<b>${p.cliente}</b><br>
+<small>${p.telefono}</small>
+</td>
 
-   <td>${p.pago}</td>
+<td>
+Pack x${p.pack}
+</td>
 
-   <td>
-   <span class="badge ${estadoClass}">
-   ${p.estado}
-   </span>
-   </td>
+<td>
+${p.cantidad}
+</td>
 
-   <td>
-   <button class="danger"
-   onclick="eliminarPedido(${p.id})">
-   Eliminar
-   </button>
-   </td>
+<td>
+${dinero(p.total)}
+</td>
 
-   </tr>
-   `;
- });
+<td>
+${p.pago}
+</td>
 
- document.getElementById("tablaPedidos").innerHTML =
- html ||
- `<tr><td colspan="7">No hay pedidos todavía.</td></tr>`;
+<td>
+<span class="badge ${clase}">
+${p.estado}
+</span>
+</td>
+
+<td>
+
+<button
+class="secondary"
+onclick="cambiarEstado(${p.id})">
+Estado
+</button>
+
+<button
+class="danger"
+onclick="eliminarPedido(${p.id})">
+Eliminar
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+
+document.getElementById("tablaPedidos").innerHTML=
+html||
+`<tr>
+<td colspan="7">
+No hay pedidos todavía.
+</td>
+</tr>`;
+
 }
+
 
 function cargarInventario(){
 
- let html="";
+let html="";
 
- datos.movimientos
- .slice()
- .reverse()
- .forEach(m=>{
+datos.movimientos
+.slice()
+.reverse()
+.forEach(m=>{
 
-   html += `
-   <tr>
-   <td>${m.fecha}</td>
-   <td>${m.tipo==="entrada"?"Entrada":"Salida"}</td>
-   <td>${m.cantidad}</td>
-   </tr>
-   `;
- });
+html+=`
 
- document.getElementById("tablaInventario").innerHTML =
- html ||
- `<tr><td colspan="3">No hay movimientos.</td></tr>`;
+<tr>
+
+<td>${m.fecha}</td>
+
+<td>${m.producto}</td>
+
+<td>
+${m.tipo==="entrada"
+?"Entrada"
+:"Salida"}
+</td>
+
+<td>${m.cantidad}</td>
+
+</tr>
+
+`;
+
+});
+
+
+document.getElementById("tablaInventario").innerHTML=
+html||
+`<tr>
+<td colspan="4">
+No hay movimientos.
+</td>
+</tr>`;
+
 }
+
 
 function cargarClientes(){
 
- let clientes={};
+let clientes={};
 
- datos.pedidos.forEach(p=>{
 
-   if(!clientes[p.cliente]){
-     clientes[p.cliente]={
-       telefono:p.telefono,
-       pedidos:0,
-       total:0
-     };
-   }
+datos.pedidos.forEach(p=>{
 
-   clientes[p.cliente].pedidos++;
-   clientes[p.cliente].total+=p.total;
- });
+if(!clientes[p.cliente]){
 
- let html="";
+clientes[p.cliente]={
 
- Object.keys(clientes).forEach(nombre=>{
+telefono:p.telefono,
 
-   let c=clientes[nombre];
+pedidos:0,
 
-   html += `
-   <tr>
-   <td>${nombre}</td>
-   <td>${c.telefono}</td>
-   <td>${c.pedidos}</td>
-   <td>${dinero(c.total)}</td>
-   </tr>
-   `;
- });
+total:0
 
- document.getElementById("tablaClientes").innerHTML =
- html ||
- `<tr><td colspan="4">No hay clientes todavía.</td></tr>`;
+};
+
 }
+
+clientes[p.cliente].pedidos++;
+
+clientes[p.cliente].total+=p.total;
+
+});
+
+
+let html="";
+
+
+Object.keys(clientes)
+.forEach(nombre=>{
+
+let c=clientes[nombre];
+
+html+=`
+
+<tr>
+
+<td>${nombre}</td>
+
+<td>${c.telefono}</td>
+
+<td>${c.pedidos}</td>
+
+<td>${dinero(c.total)}</td>
+
+</tr>
+
+`;
+
+});
+
+
+document.getElementById("tablaClientes").innerHTML=
+html||
+`<tr>
+<td colspan="4">
+No hay clientes todavía.
+</td>
+</tr>`;
+
+}
+
 
 function exportar(){
 
- let archivo = new Blob(
-  [JSON.stringify(datos,null,2)],
-  {type:"application/json"}
- );
+let archivo=new Blob(
 
- let url=URL.createObjectURL(archivo);
+[JSON.stringify(datos,null,2)],
 
- let a=document.createElement("a");
+{type:"application/json"}
 
- a.href=url;
- a.download="respaldo-chorizos.json";
- a.click();
+);
 
- URL.revokeObjectURL(url);
+let url=
+URL.createObjectURL(archivo);
+
+let a=
+document.createElement("a");
+
+a.href=url;
+
+a.download=
+"respaldo-chorizos-v2.json";
+
+a.click();
+
+URL.revokeObjectURL(url);
+
 }
+
 
 function importar(){
 
- let archivo =
- document.getElementById("archivoImportar").files[0];
+let archivo=
+document.getElementById(
+"archivoImportar"
+).files[0];
 
- if(!archivo){
-   alert("Selecciona primero un archivo de respaldo.");
-   return;
- }
 
- let lector=new FileReader();
+if(!archivo){
 
- lector.onload=function(){
+alert(
+"Selecciona primero un archivo de respaldo."
+);
 
-   try{
+return;
 
-     datos=JSON.parse(lector.result);
-
-     guardar();
-
-     alert("Respaldo restaurado correctamente.");
-
-   }catch(e){
-
-     alert("El archivo no es válido.");
-
-   }
-
- };
-
- lector.readAsText(archivo);
 }
+
+
+let lector=
+new FileReader();
+
+
+lector.onload=function(){
+
+try{
+
+datos=
+JSON.parse(lector.result);
+
+guardar();
+
+alert(
+"Respaldo restaurado correctamente."
+);
+
+}catch(e){
+
+alert(
+"El archivo no es válido."
+);
+
+}
+
+};
+
+
+lector.readAsText(archivo);
+
+}
+
 
 function borrarTodo(){
 
- if(!confirm(
- "¿Seguro que quieres borrar TODOS los pedidos, clientes e inventario?"
- )) return;
+if(!confirm(
+"¿Seguro que quieres borrar TODOS los pedidos, clientes e inventario?"
+))return;
 
- datos={
-   pedidos:[],
-   inventario:0,
-   movimientos:[]
- };
 
- guardar();
+datos={
+
+pedidos:[],
+
+inventario:{
+x5:0,
+x7:0
+},
+
+movimientos:[]
+
+};
+
+
+guardar();
+
 }
+
+
+/* Iniciar aplicación */
 
 actualizar();
 
