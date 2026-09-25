@@ -370,10 +370,6 @@ h3{
 <main>
 
 
-<!-- ========================= -->
-<!-- INICIO -->
-<!-- ========================= -->
-
 <section id="inicio" class="section active">
 
   <div class="card">
@@ -425,10 +421,6 @@ h3{
 </section>
 
 
-<!-- ========================= -->
-<!-- LOTES -->
-<!-- ========================= -->
-
 <section id="lotes" class="section">
 
   <div class="card">
@@ -471,10 +463,6 @@ h3{
 </section>
 
 
-<!-- ========================= -->
-<!-- PEDIDOS -->
-<!-- ========================= -->
-
 <section id="pedidos" class="section">
 
   <div class="card">
@@ -511,6 +499,7 @@ h3{
         <label>Pack</label>
 
         <select id="pedidoPack">
+
           <option value="x5">
             Pack x5 - $17.000
           </option>
@@ -518,11 +507,13 @@ h3{
           <option value="x7">
             Pack x7 - $22.000
           </option>
+
         </select>
 
       </div>
 
       <div>
+
         <label>Cantidad</label>
 
         <input
@@ -535,6 +526,7 @@ h3{
       </div>
 
       <div>
+
         <label>Forma de pago</label>
 
         <select id="pedidoPago">
@@ -590,9 +582,7 @@ h3{
 
     <div class="card mt">
 
-      <strong>
-        Total:
-      </strong>
+      <strong>Total:</strong>
 
       <span id="pedidoTotal">
         $17.000
@@ -650,10 +640,6 @@ h3{
 
 </section>
 
-
-<!-- ========================= -->
-<!-- INVENTARIO -->
-<!-- ========================= -->
 
 <section id="inventario" class="section">
 
@@ -795,10 +781,6 @@ h3{
 </section>
 
 
-<!-- ========================= -->
-<!-- CLIENTES -->
-<!-- ========================= -->
-
 <section id="clientes" class="section">
 
   <div class="card">
@@ -810,9 +792,7 @@ h3{
 
     <div class="success-box mb">
 
-      <strong>
-        Importante:
-      </strong>
+      <strong>Importante:</strong>
 
       aquí solamente aparecen los clientes que tienen
       pedidos pertenecientes al lote activo.
@@ -848,10 +828,6 @@ h3{
 
 </section>
 
-
-<!-- ========================= -->
-<!-- FINANZAS -->
-<!-- ========================= -->
 
 <section id="finanzas" class="section">
 
@@ -1002,10 +978,6 @@ h3{
 </section>
 
 
-<!-- ========================= -->
-<!-- GENERAL -->
-<!-- ========================= -->
-
 <section id="general" class="section">
 
   <div class="card">
@@ -1099,10 +1071,6 @@ h3{
 </section>
 
 
-<!-- ========================= -->
-<!-- DATOS -->
-<!-- ========================= -->
-
 <section id="datos" class="section">
 
   <div class="card">
@@ -1163,19 +1131,12 @@ h3{
 </main>
 
 
-<!-- FIREBASE -->
-
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
 
 
 <script>
-
-
-/* =====================================================
-   CONFIGURACIÓN
-===================================================== */
 
 const firebaseConfig = {
 
@@ -1208,10 +1169,6 @@ firebase.initializeApp(firebaseConfig);
 const firestore =
   firebase.firestore();
 
-
-/* =====================================================
-   CONFIGURACIÓN DEL NEGOCIO
-===================================================== */
 
 const PRECIO_X5 = 17000;
 const PRECIO_X7 = 22000;
@@ -1281,7 +1238,7 @@ function escapeHTML(texto){
 
 
 /* =====================================================
-   CREAR BASE VACÍA
+   BASE VACÍA
 ===================================================== */
 
 function crearDBVacia(){
@@ -1321,7 +1278,7 @@ function crearDBVacia(){
 
 
 /* =====================================================
-   NORMALIZAR BASE DE DATOS
+   NORMALIZACIÓN Y SEPARACIÓN REAL POR LOTE
 ===================================================== */
 
 function normalizarDB(data){
@@ -1344,6 +1301,16 @@ function normalizarDB(data){
     return crearDBVacia();
 
   }
+
+
+  /*
+    Este conjunto sirve para detectar
+    pedidos duplicados físicamente en
+    varios lotes.
+  */
+
+  const pedidosVistos =
+    new Set();
 
 
   data.lotes.forEach(
@@ -1369,23 +1336,12 @@ function normalizarDB(data){
 
       }
 
-      if(
-        typeof lote.inventario.x5 !== "number"
-      ){
+      lote.inventario.x5 =
+        Number(lote.inventario.x5)||0;
 
-        lote.inventario.x5 =
-          Number(lote.inventario.x5)||0;
+      lote.inventario.x7 =
+        Number(lote.inventario.x7)||0;
 
-      }
-
-      if(
-        typeof lote.inventario.x7 !== "number"
-      ){
-
-        lote.inventario.x7 =
-          Number(lote.inventario.x7)||0;
-
-      }
 
       if(!Array.isArray(lote.pedidos)){
         lote.pedidos=[];
@@ -1397,13 +1353,15 @@ function normalizarDB(data){
 
 
       /*
-        IMPORTANTE:
+        EL LOTE DONDE ESTÁ GUARDADO EL PEDIDO
+        ES LA FUENTE DE VERDAD.
 
-        Todos los pedidos antiguos reciben
-        el lote donde actualmente están guardados.
-
-        Así no se mezclan clientes entre lotes.
+        Esto corrige pedidos antiguos que
+        tenían loteId vacío o incorrecto.
       */
+
+      const pedidosLimpios=[];
+
 
       lote.pedidos.forEach(
         pedido=>{
@@ -1413,12 +1371,33 @@ function normalizarDB(data){
           }
 
 
-          if(!pedido.loteId){
+          /*
+            Si exactamente el mismo pedido
+            aparece duplicado en otro lote,
+            no lo repetimos.
+          */
 
-            pedido.loteId =
-              lote.id;
+          if(
+            pedidosVistos.has(pedido.id)
+          ){
+
+            return;
 
           }
+
+
+          pedidosVistos.add(
+            pedido.id
+          );
+
+
+          /*
+            SIEMPRE se asigna el ID del lote
+            donde está físicamente guardado.
+          */
+
+          pedido.loteId =
+            lote.id;
 
 
           if(
@@ -1429,8 +1408,17 @@ function normalizarDB(data){
 
           }
 
+
+          pedidosLimpios.push(
+            pedido
+          );
+
         }
       );
+
+
+      lote.pedidos =
+        pedidosLimpios;
 
 
       lote.gastos.forEach(
@@ -1449,7 +1437,8 @@ function normalizarDB(data){
 
   const existe =
     data.lotes.some(
-      lote=>lote.id===data.loteActivo
+      lote=>
+        lote.id===data.loteActivo
     );
 
 
@@ -1541,7 +1530,9 @@ async function guardarNube(){
     await firestore
       .collection("appData")
       .doc("chorizosAdmin")
-      .set(db);
+      .set(
+        normalizarDB(db)
+      );
 
 
     document.getElementById(
@@ -1585,11 +1576,6 @@ async function iniciarNube(){
         );
 
 
-      /*
-        Si existe información en la nube,
-        se utiliza como fuente principal.
-      */
-
       db=nube;
 
       guardarLocal();
@@ -1626,9 +1612,9 @@ async function guardar(){
 
   guardarLocal();
 
-  await guardarNube();
-
   actualizarTodo();
+
+  await guardarNube();
 
 }
 
@@ -1652,7 +1638,7 @@ function obtenerLote(){
 
 
 /* =====================================================
-   CAMBIAR SECCIÓN
+   SECCIONES
 ===================================================== */
 
 function mostrarSeccion(nombre){
@@ -1718,20 +1704,23 @@ function mostrarSeccion(nombre){
 
 async function cambiarLote(id){
 
-  const existe =
-    db.lotes.some(
-      lote=>lote.id===id
+  const lote =
+    db.lotes.find(
+      l=>l.id===id
     );
 
-  if(!existe){
+  if(!lote){
     return;
   }
 
 
-  db.loteActivo=id;
+  db.loteActivo =
+    lote.id;
+
 
   db =
     normalizarDB(db);
+
 
   guardarLocal();
 
@@ -1764,7 +1753,8 @@ async function crearLote(){
 
   const lote={
 
-    id:crearId(),
+    id:
+      crearId(),
 
     nombre:
       "Lote "+numero,
@@ -1786,13 +1776,20 @@ async function crearLote(){
   };
 
 
-  db.lotes.push(lote);
+  db.lotes.push(
+    lote
+  );
 
-  db.loteActivo=lote.id;
+
+  db.loteActivo =
+    lote.id;
+
 
   await guardar();
 
-  mostrarSeccion("lotes");
+  mostrarSeccion(
+    "lotes"
+  );
 
 }
 
@@ -2296,15 +2293,30 @@ async function crearPedido(){
     precioUnitario*cantidad;
 
 
-  /*
-    El pedido queda explícitamente
-    relacionado con el lote actual.
-  */
+  if(
+    lote.inventario[pack]
+    <
+    cantidad
+  ){
+
+    alert(
+      "No hay suficiente inventario para este pedido."
+    );
+
+    return;
+
+  }
+
 
   const pedido={
 
     id:
       crearId(),
+
+    /*
+      ESTE PEDIDO PERTENECE
+      EXCLUSIVAMENTE AL LOTE ACTIVO.
+    */
 
     loteId:
       lote.id,
@@ -2343,26 +2355,6 @@ async function crearPedido(){
       true
 
   };
-
-
-  /*
-    Todos los estados descuentan inventario
-    UNA SOLA VEZ.
-  */
-
-  if(
-    lote.inventario[pack]
-    <
-    cantidad
-  ){
-
-    alert(
-      "No hay suficiente inventario para este pedido."
-    );
-
-    return;
-
-  }
 
 
   lote.inventario[pack]
@@ -2417,15 +2409,20 @@ async function cambiarPago(
 
   const pedido =
     lote.pedidos.find(
-      p=>p.id===pedidoId
+      p=>
+        p.id===pedidoId &&
+        p.loteId===lote.id
     );
+
 
   if(!pedido){
     return;
   }
 
 
-  pedido.pago=valor;
+  pedido.pago=
+    valor;
+
 
   await guardar();
 
@@ -2447,8 +2444,11 @@ async function cambiarEstado(
 
   const pedido =
     lote.pedidos.find(
-      p=>p.id===pedidoId
+      p=>
+        p.id===pedidoId &&
+        p.loteId===lote.id
     );
+
 
   if(!pedido){
     return;
@@ -2456,16 +2456,15 @@ async function cambiarEstado(
 
 
   /*
-    IMPORTANTE:
+    CAMBIAR EL ESTADO NO TOCA INVENTARIO.
 
-    Cambiar de Pendiente → Pagado
-    → NO descuenta inventario otra vez.
-
-    Cambiar de Pagado → Entregado
-    → NO descuenta inventario otra vez.
+    El inventario solamente se descontó
+    cuando se creó el pedido.
   */
 
-  pedido.estado=valor;
+  pedido.estado=
+    valor;
+
 
   await guardar();
 
@@ -2486,7 +2485,9 @@ async function eliminarPedido(
 
   const indice =
     lote.pedidos.findIndex(
-      p=>p.id===pedidoId
+      p=>
+        p.id===pedidoId &&
+        p.loteId===lote.id
     );
 
 
@@ -2510,21 +2511,16 @@ async function eliminarPedido(
   }
 
 
-  /*
-    Al eliminar el pedido,
-    se devuelve el inventario
-    solamente si había sido descontado.
-  */
-
   if(
     pedido.inventarioDescontado
   ){
 
     lote.inventario[
       pedido.pack
-    ] += Number(
-      pedido.cantidad
-    ) || 0;
+    ] +=
+      Number(
+        pedido.cantidad
+      ) || 0;
 
   }
 
@@ -2539,6 +2535,10 @@ async function eliminarPedido(
 
 }
 
+
+/* =====================================================
+   RENDER PEDIDOS — SOLO LOTE ACTIVO
+===================================================== */
 
 function renderPedidos(){
 
@@ -2563,14 +2563,18 @@ function renderPedidos(){
   if(!lote){
 
     tbody.innerHTML=`
+
       <tr>
+
         <td
           colspan="9"
           class="empty"
         >
           No hay lote activo.
         </td>
+
       </tr>
+
     `;
 
     return;
@@ -2578,18 +2582,40 @@ function renderPedidos(){
   }
 
 
-  if(!lote.pedidos.length){
+  /*
+    MUY IMPORTANTE:
+
+    Aunque existan pedidos almacenados
+    en la base general, AQUÍ solamente
+    se muestran los que pertenecen al
+    lote actualmente seleccionado.
+  */
+
+  const pedidosDelLote =
+    lote.pedidos.filter(
+      pedido=>
+        pedido.loteId===lote.id
+    );
+
+
+  if(!pedidosDelLote.length){
 
     tbody.innerHTML=`
+
       <tr>
+
         <td
           colspan="9"
           class="empty"
         >
+
           No hay pedidos en
           ${escapeHTML(lote.nombre)}.
+
         </td>
+
       </tr>
+
     `;
 
     return;
@@ -2598,25 +2624,33 @@ function renderPedidos(){
 
 
   tbody.innerHTML =
-    lote.pedidos.map(
+    pedidosDelLote.map(
       pedido=>`
 
         <tr>
 
           <td>
-            ${escapeHTML(pedido.fecha)}
+            ${escapeHTML(
+              pedido.fecha
+            )}
           </td>
 
           <td>
-            ${escapeHTML(pedido.cliente)}
+            ${escapeHTML(
+              pedido.cliente
+            )}
           </td>
 
           <td>
-            ${escapeHTML(pedido.telefono)}
+            ${escapeHTML(
+              pedido.telefono
+            )}
           </td>
 
           <td>
-            ${escapeHTML(pedido.pack)}
+            ${escapeHTML(
+              pedido.pack
+            )}
           </td>
 
           <td>
@@ -2624,7 +2658,9 @@ function renderPedidos(){
           </td>
 
           <td class="money">
-            ${dinero(pedido.total)}
+            ${dinero(
+              pedido.total
+            )}
           </td>
 
           <td>
@@ -2761,7 +2797,7 @@ function renderPedidos(){
 
 
 /* =====================================================
-   CLIENTES
+   CLIENTES — SOLO LOTE ACTIVO
 ===================================================== */
 
 function renderClientes(){
@@ -2815,14 +2851,10 @@ function renderClientes(){
 
 
   /*
-    ESTA ES LA PARTE CLAVE.
+    SOLO PEDIDOS DEL LOTE ACTUAL.
 
-    Solamente tomamos pedidos cuyo loteId
-    corresponde al lote actualmente activo.
-
-    Así, aunque existiera información antigua
-    o algún dato incorrecto, un cliente de Lote 1
-    no aparecerá en Lote 2.
+    No se consulta db.lotes completo.
+    No se consulta pedidos de otros lotes.
   */
 
   const pedidosDelLote =
@@ -2849,14 +2881,6 @@ function renderClientes(){
           pedido.cliente || ""
         ).trim();
 
-
-      /*
-        Si tiene teléfono se utiliza como
-        identificador principal.
-
-        Si no tiene teléfono se utiliza
-        el nombre.
-      */
 
       const key =
         (
@@ -2925,7 +2949,9 @@ function renderClientes(){
 
 
   const clientes =
-    Object.values(mapa);
+    Object.values(
+      mapa
+    );
 
 
   if(!clientes.length){
@@ -3044,13 +3070,15 @@ function contarClientesLote(lote){
     );
 
 
-  return Object.keys(mapa).length;
+  return Object.keys(
+    mapa
+  ).length;
 
 }
 
 
 /* =====================================================
-   CÁLCULOS
+   CÁLCULOS POR LOTE
 ===================================================== */
 
 function calcularLote(lote){
@@ -3061,6 +3089,11 @@ function calcularLote(lote){
 
   let pendiente=0;
 
+
+  /*
+    SOLO pedidos pertenecientes
+    a este lote.
+  */
 
   lote.pedidos
     .filter(
@@ -3202,7 +3235,10 @@ function renderInicio(){
   document.getElementById(
     "inicioPedidos"
   ).textContent =
-    lote.pedidos.length;
+    lote.pedidos.filter(
+      pedido=>
+        pedido.loteId===lote.id
+    ).length;
 
 }
 
@@ -3354,6 +3390,17 @@ async function agregarGasto(){
   }
 
 
+  if(lote.cerrado){
+
+    alert(
+      "Este lote está cerrado."
+    );
+
+    return;
+
+  }
+
+
   const descripcion =
     document.getElementById(
       "gastoDescripcion"
@@ -3438,7 +3485,8 @@ async function eliminarGasto(id){
 
   const indice =
     lote.gastos.findIndex(
-      gasto=>gasto.id===id
+      gasto=>
+        gasto.id===id
     );
 
 
@@ -3470,7 +3518,7 @@ async function eliminarGasto(id){
 
 
 /* =====================================================
-   GENERAL
+   GENERAL — TODOS LOS LOTES
 ===================================================== */
 
 function renderGeneral(){
@@ -3546,6 +3594,13 @@ function renderGeneral(){
           calcularLote(lote);
 
 
+        const cantidadPedidos =
+          lote.pedidos.filter(
+            pedido=>
+              pedido.loteId===lote.id
+          ).length;
+
+
         return `
 
           <tr>
@@ -3581,7 +3636,7 @@ function renderGeneral(){
             </td>
 
             <td>
-              ${lote.pedidos.length}
+              ${cantidadPedidos}
             </td>
 
           </tr>
@@ -3814,6 +3869,7 @@ if(!db){
 
 actualizarTodo();
 
+
 iniciarNube();
 
 
@@ -3834,12 +3890,9 @@ document.getElementById(
 
 
 /*
-  IMPORTANTE:
-
-  NO registramos nuevamente el Service Worker.
-
-  Esto evita que una versión antigua de la
-  aplicación siga mostrando un index.html viejo.
+  Desactivar Service Worker antiguo.
+  Esto evita que una versión anterior
+  siga mostrando código viejo.
 */
 
 if(
@@ -3887,14 +3940,9 @@ if(
 }
 
 
-/* =====================================================
-   MOSTRAR INICIO
-===================================================== */
-
 mostrarSeccion(
   "inicio"
 );
-
 
 </script>
 
