@@ -1,78 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
-/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Chorizos Admin V8</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
 
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Arial,sans-serif;
   background:#f4f4f4;
-  color:#222;
+  color:#111;
 }
 
 header{
   background:#111;
   color:white;
   padding:18px;
+  text-align:center;
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:1000;
 }
 
 header h1{
-  margin:0 0 8px;
+  margin:0;
   font-size:22px;
-}
-
-#loteHeader{
-  font-size:14px;
-  opacity:.9;
-}
-
-#syncStatus{
-  font-size:12px;
-  margin-top:5px;
-  opacity:.8;
 }
 
 nav{
   display:flex;
-  gap:7px;
+  gap:6px;
   overflow-x:auto;
-  padding:10px;
-  background:white;
-  border-bottom:1px solid #ddd;
+  padding:8px;
+  background:#222;
   position:sticky;
-  top:79px;
-  z-index:10;
+  top:62px;
+  z-index:999;
 }
 
 nav button{
   border:0;
-  background:#eee;
+  background:#444;
+  color:white;
   padding:10px 13px;
-  border-radius:8px;
+  border-radius:7px;
   white-space:nowrap;
   cursor:pointer;
 }
 
-nav button.active{
-  background:#111;
-  color:white;
+nav button:hover{
+  background:#666;
 }
 
 main{
@@ -81,20 +64,24 @@ main{
   padding:15px;
 }
 
-.section{
+.seccion{
   display:none;
 }
 
-.section.active{
+.seccion.activa{
   display:block;
 }
 
 .card{
   background:white;
-  border-radius:12px;
-  padding:16px;
+  border-radius:10px;
+  padding:15px;
   margin-bottom:15px;
-  box-shadow:0 2px 8px rgba(0,0,0,.07);
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+h2{
+  margin-top:0;
 }
 
 .grid{
@@ -105,315 +92,203 @@ main{
 
 .stat{
   background:white;
-  border-radius:12px;
-  padding:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.07);
+  border-radius:10px;
+  padding:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .stat small{
-  display:block;
-  color:#777;
-  margin-bottom:7px;
+  color:#666;
 }
 
 .stat strong{
+  display:block;
   font-size:22px;
+  margin-top:6px;
+}
+
+input,
+select,
+button,
+textarea{
+  font:inherit;
 }
 
 input,
 select,
 textarea{
   width:100%;
-  padding:11px;
+  padding:10px;
   border:1px solid #ccc;
-  border-radius:8px;
-  font-size:15px;
-  background:white;
-}
-
-label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:5px;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:12px;
+  border-radius:7px;
+  margin-top:5px;
+  margin-bottom:10px;
 }
 
 button{
   border:0;
-  border-radius:8px;
   padding:10px 14px;
+  border-radius:7px;
   cursor:pointer;
-  font-size:14px;
-}
-
-.btn{
   background:#111;
   color:white;
 }
 
-.btn-secondary{
-  background:#ddd;
-  color:#111;
+button.secundario{
+  background:#777;
 }
 
-.btn-danger{
-  background:#c62828;
-  color:white;
+button.peligro{
+  background:#b00020;
 }
 
-.btn-success{
-  background:#2e7d32;
-  color:white;
+button.exito{
+  background:#167c2d;
 }
 
-button:disabled{
-  opacity:.5;
-  cursor:not-allowed;
+label{
+  font-weight:bold;
+  font-size:14px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+th,
+td{
+  border-bottom:1px solid #ddd;
+  padding:9px 6px;
+  text-align:left;
+  font-size:14px;
+}
+
+th{
+  background:#f1f1f1;
 }
 
 .table-wrap{
   overflow-x:auto;
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px;
+.lote-card{
+  border:2px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:10px;
+  background:white;
 }
 
-th,
-td{
-  border-bottom:1px solid #eee;
-  padding:10px 8px;
-  text-align:left;
-  font-size:14px;
-}
-
-th{
-  background:#fafafa;
-}
-
-.money{
-  font-weight:bold;
-  white-space:nowrap;
-}
-
-.empty{
-  text-align:center;
-  color:#777;
-  padding:30px;
+.lote-card.activo{
+  border-color:#111;
 }
 
 .badge{
   display:inline-block;
-  padding:5px 8px;
+  padding:4px 8px;
   border-radius:20px;
   background:#eee;
   font-size:12px;
 }
 
-.badge-green{
-  background:#dff2df;
-  color:#176b17;
+.badge.activo{
+  background:#111;
+  color:white;
 }
 
-.badge-yellow{
-  background:#fff2c7;
-  color:#735600;
+.badge.cerrado{
+  background:#ddd;
 }
 
-.badge-red{
-  background:#ffdede;
-  color:#8c0000;
+.total{
+  font-size:20px;
+  font-weight:bold;
 }
 
-.lote-card{
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:14px;
-  margin-bottom:10px;
-  background:white;
+.muted{
+  color:#666;
 }
 
-.lote-card.active{
-  border:2px solid #111;
-}
-
-.flex{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.right{
-  text-align:right;
-}
-
-.mt{
-  margin-top:12px;
-}
-
-.mb{
+.alerta{
+  padding:12px;
+  border-radius:8px;
+  background:#fff3cd;
   margin-bottom:12px;
 }
 
-.warning{
-  background:#fff4d6;
-  border:1px solid #f0d88a;
-  padding:12px;
-  border-radius:8px;
-}
-
-.success-box{
-  background:#e5f5e5;
-  border:1px solid #b9dfb9;
-  padding:12px;
-  border-radius:8px;
-}
-
-.danger-box{
-  background:#ffe7e7;
-  border:1px solid #e0b0b0;
-  padding:12px;
-  border-radius:8px;
-}
-
-h2{
-  margin-top:0;
-}
-
-h3{
-  margin-top:0;
-}
-
 @media(max-width:600px){
-
-  main{
-    padding:10px;
+  th,
+  td{
+    font-size:12px;
   }
 
-  .stat strong{
-    font-size:19px;
+  button{
+    padding:9px 10px;
   }
-
-  nav{
-    top:84px;
-  }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
   <h1>🌭 Chorizos Admin V8</h1>
-
-  <div id="loteHeader">
-    Lote activo: -
-  </div>
-
-  <div id="syncStatus">
-    Datos locales
-  </div>
-
 </header>
 
-
 <nav>
-
-  <button onclick="mostrarSeccion('inicio')" id="navInicio">
-    Inicio
-  </button>
-
-  <button onclick="mostrarSeccion('lotes')" id="navLotes">
-    Lotes
-  </button>
-
-  <button onclick="mostrarSeccion('pedidos')" id="navPedidos">
-    Pedidos
-  </button>
-
-  <button onclick="mostrarSeccion('inventario')" id="navInventario">
-    Inventario
-  </button>
-
-  <button onclick="mostrarSeccion('clientes')" id="navClientes">
-    Clientes
-  </button>
-
-  <button onclick="mostrarSeccion('finanzas')" id="navFinanzas">
-    Finanzas
-  </button>
-
-  <button onclick="mostrarSeccion('general')" id="navGeneral">
-    General
-  </button>
-
-  <button onclick="mostrarSeccion('datos')" id="navDatos">
-    Datos
-  </button>
-
+  <button onclick="mostrarSeccion('inicio')">Inicio</button>
+  <button onclick="mostrarSeccion('lotes')">Lotes</button>
+  <button onclick="mostrarSeccion('pedidos')">Pedidos</button>
+  <button onclick="mostrarSeccion('inventario')">Inventario</button>
+  <button onclick="mostrarSeccion('clientes')">Clientes</button>
+  <button onclick="mostrarSeccion('finanzas')">Finanzas</button>
+  <button onclick="mostrarSeccion('general')">General</button>
+  <button onclick="mostrarSeccion('datos')">Datos</button>
 </nav>
-
 
 <main>
 
+<!-- ================= INICIO ================= -->
 
-<section id="inicio" class="section active">
+<section id="inicio" class="seccion activa">
 
   <div class="card">
-
     <h2>Inicio</h2>
-
-    <p>
-      Resumen del lote activo:
-      <strong id="inicioLoteNombre">-</strong>
-    </p>
-
+    <div id="inicioLote"></div>
   </div>
-
 
   <div class="grid">
 
     <div class="stat">
       <small>Ventas</small>
-      <strong id="inicioVentas">$0</strong>
+      <strong id="statVentas">$0</strong>
     </div>
 
     <div class="stat">
       <small>Costo producto</small>
-      <strong id="inicioCosto">$0</strong>
+      <strong id="statCosto">$0</strong>
     </div>
 
     <div class="stat">
       <small>Gastos</small>
-      <strong id="inicioGastos">$0</strong>
+      <strong id="statGastos">$0</strong>
     </div>
 
     <div class="stat">
       <small>Ganancia</small>
-      <strong id="inicioGanancia">$0</strong>
+      <strong id="statGanancia">$0</strong>
     </div>
 
     <div class="stat">
       <small>Dinero pendiente</small>
-      <strong id="inicioPendiente">$0</strong>
+      <strong id="statPendiente">$0</strong>
     </div>
 
     <div class="stat">
       <small>Pedidos</small>
-      <strong id="inicioPedidos">0</strong>
+      <strong id="statPedidos">0</strong>
     </div>
 
   </div>
@@ -421,218 +296,127 @@ h3{
 </section>
 
 
-<section id="lotes" class="section">
+<!-- ================= LOTES ================= -->
+
+<section id="lotes" class="seccion">
 
   <div class="card">
 
     <h2>Lotes</h2>
 
-    <div class="form-grid">
+    <label>Lote activo</label>
 
-      <div>
+    <select id="selectorLote" onchange="cambiarLote(this.value)"></select>
 
-        <label>Lote activo</label>
+    <br>
 
-        <select
-          id="selectorLote"
-          onchange="cambiarLoteDesdeSelector()"
-        ></select>
-
-      </div>
-
-      <div>
-
-        <label>Nuevo lote</label>
-
-        <button
-          class="btn"
-          onclick="crearLote()"
-        >
-          + Crear lote
-        </button>
-
-      </div>
-
-    </div>
+    <button onclick="crearLote()">+ Crear lote</button>
 
   </div>
-
 
   <div id="listaLotes"></div>
 
 </section>
 
 
-<section id="pedidos" class="section">
+<!-- ================= PEDIDOS ================= -->
+
+<section id="pedidos" class="seccion">
 
   <div class="card">
 
-    <h2>Crear pedido</h2>
+    <h2>Pedidos</h2>
 
-    <div class="form-grid">
+    <div id="pedidoLoteActivo"></div>
 
-      <div>
-        <label>Cliente</label>
-        <input
-          id="pedidoCliente"
-          placeholder="Nombre del cliente"
-        >
-      </div>
+    <label>Cliente</label>
+    <input id="pedidoCliente" placeholder="Nombre del cliente">
 
-      <div>
-        <label>Teléfono</label>
-        <input
-          id="pedidoTelefono"
-          placeholder="Teléfono"
-        >
-      </div>
+    <label>Teléfono</label>
+    <input id="pedidoTelefono" placeholder="Teléfono">
 
-      <div>
-        <label>Dirección</label>
-        <input
-          id="pedidoDireccion"
-          placeholder="Dirección"
-        >
-      </div>
+    <label>Dirección</label>
+    <input id="pedidoDireccion" placeholder="Dirección">
 
-      <div>
-        <label>Pack</label>
+    <label>Pack</label>
+    <select id="pedidoPack">
+      <option value="x5">Pack x5 - $17.000</option>
+      <option value="x7">Pack x7 - $22.000</option>
+    </select>
 
-        <select id="pedidoPack">
+    <label>Cantidad</label>
+    <input id="pedidoCantidad" type="number" min="1" value="1">
 
-          <option value="x5">
-            Pack x5 - $17.000
-          </option>
+    <label>Forma de pago</label>
+    <select id="pedidoPago">
+      <option value="Pendiente">Pendiente</option>
+      <option value="Nequi">Nequi</option>
+      <option value="Daviplata">Daviplata</option>
+      <option value="Efectivo">Efectivo</option>
+      <option value="Transferencia">Transferencia</option>
+    </select>
 
-          <option value="x7">
-            Pack x7 - $22.000
-          </option>
+    <label>Estado</label>
+    <select id="pedidoEstado">
+      <option value="Pendiente">Pendiente</option>
+      <option value="Pagado">Pagado</option>
+      <option value="Entregado">Entregado</option>
+    </select>
 
-        </select>
-
-      </div>
-
-      <div>
-
-        <label>Cantidad</label>
-
-        <input
-          id="pedidoCantidad"
-          type="number"
-          min="1"
-          value="1"
-        >
-
-      </div>
-
-      <div>
-
-        <label>Forma de pago</label>
-
-        <select id="pedidoPago">
-
-          <option value="Pendiente">
-            Pendiente
-          </option>
-
-          <option value="Nequi">
-            Nequi
-          </option>
-
-          <option value="Daviplata">
-            Daviplata
-          </option>
-
-          <option value="Efectivo">
-            Efectivo
-          </option>
-
-          <option value="Transferencia">
-            Transferencia
-          </option>
-
-        </select>
-
-      </div>
-
-      <div>
-
-        <label>Estado</label>
-
-        <select id="pedidoEstado">
-
-          <option value="Pendiente">
-            Pendiente
-          </option>
-
-          <option value="Pagado">
-            Pagado
-          </option>
-
-          <option value="Entregado">
-            Entregado
-          </option>
-
-        </select>
-
-      </div>
-
-    </div>
-
-
-    <div class="card mt">
-
-      <strong>Total:</strong>
-
-      <span id="pedidoTotal">
-        $17.000
-      </span>
-
-    </div>
-
-
-    <button
-      class="btn"
-      onclick="crearPedido()"
-    >
-      Crear pedido
-    </button>
+    <button onclick="crearPedido()">Crear pedido</button>
 
   </div>
 
+  <div class="card">
+
+    <h2>Pedidos del lote activo</h2>
+
+    <div id="tablaPedidos" class="table-wrap"></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= INVENTARIO ================= -->
+
+<section id="inventario" class="seccion">
 
   <div class="card">
 
-    <h2>
-      Pedidos de
-      <span id="pedidosLoteNombre">-</span>
-    </h2>
+    <h2>Inventario</h2>
 
-    <div class="table-wrap">
+    <div id="inventarioLoteActivo"></div>
 
-      <table>
+    <div class="grid">
 
-        <thead>
+      <div>
+        <h3>Pack x5</h3>
+        <div class="total" id="invX5">0</div>
 
-          <tr>
+        <button onclick="modificarInventario('x5',1)">
+          +1
+        </button>
 
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Teléfono</th>
-            <th>Pack</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-            <th>Pago</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+        <button class="secundario"
+                onclick="modificarInventario('x5',-1)">
+          -1
+        </button>
+      </div>
 
-          </tr>
+      <div>
+        <h3>Pack x7</h3>
+        <div class="total" id="invX7">0</div>
 
-        </thead>
+        <button onclick="modificarInventario('x7',1)">
+          +1
+        </button>
 
-        <tbody id="tablaPedidos"></tbody>
-
-      </table>
+        <button class="secundario"
+                onclick="modificarInventario('x7',-1)">
+          -1
+        </button>
+      </div>
 
     </div>
 
@@ -641,534 +425,236 @@ h3{
 </section>
 
 
-<section id="inventario" class="section">
+<!-- ================= CLIENTES ================= -->
+
+<section id="clientes" class="seccion">
 
   <div class="card">
 
-    <h2>
-      Inventario -
-      <span id="inventarioLoteNombre">-</span>
-    </h2>
+    <h2>Clientes</h2>
+
+    <div id="clientesLoteActivo"></div>
+
+    <div class="alerta">
+      Aquí solamente aparecen los clientes que realizaron pedidos
+      en el <strong>lote activo</strong>.
+    </div>
+
+    <div id="tablaClientes" class="table-wrap"></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FINANZAS ================= -->
+
+<section id="finanzas" class="seccion">
+
+  <div class="card">
+
+    <h2>Finanzas</h2>
+
+    <div id="finanzasLoteActivo"></div>
 
     <div class="grid">
 
       <div class="stat">
-
-        <small>
-          Packs x5 disponibles
-        </small>
-
-        <strong id="inventarioX5">
-          0
-        </strong>
-
+        <small>Ventas</small>
+        <strong id="finVentas">$0</strong>
       </div>
 
       <div class="stat">
+        <small>Costo producto</small>
+        <strong id="finCosto">$0</strong>
+      </div>
 
-        <small>
-          Packs x7 disponibles
-        </small>
+      <div class="stat">
+        <small>Ganancia bruta</small>
+        <strong id="finBruto">$0</strong>
+      </div>
 
-        <strong id="inventarioX7">
-          0
-        </strong>
+      <div class="stat">
+        <small>Gastos</small>
+        <strong id="finGastos">$0</strong>
+      </div>
 
+      <div class="stat">
+        <small>Ganancia neta</small>
+        <strong id="finNeto">$0</strong>
+      </div>
+
+      <div class="stat">
+        <small>Pendiente</small>
+        <strong id="finPendiente">$0</strong>
       </div>
 
     </div>
 
   </div>
-
 
   <div class="card">
 
-    <h3>Agregar inventario</h3>
+    <h3>Agregar gasto</h3>
 
-    <div class="form-grid">
+    <label>Descripción</label>
+    <input id="gastoDescripcion" placeholder="Ej: transporte">
 
-      <div>
+    <label>Valor</label>
+    <input id="gastoValor" type="number" min="0">
 
-        <label>Producto</label>
-
-        <select id="inventarioProducto">
-
-          <option value="x5">
-            Pack x5
-          </option>
-
-          <option value="x7">
-            Pack x7
-          </option>
-
-        </select>
-
-      </div>
-
-      <div>
-
-        <label>Cantidad</label>
-
-        <input
-          id="inventarioCantidad"
-          type="number"
-          min="1"
-          value="1"
-        >
-
-      </div>
-
-    </div>
-
-    <button
-      class="btn-success mt"
-      onclick="agregarInventario()"
-    >
-      Agregar
-    </button>
+    <button onclick="crearGasto()">Agregar gasto</button>
 
   </div>
-
 
   <div class="card">
-
-    <h3>Retirar inventario</h3>
-
-    <div class="form-grid">
-
-      <div>
-
-        <label>Producto</label>
-
-        <select id="inventarioProductoRetirar">
-
-          <option value="x5">
-            Pack x5
-          </option>
-
-          <option value="x7">
-            Pack x7
-          </option>
-
-        </select>
-
-      </div>
-
-      <div>
-
-        <label>Cantidad</label>
-
-        <input
-          id="inventarioCantidadRetirar"
-          type="number"
-          min="1"
-          value="1"
-        >
-
-      </div>
-
-    </div>
-
-    <button
-      class="btn-danger mt"
-      onclick="retirarInventario()"
-    >
-      Retirar
-    </button>
-
-  </div>
-
-</section>
-
-
-<section id="clientes" class="section">
-
-  <div class="card">
-
-    <h2>
-      Clientes de
-      <span id="clientesLoteNombre">-</span>
-    </h2>
-
-    <div class="success-box mb">
-
-      <strong>Importante:</strong>
-
-      aquí solamente aparecen los clientes que tienen
-      pedidos pertenecientes al lote activo.
-
-    </div>
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-
-          <tr>
-
-            <th>Cliente</th>
-            <th>Teléfono</th>
-            <th>Dirección</th>
-            <th>Pedidos</th>
-            <th>Compras</th>
-            <th>Pendiente</th>
-
-          </tr>
-
-        </thead>
-
-        <tbody id="tablaClientes"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<section id="finanzas" class="section">
-
-  <div class="card">
-
-    <h2>
-      Finanzas -
-      <span id="finanzasLoteNombre">-</span>
-    </h2>
-
-  </div>
-
-
-  <div class="grid">
-
-    <div class="stat">
-
-      <small>Ventas</small>
-
-      <strong id="finVentas">
-        $0
-      </strong>
-
-    </div>
-
-    <div class="stat">
-
-      <small>Costo producto</small>
-
-      <strong id="finCosto">
-        $0
-      </strong>
-
-    </div>
-
-    <div class="stat">
-
-      <small>Ganancia bruta</small>
-
-      <strong id="finGananciaBruta">
-        $0
-      </strong>
-
-    </div>
-
-    <div class="stat">
-
-      <small>Gastos</small>
-
-      <strong id="finGastos">
-        $0
-      </strong>
-
-    </div>
-
-    <div class="stat">
-
-      <small>Ganancia neta</small>
-
-      <strong id="finGananciaNeta">
-        $0
-      </strong>
-
-    </div>
-
-    <div class="stat">
-
-      <small>Pendiente</small>
-
-      <strong id="finPendiente">
-        $0
-      </strong>
-
-    </div>
-
-  </div>
-
-
-  <div class="card mt">
 
     <h3>Gastos del lote</h3>
 
-    <div class="form-grid">
-
-      <div>
-
-        <label>Descripción</label>
-
-        <input
-          id="gastoDescripcion"
-          placeholder="Ej: transporte"
-        >
-
-      </div>
-
-      <div>
-
-        <label>Valor</label>
-
-        <input
-          id="gastoValor"
-          type="number"
-          min="0"
-          placeholder="0"
-        >
-
-      </div>
-
-    </div>
-
-    <button
-      class="btn mt"
-      onclick="agregarGasto()"
-    >
-      Agregar gasto
-    </button>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-
-          <tr>
-
-            <th>Fecha</th>
-            <th>Descripción</th>
-            <th>Valor</th>
-            <th>Acción</th>
-
-          </tr>
-
-        </thead>
-
-        <tbody id="tablaGastos"></tbody>
-
-      </table>
-
-    </div>
+    <div id="tablaGastos" class="table-wrap"></div>
 
   </div>
 
 </section>
 
 
-<section id="general" class="section">
+<!-- ================= GENERAL ================= -->
+
+<section id="general" class="seccion">
 
   <div class="card">
 
-    <h2>Resumen general</h2>
+    <h2>General</h2>
 
-    <p>
-      Esta sección sí reúne la información
-      de <strong>todos los lotes</strong>.
+    <p class="muted">
+      Esta sección sí muestra la información acumulada de todos los lotes.
     </p>
 
-  </div>
+    <div class="grid">
 
+      <div class="stat">
+        <small>Ventas totales</small>
+        <strong id="genVentas">$0</strong>
+      </div>
 
-  <div class="grid">
+      <div class="stat">
+        <small>Costo total</small>
+        <strong id="genCosto">$0</strong>
+      </div>
 
-    <div class="stat">
+      <div class="stat">
+        <small>Gastos totales</small>
+        <strong id="genGastos">$0</strong>
+      </div>
 
-      <small>Ventas totales</small>
+      <div class="stat">
+        <small>Ganancia total</small>
+        <strong id="genGanancia">$0</strong>
+      </div>
 
-      <strong id="generalVentas">
-        $0
-      </strong>
+      <div class="stat">
+        <small>Dinero pendiente</small>
+        <strong id="genPendiente">$0</strong>
+      </div>
 
-    </div>
-
-    <div class="stat">
-
-      <small>Costos totales</small>
-
-      <strong id="generalCostos">
-        $0
-      </strong>
-
-    </div>
-
-    <div class="stat">
-
-      <small>Gastos totales</small>
-
-      <strong id="generalGastos">
-        $0
-      </strong>
-
-    </div>
-
-    <div class="stat">
-
-      <small>Ganancia total</small>
-
-      <strong id="generalGanancia">
-        $0
-      </strong>
+      <div class="stat">
+        <small>Pedidos totales</small>
+        <strong id="genPedidos">0</strong>
+      </div>
 
     </div>
 
   </div>
 
+  <div class="card">
 
-  <div class="card mt">
+    <h3>Resumen por lote</h3>
 
-    <h3>Resultado por lote</h3>
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-
-          <tr>
-
-            <th>Lote</th>
-            <th>Ventas</th>
-            <th>Costos</th>
-            <th>Gastos</th>
-            <th>Ganancia</th>
-            <th>Pedidos</th>
-
-          </tr>
-
-        </thead>
-
-        <tbody id="tablaGeneralLotes"></tbody>
-
-      </table>
-
-    </div>
+    <div id="tablaGeneral" class="table-wrap"></div>
 
   </div>
 
 </section>
 
 
-<section id="datos" class="section">
+<!-- ================= DATOS ================= -->
+
+<section id="datos" class="seccion">
 
   <div class="card">
 
     <h2>Datos</h2>
 
     <p>
-      Utiliza estas opciones para respaldar
-      o recuperar la información de la aplicación.
+      Puedes guardar una copia de seguridad de toda la información
+      o restaurarla posteriormente.
     </p>
 
-    <button
-      class="btn"
-      onclick="exportarDatos()"
-    >
+    <button onclick="exportarDatos()">
       Exportar datos
     </button>
 
-    <button
-      class="btn-secondary"
-      onclick="document.getElementById('archivoImportar').click()"
-    >
-      Importar datos
-    </button>
+    <br><br>
 
     <input
       type="file"
       id="archivoImportar"
       accept=".json"
-      style="display:none"
       onchange="importarDatos(event)"
     >
 
-  </div>
+    <br><br>
 
-
-  <div class="card danger-box">
-
-    <h3>Reiniciar aplicación</h3>
-
-    <p>
-      Esta opción elimina los datos guardados
-      localmente en este dispositivo.
-    </p>
-
-    <button
-      class="btn-danger"
-      onclick="reiniciarAplicacion()"
-    >
-      Reiniciar
+    <button class="peligro" onclick="resetearDatos()">
+      Reiniciar aplicación
     </button>
 
   </div>
 
 </section>
 
-
 </main>
 
 
-<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+<!-- ================= FIREBASE ================= -->
 
-<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+<script type="module">
 
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-<script>
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyBrilLSqnN_eL7qStOzKyw9vEOIecuE",
-
-  authDomain:
-    "chorizos-admin.firebaseapp.com",
-
-  projectId:
-    "chorizos-admin",
-
-  storageBucket:
-    "chorizos-admin.firebasestorage.app",
-
-  messagingSenderId:
-    "385796778072",
-
-  appId:
-    "1:385796778072:web:1adfa8b0486a1402a3822d",
-
-  measurementId:
-    "G-V4YQWDSKWK6"
-
+  apiKey: "AIzaSyBrilLSqnN_eL7qStOzKyw9vEOIecuE",
+  authDomain: "chorizos-admin.firebaseapp.com",
+  projectId: "chorizos-admin",
+  storageBucket: "chorizos-admin.firebasestorage.app",
+  messagingSenderId: "385796778072",
+  appId: "1:385796778072:web:1adfa8b0486a1402a3822d",
+  measurementId: "G-V4YQWDSKWK6"
 };
 
 
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app);
 
-const firestore =
-  firebase.firestore();
+window.firestore = firestore;
+window.firebaseDoc = doc;
+window.firebaseSetDoc = setDoc;
+window.firebaseGetDoc = getDoc;
 
+</script>
+
+
+<script>
 
 const PRECIO_X5 = 17000;
 const PRECIO_X7 = 22000;
@@ -1176,56 +662,36 @@ const PRECIO_X7 = 22000;
 const COSTO_X5 = 7500;
 const COSTO_X7 = 10500;
 
-const STORAGE =
-  "chorizos_admin_v7";
-
+const STORAGE = "chorizos_admin_v7";
 
 let db = null;
 
 
-/* =====================================================
-   UTILIDADES
-===================================================== */
+/* ================= UTILIDADES ================= */
 
-function dinero(valor){
+function crearId(){
 
-  return new Intl.NumberFormat(
-    "es-CO",
-    {
-      style:"currency",
-      currency:"COP",
-      maximumFractionDigits:0
-    }
-  ).format(
-    Number(valor) || 0
-  );
+  return Date.now().toString(36) +
+         Math.random().toString(36).substring(2,8);
 
 }
 
 
 function fechaActual(){
 
-  const ahora = new Date();
-
-  return ahora.toLocaleString(
-    "es-CO"
-  );
+  return new Date().toISOString();
 
 }
 
 
-function crearId(){
+function dinero(valor){
 
-  return Date.now().toString()
-    + "_"
-    + Math.random()
-      .toString(36)
-      .substring(2,9);
+  return "$" + Number(valor || 0).toLocaleString("es-CO");
 
 }
 
 
-function escapeHTML(texto){
+function escapar(texto){
 
   return String(texto ?? "")
     .replace(/&/g,"&amp;")
@@ -1237,227 +703,209 @@ function escapeHTML(texto){
 }
 
 
-/* =====================================================
-   BASE VACÍA
-===================================================== */
+/* ================= BASE VACÍA ================= */
 
 function crearDBVacia(){
 
-  const id = crearId();
+  const lote = {
+    id:crearId(),
+    nombre:"Lote 1",
+    fecha:fechaActual(),
+    cerrado:false,
+    inventario:{
+      x5:0,
+      x7:0
+    },
+    pedidos:[],
+    gastos:[]
+  };
+
+  return {
+    lotes:[lote],
+    loteActivo:lote.id
+  };
+
+}
+
+
+/* ==========================================================
+   NORMALIZACIÓN Y MIGRACIÓN DE PEDIDOS
+   ==========================================================
+
+   Esta parte es la corrección principal.
+
+   Cada pedido debe pertenecer a UN SOLO lote.
+
+   Si existen pedidos antiguos repetidos dentro de varios lotes,
+   se conserva una sola copia según su ID.
+
+   Posteriormente se reconstruye cada lote con sus pedidos.
+========================================================== */
+
+function normalizarDB(datos){
+
+  if(!datos || typeof datos!=="object"){
+    return crearDBVacia();
+  }
+
+  if(!Array.isArray(datos.lotes)){
+    datos.lotes=[];
+  }
+
+  if(datos.lotes.length===0){
+    return crearDBVacia();
+  }
+
+
+  const lotes = datos.lotes.map((lote,index)=>{
+
+    return {
+
+      id:lote.id || crearId(),
+
+      nombre:lote.nombre || `Lote ${index+1}`,
+
+      fecha:lote.fecha || fechaActual(),
+
+      cerrado:Boolean(lote.cerrado),
+
+      inventario:{
+        x5:Number(lote.inventario?.x5 || 0),
+        x7:Number(lote.inventario?.x7 || 0)
+      },
+
+      pedidos:Array.isArray(lote.pedidos)
+        ? lote.pedidos
+        : [],
+
+      gastos:Array.isArray(lote.gastos)
+        ? lote.gastos
+        : []
+
+    };
+
+  });
+
+
+  /*
+   * Mapa de todos los pedidos.
+   *
+   * La clave es el ID del pedido.
+   * Esto evita que el mismo pedido quede duplicado
+   * en varios lotes.
+   */
+
+  const pedidosUnicos = new Map();
+
+
+  /*
+   * Recorremos los lotes en orden.
+   *
+   * Si un pedido ya apareció anteriormente,
+   * no se vuelve a agregar.
+   */
+
+  lotes.forEach(lote=>{
+
+    lote.pedidos.forEach(pedido=>{
+
+      if(!pedido || typeof pedido!=="object"){
+        return;
+      }
+
+      if(!pedido.id){
+        pedido.id=crearId();
+      }
+
+      /*
+       * Si el pedido ya tiene loteId, respetamos
+       * esa pertenencia.
+       *
+       * Si no tiene loteId, pertenece inicialmente
+       * al lote donde fue encontrado.
+       */
+
+      if(!pedido.loteId){
+        pedido.loteId=lote.id;
+      }
+
+      if(pedido.inventarioDescontado===undefined){
+        pedido.inventarioDescontado=true;
+      }
+
+
+      /*
+       * Si ya existe el ID, NO lo duplicamos.
+       */
+
+      if(!pedidosUnicos.has(pedido.id)){
+
+        pedidosUnicos.set(
+          pedido.id,
+          pedido
+        );
+
+      }
+
+    });
+
+  });
+
+
+  /*
+   * Ahora vaciamos los pedidos de todos los lotes.
+   */
+
+  lotes.forEach(lote=>{
+    lote.pedidos=[];
+  });
+
+
+  /*
+   * Volvemos a repartir cada pedido en el lote
+   * que indica su loteId.
+   */
+
+  pedidosUnicos.forEach(pedido=>{
+
+    const loteDestino = lotes.find(
+      lote=>lote.id===pedido.loteId
+    );
+
+    if(loteDestino){
+
+      loteDestino.pedidos.push(pedido);
+
+    }
+
+  });
+
+
+  /*
+   * Verificar lote activo.
+   */
+
+  let loteActivo = datos.loteActivo;
+
+  if(!lotes.some(lote=>lote.id===loteActivo)){
+
+    loteActivo=lotes[0].id;
+
+  }
+
 
   return {
 
-    lotes:[
-      {
+    lotes,
 
-        id:id,
-
-        nombre:"Lote 1",
-
-        fecha:fechaActual(),
-
-        cerrado:false,
-
-        inventario:{
-          x5:0,
-          x7:0
-        },
-
-        pedidos:[],
-
-        gastos:[]
-
-      }
-    ],
-
-    loteActivo:id
+    loteActivo
 
   };
 
 }
 
 
-/* =====================================================
-   NORMALIZACIÓN Y SEPARACIÓN REAL POR LOTE
-===================================================== */
-
-function normalizarDB(data){
-
-  if(
-    !data ||
-    typeof data !== "object"
-  ){
-
-    return crearDBVacia();
-
-  }
-
-
-  if(
-    !Array.isArray(data.lotes) ||
-    !data.lotes.length
-  ){
-
-    return crearDBVacia();
-
-  }
-
-
-  /*
-    Este conjunto sirve para detectar
-    pedidos duplicados físicamente en
-    varios lotes.
-  */
-
-  const pedidosVistos =
-    new Set();
-
-
-  data.lotes.forEach(
-    lote=>{
-
-      if(!lote.id){
-        lote.id=crearId();
-      }
-
-      if(!lote.nombre){
-        lote.nombre="Lote";
-      }
-
-      if(
-        !lote.inventario ||
-        typeof lote.inventario !== "object"
-      ){
-
-        lote.inventario={
-          x5:0,
-          x7:0
-        };
-
-      }
-
-      lote.inventario.x5 =
-        Number(lote.inventario.x5)||0;
-
-      lote.inventario.x7 =
-        Number(lote.inventario.x7)||0;
-
-
-      if(!Array.isArray(lote.pedidos)){
-        lote.pedidos=[];
-      }
-
-      if(!Array.isArray(lote.gastos)){
-        lote.gastos=[];
-      }
-
-
-      /*
-        EL LOTE DONDE ESTÁ GUARDADO EL PEDIDO
-        ES LA FUENTE DE VERDAD.
-
-        Esto corrige pedidos antiguos que
-        tenían loteId vacío o incorrecto.
-      */
-
-      const pedidosLimpios=[];
-
-
-      lote.pedidos.forEach(
-        pedido=>{
-
-          if(!pedido.id){
-            pedido.id=crearId();
-          }
-
-
-          /*
-            Si exactamente el mismo pedido
-            aparece duplicado en otro lote,
-            no lo repetimos.
-          */
-
-          if(
-            pedidosVistos.has(pedido.id)
-          ){
-
-            return;
-
-          }
-
-
-          pedidosVistos.add(
-            pedido.id
-          );
-
-
-          /*
-            SIEMPRE se asigna el ID del lote
-            donde está físicamente guardado.
-          */
-
-          pedido.loteId =
-            lote.id;
-
-
-          if(
-            pedido.inventarioDescontado === undefined
-          ){
-
-            pedido.inventarioDescontado=true;
-
-          }
-
-
-          pedidosLimpios.push(
-            pedido
-          );
-
-        }
-      );
-
-
-      lote.pedidos =
-        pedidosLimpios;
-
-
-      lote.gastos.forEach(
-        gasto=>{
-
-          if(!gasto.id){
-            gasto.id=crearId();
-          }
-
-        }
-      );
-
-    }
-  );
-
-
-  const existe =
-    data.lotes.some(
-      lote=>
-        lote.id===data.loteActivo
-    );
-
-
-  if(!existe){
-
-    data.loteActivo =
-      data.lotes[0].id;
-
-  }
-
-
-  return data;
-
-}
-
-
-/* =====================================================
-   LOCAL
-===================================================== */
+/* ================= GUARDAR LOCAL ================= */
 
 function guardarLocal(){
 
@@ -1470,30 +918,43 @@ function guardarLocal(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Error guardando localmente:",
+      error
+    );
 
   }
 
 }
 
 
+/* ================= CARGAR LOCAL ================= */
+
 function cargarLocal(){
 
   try{
 
-    const guardado =
-      localStorage.getItem(
-        STORAGE
-      );
+    const datos =
+      localStorage.getItem(STORAGE);
 
-    if(guardado){
+    if(!datos){
 
-      db =
-        normalizarDB(
-          JSON.parse(guardado)
-        );
+      db=crearDBVacia();
+      guardarLocal();
+      return;
 
     }
+
+    db=normalizarDB(
+      JSON.parse(datos)
+    );
+
+    /*
+     * Guardamos inmediatamente la versión
+     * ya normalizada.
+     */
+
+    guardarLocal();
 
   }catch(error){
 
@@ -1502,55 +963,46 @@ function cargarLocal(){
       error
     );
 
-    db=null;
+    db=crearDBVacia();
+    guardarLocal();
 
   }
 
 }
 
 
-/* =====================================================
-   FIREBASE
-===================================================== */
+/* ================= FIREBASE ================= */
 
 async function guardarNube(){
 
-  if(!db){
-    return;
-  }
-
   try{
 
-    document.getElementById(
-      "syncStatus"
-    ).textContent =
-      "Guardando en la nube...";
+    if(
+      !window.firestore ||
+      !window.firebaseDoc ||
+      !window.firebaseSetDoc
+    ){
+      return;
+    }
 
+    await window.firebaseSetDoc(
 
-    await firestore
-      .collection("appData")
-      .doc("chorizosAdmin")
-      .set(
-        normalizarDB(db)
-      );
+      window.firebaseDoc(
+        window.firestore,
+        "appData",
+        "chorizosAdmin"
+      ),
 
+      db
 
-    document.getElementById(
-      "syncStatus"
-    ).textContent =
-      "☁️ Sincronizado";
+    );
 
   }catch(error){
 
     console.error(
-      "Firebase:",
+      "Error guardando en Firebase:",
       error
     );
-
-    document.getElementById(
-      "syncStatus"
-    ).textContent =
-      "⚠️ Guardado local";
 
   }
 
@@ -1561,26 +1013,46 @@ async function iniciarNube(){
 
   try{
 
-    const snap =
-      await firestore
-        .collection("appData")
-        .doc("chorizosAdmin")
-        .get();
+    if(
+      !window.firestore ||
+      !window.firebaseDoc ||
+      !window.firebaseGetDoc
+    ){
+      return;
+    }
+
+    const referencia =
+      window.firebaseDoc(
+        window.firestore,
+        "appData",
+        "chorizosAdmin"
+      );
+
+    const snapshot =
+      await window.firebaseGetDoc(referencia);
 
 
-    if(snap.exists){
+    if(snapshot.exists()){
 
-      const nube =
-        normalizarDB(
-          snap.data()
-        );
+      /*
+       * Normalizamos también lo que viene
+       * desde Firebase.
+       */
 
-
-      db=nube;
+      db=normalizarDB(
+        snapshot.data()
+      );
 
       guardarLocal();
 
       actualizarTodo();
+
+      /*
+       * Guardamos la estructura limpia
+       * nuevamente en la nube.
+       */
+
+      await guardarNube();
 
     }else{
 
@@ -1591,176 +1063,95 @@ async function iniciarNube(){
   }catch(error){
 
     console.error(
-      "No se pudo cargar Firebase:",
+      "Error iniciando nube:",
       error
     );
 
-    document.getElementById(
-      "syncStatus"
-    ).textContent =
-      "⚠️ Trabajando sin nube";
-
   }
 
 }
 
 
-async function guardar(){
-
-  db =
-    normalizarDB(db);
-
-  guardarLocal();
-
-  actualizarTodo();
-
-  await guardarNube();
-
-}
-
-
-/* =====================================================
-   LOTE ACTIVO
-===================================================== */
+/* ================= LOTE ACTIVO ================= */
 
 function obtenerLote(){
 
-  if(!db){
-    return null;
-  }
-
   return db.lotes.find(
-    lote=>
-      lote.id===db.loteActivo
-  ) || db.lotes[0];
-
-}
-
-
-/* =====================================================
-   SECCIONES
-===================================================== */
-
-function mostrarSeccion(nombre){
-
-  document
-    .querySelectorAll(".section")
-    .forEach(
-      seccion=>{
-        seccion.classList.remove(
-          "active"
-        );
-      }
-    );
-
-
-  document
-    .querySelectorAll("nav button")
-    .forEach(
-      boton=>{
-        boton.classList.remove(
-          "active"
-        );
-      }
-    );
-
-
-  const seccion =
-    document.getElementById(
-      nombre
-    );
-
-  if(seccion){
-
-    seccion.classList.add(
-      "active"
-    );
-
-  }
-
-
-  const boton =
-    document.getElementById(
-      "nav"+
-      nombre.charAt(0).toUpperCase()
-      +
-      nombre.slice(1)
-    );
-
-  if(boton){
-
-    boton.classList.add(
-      "active"
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   LOTES
-===================================================== */
-
-async function cambiarLote(id){
-
-  const lote =
-    db.lotes.find(
-      l=>l.id===id
-    );
-
-  if(!lote){
-    return;
-  }
-
-
-  db.loteActivo =
-    lote.id;
-
-
-  db =
-    normalizarDB(db);
-
-
-  guardarLocal();
-
-  actualizarTodo();
-
-  await guardarNube();
-
-}
-
-
-function cambiarLoteDesdeSelector(){
-
-  const selector =
-    document.getElementById(
-      "selectorLote"
-    );
-
-  cambiarLote(
-    selector.value
+    lote=>lote.id===db.loteActivo
   );
 
 }
 
 
-async function crearLote(){
+/* ================= SECCIONES ================= */
 
-  const numero =
-    db.lotes.length+1;
+function mostrarSeccion(nombre){
+
+  document
+    .querySelectorAll(".seccion")
+    .forEach(seccion=>{
+      seccion.classList.remove("activa");
+    });
+
+
+  const seccion =
+    document.getElementById(nombre);
+
+  if(seccion){
+    seccion.classList.add("activa");
+  }
+
+
+  actualizarTodo();
+
+}
+
+
+/* ================= CAMBIAR LOTE ================= */
+
+function cambiarLote(id){
+
+  const existe =
+    db.lotes.some(lote=>lote.id===id);
+
+  if(!existe){
+    return;
+  }
+
+  db.loteActivo=id;
+
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
+
+}
+
+
+/* ================= CREAR LOTE ================= */
+
+function crearLote(){
+
+  const nombre =
+    prompt(
+      "Nombre del nuevo lote:",
+      `Lote ${db.lotes.length+1}`
+    );
+
+
+  if(!nombre){
+    return;
+  }
 
 
   const lote={
 
-    id:
-      crearId(),
+    id:crearId(),
 
-    nombre:
-      "Lote "+numero,
+    nombre:nombre.trim(),
 
-    fecha:
-      fechaActual(),
+    fecha:fechaActual(),
 
     cerrado:false,
 
@@ -1776,25 +1167,22 @@ async function crearLote(){
   };
 
 
-  db.lotes.push(
-    lote
-  );
+  db.lotes.push(lote);
 
+  db.loteActivo=lote.id;
 
-  db.loteActivo =
-    lote.id;
+  guardarLocal();
 
+  actualizarTodo();
 
-  await guardar();
-
-  mostrarSeccion(
-    "lotes"
-  );
+  guardarNube();
 
 }
 
 
-async function cerrarLote(id){
+/* ================= CERRAR LOTE ================= */
+
+function cerrarLote(id){
 
   const lote =
     db.lotes.find(
@@ -1808,23 +1196,27 @@ async function cerrarLote(id){
 
   if(
     !confirm(
-      "¿Cerrar "+lote.nombre+"?"
+      `¿Cerrar ${lote.nombre}?`
     )
   ){
-
     return;
-
   }
 
 
   lote.cerrado=true;
 
-  await guardar();
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
 
 }
 
 
-async function reabrirLote(id){
+/* ================= REABRIR LOTE ================= */
+
+function reabrirLote(id){
 
   const lote =
     db.lotes.find(
@@ -1838,368 +1230,119 @@ async function reabrirLote(id){
 
   lote.cerrado=false;
 
-  await guardar();
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
 
 }
 
+
+/* ================= RENDER LOTES ================= */
 
 function renderLotes(){
 
   const selector =
-    document.getElementById(
-      "selectorLote"
-    );
-
-  const lista =
-    document.getElementById(
-      "listaLotes"
-    );
-
+    document.getElementById("selectorLote");
 
   selector.innerHTML =
-    db.lotes.map(
-      lote=>`
+    db.lotes.map(lote=>`
 
-        <option
-          value="${lote.id}"
-          ${lote.id===db.loteActivo
-            ?"selected"
-            :""
+      <option
+        value="${lote.id}"
+        ${lote.id===db.loteActivo?"selected":""}
+      >
+        ${escapar(lote.nombre)}
+        ${lote.cerrado?" — CERRADO":""}
+      </option>
+
+    `).join("");
+
+
+  const contenedor =
+    document.getElementById("listaLotes");
+
+
+  contenedor.innerHTML =
+    db.lotes.map(lote=>`
+
+      <div class="lote-card
+        ${lote.id===db.loteActivo?"activo":""}">
+
+        <h3>
+          ${escapar(lote.nombre)}
+
+          ${
+            lote.id===db.loteActivo
+            ? `<span class="badge activo">ACTIVO</span>`
+            : ""
           }
-        >
-          ${escapeHTML(lote.nombre)}
-          ${lote.cerrado
-            ?" - Cerrado"
-            :""
+
+          ${
+            lote.cerrado
+            ? `<span class="badge cerrado">CERRADO</span>`
+            : ""
           }
-        </option>
 
-      `
-    ).join("");
+        </h3>
 
+        <p>
+          Fecha:
+          ${new Date(lote.fecha)
+            .toLocaleDateString("es-CO")}
+        </p>
 
-  lista.innerHTML =
-    db.lotes.map(
-      lote=>{
+        <p>
+          Pedidos:
+          <strong>${lote.pedidos.length}</strong>
+        </p>
 
-        const calculo =
-          calcularLote(lote);
+        <p>
+          Inventario:
+          x5 = ${lote.inventario.x5}
+          |
+          x7 = ${lote.inventario.x7}
+        </p>
 
+        ${
+          lote.cerrado
 
-        const activo =
-          lote.id===db.loteActivo;
+          ?
 
+          `
+          <button
+            onclick="reabrirLote('${lote.id}')">
+            Reabrir
+          </button>
+          `
 
-        return `
+          :
 
-          <div
-            class="lote-card
-              ${activo?"active":""}"
-          >
+          `
+          <button
+            class="secundario"
+            onclick="cerrarLote('${lote.id}')">
+            Cerrar lote
+          </button>
+          `
+        }
 
-            <div class="flex">
+      </div>
 
-              <strong>
-                ${escapeHTML(lote.nombre)}
-              </strong>
-
-              ${
-                activo
-                ?`
-                  <span class="badge badge-green">
-                    ACTIVO
-                  </span>
-                `
-                :""
-              }
-
-              ${
-                lote.cerrado
-                ?`
-                  <span class="badge badge-red">
-                    CERRADO
-                  </span>
-                `
-                :""
-              }
-
-            </div>
-
-
-            <p>
-              Creado:
-              ${escapeHTML(lote.fecha || "")}
-            </p>
-
-
-            <p>
-
-              Ventas:
-              <strong>
-                ${dinero(calculo.ventas)}
-              </strong>
-
-              ·
-
-              Ganancia:
-              <strong>
-                ${dinero(calculo.neto)}
-              </strong>
-
-            </p>
-
-
-            <div class="flex">
-
-              <button
-                class="btn"
-                onclick="cambiarLote('${lote.id}')"
-              >
-                Seleccionar
-              </button>
-
-              ${
-                lote.cerrado
-                ?`
-                  <button
-                    class="btn-secondary"
-                    onclick="reabrirLote('${lote.id}')"
-                  >
-                    Reabrir
-                  </button>
-                `
-                :`
-                  <button
-                    class="btn-danger"
-                    onclick="cerrarLote('${lote.id}')"
-                  >
-                    Cerrar lote
-                  </button>
-                `
-              }
-
-            </div>
-
-          </div>
-
-        `;
-
-      }
-    ).join("");
-
-
-  const activo =
-    obtenerLote();
-
-
-  document.getElementById(
-    "loteHeader"
-  ).textContent =
-    "Lote activo: "
-    +
-    (
-      activo
-      ?activo.nombre
-      :"Sin lote"
-    );
+    `).join("");
 
 }
 
 
-/* =====================================================
-   INVENTARIO
-===================================================== */
+/* ================= INVENTARIO ================= */
 
-async function agregarInventario(){
+function modificarInventario(tipo,cantidad){
 
-  const lote =
-    obtenerLote();
+  const lote=obtenerLote();
 
   if(!lote){
     return;
-  }
-
-
-  const producto =
-    document.getElementById(
-      "inventarioProducto"
-    ).value;
-
-
-  const cantidad =
-    Number(
-      document.getElementById(
-        "inventarioCantidad"
-      ).value
-    );
-
-
-  if(
-    !cantidad ||
-    cantidad<=0
-  ){
-
-    alert(
-      "Ingresa una cantidad válida."
-    );
-
-    return;
-
-  }
-
-
-  lote.inventario[producto] +=
-    cantidad;
-
-
-  await guardar();
-
-}
-
-
-async function retirarInventario(){
-
-  const lote =
-    obtenerLote();
-
-  if(!lote){
-    return;
-  }
-
-
-  const producto =
-    document.getElementById(
-      "inventarioProductoRetirar"
-    ).value;
-
-
-  const cantidad =
-    Number(
-      document.getElementById(
-        "inventarioCantidadRetirar"
-      ).value
-    );
-
-
-  if(
-    !cantidad ||
-    cantidad<=0
-  ){
-
-    alert(
-      "Ingresa una cantidad válida."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    lote.inventario[producto]
-    <
-    cantidad
-  ){
-
-    alert(
-      "No tienes suficiente inventario."
-    );
-
-    return;
-
-  }
-
-
-  lote.inventario[producto]
-    -=cantidad;
-
-
-  await guardar();
-
-}
-
-
-function renderInventario(){
-
-  const lote =
-    obtenerLote();
-
-
-  if(!lote){
-    return;
-  }
-
-
-  document.getElementById(
-    "inventarioLoteNombre"
-  ).textContent =
-    lote.nombre;
-
-
-  document.getElementById(
-    "inventarioX5"
-  ).textContent =
-    lote.inventario.x5;
-
-
-  document.getElementById(
-    "inventarioX7"
-  ).textContent =
-    lote.inventario.x7;
-
-}
-
-
-/* =====================================================
-   PEDIDOS
-===================================================== */
-
-function actualizarPrecioPedido(){
-
-  const pack =
-    document.getElementById(
-      "pedidoPack"
-    ).value;
-
-
-  const cantidad =
-    Number(
-      document.getElementById(
-        "pedidoCantidad"
-      ).value
-    ) || 0;
-
-
-  const precio =
-    pack==="x5"
-    ?PRECIO_X5
-    :PRECIO_X7;
-
-
-  document.getElementById(
-    "pedidoTotal"
-  ).textContent =
-    dinero(
-      precio*cantidad
-    );
-
-}
-
-
-async function crearPedido(){
-
-  const lote =
-    obtenerLote();
-
-
-  if(!lote){
-
-    alert(
-      "No hay lote activo."
-    );
-
-    return;
-
   }
 
 
@@ -2214,48 +1357,100 @@ async function crearPedido(){
   }
 
 
+  const nuevoValor =
+    Number(lote.inventario[tipo] || 0)
+    + cantidad;
+
+
+  if(nuevoValor<0){
+
+    alert(
+      "El inventario no puede quedar negativo."
+    );
+
+    return;
+
+  }
+
+
+  lote.inventario[tipo]=nuevoValor;
+
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
+
+}
+
+
+/* ================= PEDIDOS ================= */
+
+function crearPedido(){
+
+  const lote=obtenerLote();
+
+  if(!lote){
+    return;
+  }
+
+
+  if(lote.cerrado){
+
+    alert(
+      "Este lote está cerrado. Reábrelo para crear pedidos."
+    );
+
+    return;
+
+  }
+
+
   const cliente =
-    document.getElementById(
-      "pedidoCliente"
-    ).value.trim();
+    document
+      .getElementById("pedidoCliente")
+      .value
+      .trim();
 
 
   const telefono =
-    document.getElementById(
-      "pedidoTelefono"
-    ).value.trim();
+    document
+      .getElementById("pedidoTelefono")
+      .value
+      .trim();
 
 
   const direccion =
-    document.getElementById(
-      "pedidoDireccion"
-    ).value.trim();
+    document
+      .getElementById("pedidoDireccion")
+      .value
+      .trim();
 
 
   const pack =
-    document.getElementById(
-      "pedidoPack"
-    ).value;
+    document
+      .getElementById("pedidoPack")
+      .value;
 
 
   const cantidad =
     Number(
-      document.getElementById(
-        "pedidoCantidad"
-      ).value
+      document
+        .getElementById("pedidoCantidad")
+        .value
     );
 
 
   const pago =
-    document.getElementById(
-      "pedidoPago"
-    ).value;
+    document
+      .getElementById("pedidoPago")
+      .value;
 
 
   const estado =
-    document.getElementById(
-      "pedidoEstado"
-    ).value;
+    document
+      .getElementById("pedidoEstado")
+      .value;
 
 
   if(!cliente){
@@ -2269,10 +1464,7 @@ async function crearPedido(){
   }
 
 
-  if(
-    !cantidad ||
-    cantidad<=0
-  ){
+  if(!cantidad || cantidad<1){
 
     alert(
       "Ingresa una cantidad válida."
@@ -2285,22 +1477,24 @@ async function crearPedido(){
 
   const precioUnitario =
     pack==="x5"
-    ?PRECIO_X5
-    :PRECIO_X7;
+    ? PRECIO_X5
+    : PRECIO_X7;
 
 
   const total =
     precioUnitario*cantidad;
 
 
-  if(
-    lote.inventario[pack]
-    <
-    cantidad
-  ){
+  const inventarioDisponible =
+    Number(
+      lote.inventario[pack] || 0
+    );
+
+
+  if(inventarioDisponible<cantidad){
 
     alert(
-      "No hay suficiente inventario para este pedido."
+      `No hay suficiente inventario de ${pack}.`
     );
 
     return;
@@ -2310,97 +1504,77 @@ async function crearPedido(){
 
   const pedido={
 
-    id:
-      crearId(),
+    id:crearId(),
 
     /*
-      ESTE PEDIDO PERTENECE
-      EXCLUSIVAMENTE AL LOTE ACTIVO.
-    */
+     * ESTA ES LA CLAVE:
+     * el pedido queda asociado directamente
+     * al lote que estaba activo cuando se creó.
+     */
 
-    loteId:
-      lote.id,
+    loteId:lote.id,
 
-    fecha:
-      fechaActual(),
+    fecha:fechaActual(),
 
-    cliente:
-      cliente,
+    cliente,
 
-    telefono:
-      telefono,
+    telefono,
 
-    direccion:
-      direccion,
+    direccion,
 
-    pack:
-      pack,
+    pack,
 
-    cantidad:
-      cantidad,
+    cantidad,
 
-    precioUnitario:
-      precioUnitario,
+    precioUnitario,
 
-    total:
-      total,
+    total,
 
-    pago:
-      pago,
+    pago,
 
-    estado:
-      estado,
+    estado,
 
-    inventarioDescontado:
-      true
+    inventarioDescontado:true
 
   };
 
 
-  lote.inventario[pack]
-    -=cantidad;
+  lote.inventario[pack]-=cantidad;
+
+  lote.pedidos.push(pedido);
 
 
-  lote.pedidos.push(
-    pedido
-  );
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
 
 
-  await guardar();
+  document
+    .getElementById("pedidoCliente")
+    .value="";
 
+  document
+    .getElementById("pedidoTelefono")
+    .value="";
 
-  document.getElementById(
-    "pedidoCliente"
-  ).value="";
+  document
+    .getElementById("pedidoDireccion")
+    .value="";
 
-
-  document.getElementById(
-    "pedidoTelefono"
-  ).value="";
-
-
-  document.getElementById(
-    "pedidoDireccion"
-  ).value="";
-
-
-  document.getElementById(
-    "pedidoCantidad"
-  ).value=1;
-
-
-  actualizarPrecioPedido();
+  document
+    .getElementById("pedidoCantidad")
+    .value=1;
 
 }
 
 
-async function cambiarPago(
-  pedidoId,
-  valor
-){
+/* ================= CAMBIAR PAGO ================= */
 
-  const lote =
-    obtenerLote();
+function cambiarPago(id,valor){
+
+  const lote=obtenerLote();
 
   if(!lote){
     return;
@@ -2409,9 +1583,7 @@ async function cambiarPago(
 
   const pedido =
     lote.pedidos.find(
-      p=>
-        p.id===pedidoId &&
-        p.loteId===lote.id
+      p=>p.id===id
     );
 
 
@@ -2420,22 +1592,22 @@ async function cambiarPago(
   }
 
 
-  pedido.pago=
-    valor;
+  pedido.pago=valor;
 
+  guardarLocal();
 
-  await guardar();
+  actualizarTodo();
+
+  guardarNube();
 
 }
 
 
-async function cambiarEstado(
-  pedidoId,
-  valor
-){
+/* ================= CAMBIAR ESTADO ================= */
 
-  const lote =
-    obtenerLote();
+function cambiarEstado(id,valor){
+
+  const lote=obtenerLote();
 
   if(!lote){
     return;
@@ -2444,9 +1616,7 @@ async function cambiarEstado(
 
   const pedido =
     lote.pedidos.find(
-      p=>
-        p.id===pedidoId &&
-        p.loteId===lote.id
+      p=>p.id===id
     );
 
 
@@ -2456,27 +1626,32 @@ async function cambiarEstado(
 
 
   /*
-    CAMBIAR EL ESTADO NO TOCA INVENTARIO.
+   * IMPORTANTE:
+   *
+   * Cambiar entre Pendiente / Pagado / Entregado
+   * NO vuelve a descontar inventario.
+   *
+   * El inventario ya fue descontado cuando
+   * se creó el pedido.
+   */
 
-    El inventario solamente se descontó
-    cuando se creó el pedido.
-  */
-
-  pedido.estado=
-    valor;
+  pedido.estado=valor;
 
 
-  await guardar();
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
 
 }
 
 
-async function eliminarPedido(
-  pedidoId
-){
+/* ================= ELIMINAR PEDIDO ================= */
 
-  const lote =
-    obtenerLote();
+function eliminarPedido(id){
+
+  const lote=obtenerLote();
 
   if(!lote){
     return;
@@ -2485,9 +1660,7 @@ async function eliminarPedido(
 
   const indice =
     lote.pedidos.findIndex(
-      p=>
-        p.id===pedidoId &&
-        p.loteId===lote.id
+      p=>p.id===id
     );
 
 
@@ -2502,360 +1675,307 @@ async function eliminarPedido(
 
   if(
     !confirm(
-      "¿Eliminar este pedido?"
+      `¿Eliminar el pedido de ${pedido.cliente}?`
     )
   ){
+    return;
+  }
+
+
+  /*
+   * Al eliminar el pedido devolvemos
+   * las unidades al inventario.
+   */
+
+  if(pedido.inventarioDescontado){
+
+    lote.inventario[pedido.pack] =
+      Number(
+        lote.inventario[pedido.pack] || 0
+      )
+      + Number(pedido.cantidad || 0);
+
+  }
+
+
+  lote.pedidos.splice(indice,1);
+
+
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
+
+}
+
+
+/* ================= RENDER PEDIDOS ================= */
+
+function renderPedidos(){
+
+  const lote=obtenerLote();
+
+  const encabezado =
+    document.getElementById(
+      "pedidoLoteActivo"
+    );
+
+
+  if(!lote){
+
+    encabezado.innerHTML=
+      "No hay lote activo.";
 
     return;
 
   }
 
 
-  if(
-    pedido.inventarioDescontado
-  ){
+  encabezado.innerHTML=`
 
-    lote.inventario[
-      pedido.pack
-    ] +=
-      Number(
-        pedido.cantidad
-      ) || 0;
+    <p>
+      <strong>Lote activo:</strong>
+      ${escapar(lote.nombre)}
+    </p>
 
-  }
+  `;
 
 
-  lote.pedidos.splice(
-    indice,
-    1
-  );
+  /*
+   * CORRECCIÓN PRINCIPAL:
+   *
+   * SOLO mostramos pedidos cuyo loteId
+   * corresponde al lote activo.
+   */
+
+  const pedidosDelLote =
+    lote.pedidos.filter(
+      pedido=>
+        pedido.loteId===lote.id
+    );
 
 
-  await guardar();
-
-}
-
-
-/* =====================================================
-   RENDER PEDIDOS — SOLO LOTE ACTIVO
-===================================================== */
-
-function renderPedidos(){
-
-  const lote =
-    obtenerLote();
-
-
-  const tbody =
+  const contenedor =
     document.getElementById(
       "tablaPedidos"
     );
 
 
-  document.getElementById(
-    "pedidosLoteNombre"
-  ).textContent =
-    lote
-    ?lote.nombre
-    :"Sin lote";
+  if(pedidosDelLote.length===0){
 
-
-  if(!lote){
-
-    tbody.innerHTML=`
-
-      <tr>
-
-        <td
-          colspan="9"
-          class="empty"
-        >
-          No hay lote activo.
-        </td>
-
-      </tr>
-
-    `;
+    contenedor.innerHTML=
+      "<p class='muted'>No hay pedidos en este lote.</p>";
 
     return;
 
   }
 
 
-  /*
-    MUY IMPORTANTE:
+  contenedor.innerHTML=`
 
-    Aunque existan pedidos almacenados
-    en la base general, AQUÍ solamente
-    se muestran los que pertenecen al
-    lote actualmente seleccionado.
-  */
+    <table>
 
-  const pedidosDelLote =
-    lote.pedidos.filter(
-      pedido=>
-        pedido.loteId===lote.id
-    );
-
-
-  if(!pedidosDelLote.length){
-
-    tbody.innerHTML=`
-
-      <tr>
-
-        <td
-          colspan="9"
-          class="empty"
-        >
-
-          No hay pedidos en
-          ${escapeHTML(lote.nombre)}.
-
-        </td>
-
-      </tr>
-
-    `;
-
-    return;
-
-  }
-
-
-  tbody.innerHTML =
-    pedidosDelLote.map(
-      pedido=>`
+      <thead>
 
         <tr>
 
-          <td>
-            ${escapeHTML(
-              pedido.fecha
-            )}
-          </td>
-
-          <td>
-            ${escapeHTML(
-              pedido.cliente
-            )}
-          </td>
-
-          <td>
-            ${escapeHTML(
-              pedido.telefono
-            )}
-          </td>
-
-          <td>
-            ${escapeHTML(
-              pedido.pack
-            )}
-          </td>
-
-          <td>
-            ${pedido.cantidad}
-          </td>
-
-          <td class="money">
-            ${dinero(
-              pedido.total
-            )}
-          </td>
-
-          <td>
-
-            <select
-              onchange="
-                cambiarPago(
-                  '${pedido.id}',
-                  this.value
-                )
-              "
-            >
-
-              <option
-                value="Pendiente"
-                ${pedido.pago==="Pendiente"
-                  ?"selected"
-                  :""
-                }
-              >
-                Pendiente
-              </option>
-
-              <option
-                value="Nequi"
-                ${pedido.pago==="Nequi"
-                  ?"selected"
-                  :""
-                }
-              >
-                Nequi
-              </option>
-
-              <option
-                value="Daviplata"
-                ${pedido.pago==="Daviplata"
-                  ?"selected"
-                  :""
-                }
-              >
-                Daviplata
-              </option>
-
-              <option
-                value="Efectivo"
-                ${pedido.pago==="Efectivo"
-                  ?"selected"
-                  :""
-                }
-              >
-                Efectivo
-              </option>
-
-              <option
-                value="Transferencia"
-                ${pedido.pago==="Transferencia"
-                  ?"selected"
-                  :""
-                }
-              >
-                Transferencia
-              </option>
-
-            </select>
-
-          </td>
-
-          <td>
-
-            <select
-              onchange="
-                cambiarEstado(
-                  '${pedido.id}',
-                  this.value
-                )
-              "
-            >
-
-              <option
-                value="Pendiente"
-                ${pedido.estado==="Pendiente"
-                  ?"selected"
-                  :""
-                }
-              >
-                Pendiente
-              </option>
-
-              <option
-                value="Pagado"
-                ${pedido.estado==="Pagado"
-                  ?"selected"
-                  :""
-                }
-              >
-                Pagado
-              </option>
-
-              <option
-                value="Entregado"
-                ${pedido.estado==="Entregado"
-                  ?"selected"
-                  :""
-                }
-              >
-                Entregado
-              </option>
-
-            </select>
-
-          </td>
-
-          <td>
-
-            <button
-              class="btn-danger"
-              onclick="
-                eliminarPedido(
-                  '${pedido.id}'
-                )
-              "
-            >
-              Eliminar
-            </button>
-
-          </td>
+          <th>Fecha</th>
+          <th>Cliente</th>
+          <th>Teléfono</th>
+          <th>Pack</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+          <th>Pago</th>
+          <th>Estado</th>
+          <th></th>
 
         </tr>
 
-      `
-    ).join("");
+      </thead>
+
+      <tbody>
+
+        ${
+          pedidosDelLote.map(pedido=>`
+
+            <tr>
+
+              <td>
+                ${new Date(pedido.fecha)
+                  .toLocaleDateString("es-CO")}
+              </td>
+
+              <td>
+                ${escapar(pedido.cliente)}
+              </td>
+
+              <td>
+                ${escapar(pedido.telefono)}
+              </td>
+
+              <td>
+                ${pedido.pack}
+              </td>
+
+              <td>
+                ${pedido.cantidad}
+              </td>
+
+              <td>
+                ${dinero(pedido.total)}
+              </td>
+
+              <td>
+
+                <select
+                  onchange="
+                    cambiarPago(
+                      '${pedido.id}',
+                      this.value
+                    )
+                  ">
+
+                  <option
+                    value="Pendiente"
+                    ${pedido.pago==="Pendiente"?"selected":""}>
+                    Pendiente
+                  </option>
+
+                  <option
+                    value="Nequi"
+                    ${pedido.pago==="Nequi"?"selected":""}>
+                    Nequi
+                  </option>
+
+                  <option
+                    value="Daviplata"
+                    ${pedido.pago==="Daviplata"?"selected":""}>
+                    Daviplata
+                  </option>
+
+                  <option
+                    value="Efectivo"
+                    ${pedido.pago==="Efectivo"?"selected":""}>
+                    Efectivo
+                  </option>
+
+                  <option
+                    value="Transferencia"
+                    ${pedido.pago==="Transferencia"?"selected":""}>
+                    Transferencia
+                  </option>
+
+                </select>
+
+              </td>
+
+              <td>
+
+                <select
+                  onchange="
+                    cambiarEstado(
+                      '${pedido.id}',
+                      this.value
+                    )
+                  ">
+
+                  <option
+                    value="Pendiente"
+                    ${pedido.estado==="Pendiente"?"selected":""}>
+                    Pendiente
+                  </option>
+
+                  <option
+                    value="Pagado"
+                    ${pedido.estado==="Pagado"?"selected":""}>
+                    Pagado
+                  </option>
+
+                  <option
+                    value="Entregado"
+                    ${pedido.estado==="Entregado"?"selected":""}>
+                    Entregado
+                  </option>
+
+                </select>
+
+              </td>
+
+              <td>
+
+                <button
+                  class="peligro"
+                  onclick="
+                    eliminarPedido(
+                      '${pedido.id}'
+                    )
+                  ">
+                  Eliminar
+                </button>
+
+              </td>
+
+            </tr>
+
+          `).join("")
+        }
+
+      </tbody>
+
+    </table>
+
+  `;
 
 }
 
 
-/* =====================================================
-   CLIENTES — SOLO LOTE ACTIVO
-===================================================== */
+/* ================= CLIENTES ================= */
 
 function renderClientes(){
 
-  const lote =
-    obtenerLote();
+  const lote=obtenerLote();
+
+  const encabezado =
+    document.getElementById(
+      "clientesLoteActivo"
+    );
 
 
-  const tbody =
+  const contenedor =
     document.getElementById(
       "tablaClientes"
     );
 
 
-  const nombreLote =
-    document.getElementById(
-      "clientesLoteNombre"
-    );
-
-
-  if(nombreLote){
-
-    nombreLote.textContent =
-      lote
-      ?lote.nombre
-      :"Sin lote";
-
-  }
-
-
   if(!lote){
 
-    tbody.innerHTML=`
+    encabezado.innerHTML=
+      "No hay lote activo.";
 
-      <tr>
-
-        <td
-          colspan="6"
-          class="empty"
-        >
-          No hay lote activo.
-        </td>
-
-      </tr>
-
-    `;
+    contenedor.innerHTML="";
 
     return;
 
   }
 
 
-  /*
-    SOLO PEDIDOS DEL LOTE ACTUAL.
+  encabezado.innerHTML=`
 
-    No se consulta db.lotes completo.
-    No se consulta pedidos de otros lotes.
-  */
+    <p>
+      <strong>Lote activo:</strong>
+      ${escapar(lote.nombre)}
+    </p>
+
+  `;
+
+
+  /*
+   * CORRECCIÓN:
+   *
+   * Los clientes se construyen solamente
+   * con pedidos pertenecientes al lote activo.
+   */
 
   const pedidosDelLote =
     lote.pedidos.filter(
@@ -2864,299 +1984,236 @@ function renderClientes(){
     );
 
 
-  const mapa={};
+  const clientes={};
 
 
-  pedidosDelLote.forEach(
-    pedido=>{
+  pedidosDelLote.forEach(pedido=>{
 
-      const telefono =
-        (
-          pedido.telefono || ""
-        ).trim();
+    /*
+     * Usamos teléfono como identificador
+     * cuando existe.
+     *
+     * Si no existe teléfono, usamos el nombre.
+     */
 
-
-      const nombre =
-        (
-          pedido.cliente || ""
-        ).trim();
-
-
-      const key =
-        (
-          telefono ||
-          nombre
-        )
-        .toLowerCase();
+    const clave =
+      pedido.telefono
+      ? "tel_"+pedido.telefono
+      : "nom_"+pedido.cliente
+          .trim()
+          .toLowerCase();
 
 
-      if(!key){
-        return;
-      }
+    if(!clientes[clave]){
 
+      clientes[clave]={
 
-      if(!mapa[key]){
+        cliente:pedido.cliente,
 
-        mapa[key]={
+        telefono:pedido.telefono,
 
-          cliente:
-            nombre,
+        direccion:pedido.direccion,
 
-          telefono:
-            telefono,
+        pedidos:0,
 
-          direccion:
-            (
-              pedido.direccion || ""
-            ).trim(),
+        compras:0,
 
-          pedidos:
-            0,
+        pendiente:0
 
-          compras:
-            0,
-
-          pendiente:
-            0
-
-        };
-
-      }
-
-
-      mapa[key].pedidos++;
-
-
-      mapa[key].compras +=
-        Number(
-          pedido.total
-        ) || 0;
-
-
-      if(
-        pedido.pago!=="Pagado"
-      ){
-
-        mapa[key].pendiente +=
-          Number(
-            pedido.total
-          ) || 0;
-
-      }
+      };
 
     }
-  );
 
 
-  const clientes =
-    Object.values(
-      mapa
-    );
+    clientes[clave].pedidos += 1;
+
+    clientes[clave].compras +=
+      Number(pedido.total || 0);
 
 
-  if(!clientes.length){
+    if(pedido.pago==="Pendiente"){
 
-    tbody.innerHTML=`
+      clientes[clave].pendiente +=
+        Number(pedido.total || 0);
 
-      <tr>
+    }
 
-        <td
-          colspan="6"
-          class="empty"
-        >
+  });
 
-          No hay clientes registrados
-          en
-          ${escapeHTML(lote.nombre)}.
 
-        </td>
+  const lista =
+    Object.values(clientes);
 
-      </tr>
 
-    `;
+  if(lista.length===0){
+
+    contenedor.innerHTML=
+      "<p class='muted'>No hay clientes en este lote.</p>";
 
     return;
 
   }
 
 
-  tbody.innerHTML =
-    clientes.map(
-      cliente=>`
+  contenedor.innerHTML=`
+
+    <table>
+
+      <thead>
 
         <tr>
 
-          <td>
-            ${escapeHTML(
-              cliente.cliente
-            )}
-          </td>
-
-          <td>
-            ${escapeHTML(
-              cliente.telefono
-            )}
-          </td>
-
-          <td>
-            ${escapeHTML(
-              cliente.direccion
-            )}
-          </td>
-
-          <td>
-            ${cliente.pedidos}
-          </td>
-
-          <td class="money">
-            ${dinero(
-              cliente.compras
-            )}
-          </td>
-
-          <td class="money">
-            ${dinero(
-              cliente.pendiente
-            )}
-          </td>
+          <th>Cliente</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Pedidos</th>
+          <th>Compras</th>
+          <th>Pendiente</th>
 
         </tr>
 
-      `
-    ).join("");
+      </thead>
+
+      <tbody>
+
+        ${
+          lista.map(cliente=>`
+
+            <tr>
+
+              <td>
+                ${escapar(cliente.cliente)}
+              </td>
+
+              <td>
+                ${escapar(cliente.telefono)}
+              </td>
+
+              <td>
+                ${escapar(cliente.direccion)}
+              </td>
+
+              <td>
+                ${cliente.pedidos}
+              </td>
+
+              <td>
+                ${dinero(cliente.compras)}
+              </td>
+
+              <td>
+                ${dinero(cliente.pendiente)}
+              </td>
+
+            </tr>
+
+          `).join("")
+        }
+
+      </tbody>
+
+    </table>
+
+  `;
 
 }
 
 
-/* =====================================================
-   CONTAR CLIENTES
-===================================================== */
+/* ================= CONTAR CLIENTES ================= */
 
 function contarClientesLote(lote){
 
-  if(!lote){
-    return 0;
-  }
-
-
-  const mapa={};
-
-
-  lote.pedidos
-    .filter(
+  const pedidosDelLote =
+    lote.pedidos.filter(
       pedido=>
         pedido.loteId===lote.id
-    )
-    .forEach(
-      pedido=>{
-
-        const key =
-          (
-            pedido.telefono ||
-            pedido.cliente ||
-            ""
-          )
-          .trim()
-          .toLowerCase();
-
-
-        if(key){
-
-          mapa[key]=true;
-
-        }
-
-      }
     );
 
 
-  return Object.keys(
-    mapa
-  ).length;
+  const clientes=new Set();
+
+
+  pedidosDelLote.forEach(pedido=>{
+
+    clientes.add(
+      pedido.telefono
+      ? "tel_"+pedido.telefono
+      : "nom_"+pedido.cliente
+          .trim()
+          .toLowerCase()
+    );
+
+  });
+
+
+  return clientes.size;
 
 }
 
 
-/* =====================================================
-   CÁLCULOS POR LOTE
-===================================================== */
+/* ================= CALCULAR LOTE ================= */
 
 function calcularLote(lote){
 
+  /*
+   * También aquí usamos solamente los pedidos
+   * que pertenecen al lote.
+   */
+
+  const pedidos =
+    lote.pedidos.filter(
+      pedido=>
+        pedido.loteId===lote.id
+    );
+
+
   let ventas=0;
-
-  let costos=0;
-
+  let costo=0;
   let pendiente=0;
 
 
-  /*
-    SOLO pedidos pertenecientes
-    a este lote.
-  */
+  pedidos.forEach(pedido=>{
 
-  lote.pedidos
-    .filter(
-      pedido=>
-        pedido.loteId===lote.id
-    )
-    .forEach(
-      pedido=>{
-
-        ventas +=
-          Number(
-            pedido.total
-          ) || 0;
+    ventas +=
+      Number(pedido.total || 0);
 
 
-        const costoUnitario =
-          pedido.pack==="x5"
-          ?COSTO_X5
-          :COSTO_X7;
+    if(pedido.pack==="x5"){
+
+      costo +=
+        COSTO_X5 *
+        Number(pedido.cantidad || 0);
+
+    }else{
+
+      costo +=
+        COSTO_X7 *
+        Number(pedido.cantidad || 0);
+
+    }
 
 
-        costos +=
-          costoUnitario *
-          (
-            Number(
-              pedido.cantidad
-            ) || 0
-          );
+    if(pedido.pago==="Pendiente"){
 
+      pendiente +=
+        Number(pedido.total || 0);
 
-        if(
-          pedido.pago!=="Pagado"
-        ){
+    }
 
-          pendiente +=
-            Number(
-              pedido.total
-            ) || 0;
-
-        }
-
-      }
-    );
+  });
 
 
   const gastos =
     lote.gastos.reduce(
-      (
-        total,
-        gasto
-      )=>
+      (total,gasto)=>
         total+
-        (
-          Number(
-            gasto.valor
-          ) || 0
-        ),
+        Number(gasto.valor || 0),
       0
     );
 
 
   const bruto =
-    ventas-costos;
+    ventas-costo;
 
 
   const neto =
@@ -3166,224 +2223,236 @@ function calcularLote(lote){
   return {
 
     ventas,
-    costos,
+
+    costo,
+
     gastos,
+
     bruto,
+
     neto,
-    pendiente
+
+    pendiente,
+
+    pedidos:pedidos.length
 
   };
 
 }
 
 
-/* =====================================================
-   INICIO
-===================================================== */
+/* ================= INICIO ================= */
 
 function renderInicio(){
 
-  const lote =
-    obtenerLote();
-
+  const lote=obtenerLote();
 
   if(!lote){
     return;
   }
 
 
-  const calculo =
+  const datos =
     calcularLote(lote);
 
 
   document.getElementById(
-    "inicioLoteNombre"
-  ).textContent =
-    lote.nombre;
+    "inicioLote"
+  ).innerHTML=`
+
+    <p>
+      <strong>Lote activo:</strong>
+      ${escapar(lote.nombre)}
+    </p>
+
+  `;
 
 
   document.getElementById(
-    "inicioVentas"
-  ).textContent =
-    dinero(calculo.ventas);
+    "statVentas"
+  ).textContent=
+    dinero(datos.ventas);
 
 
   document.getElementById(
-    "inicioCosto"
-  ).textContent =
-    dinero(calculo.costos);
+    "statCosto"
+  ).textContent=
+    dinero(datos.costo);
 
 
   document.getElementById(
-    "inicioGastos"
-  ).textContent =
-    dinero(calculo.gastos);
+    "statGastos"
+  ).textContent=
+    dinero(datos.gastos);
 
 
   document.getElementById(
-    "inicioGanancia"
-  ).textContent =
-    dinero(calculo.neto);
+    "statGanancia"
+  ).textContent=
+    dinero(datos.neto);
 
 
   document.getElementById(
-    "inicioPendiente"
-  ).textContent =
-    dinero(calculo.pendiente);
+    "statPendiente"
+  ).textContent=
+    dinero(datos.pendiente);
 
 
   document.getElementById(
-    "inicioPedidos"
-  ).textContent =
-    lote.pedidos.filter(
-      pedido=>
-        pedido.loteId===lote.id
-    ).length;
+    "statPedidos"
+  ).textContent=
+    datos.pedidos;
 
 }
 
 
-/* =====================================================
-   FINANZAS
-===================================================== */
+/* ================= FINANZAS ================= */
 
 function renderFinanzas(){
 
-  const lote =
-    obtenerLote();
-
+  const lote=obtenerLote();
 
   if(!lote){
     return;
   }
 
 
-  const calculo =
+  const datos =
     calcularLote(lote);
 
 
   document.getElementById(
-    "finanzasLoteNombre"
-  ).textContent =
-    lote.nombre;
+    "finanzasLoteActivo"
+  ).innerHTML=`
+
+    <p>
+      <strong>Lote activo:</strong>
+      ${escapar(lote.nombre)}
+    </p>
+
+  `;
 
 
   document.getElementById(
     "finVentas"
-  ).textContent =
-    dinero(calculo.ventas);
+  ).textContent=
+    dinero(datos.ventas);
 
 
   document.getElementById(
     "finCosto"
-  ).textContent =
-    dinero(calculo.costos);
+  ).textContent=
+    dinero(datos.costo);
 
 
   document.getElementById(
-    "finGananciaBruta"
-  ).textContent =
-    dinero(calculo.bruto);
+    "finBruto"
+  ).textContent=
+    dinero(datos.bruto);
 
 
   document.getElementById(
     "finGastos"
-  ).textContent =
-    dinero(calculo.gastos);
+  ).textContent=
+    dinero(datos.gastos);
 
 
   document.getElementById(
-    "finGananciaNeta"
-  ).textContent =
-    dinero(calculo.neto);
+    "finNeto"
+  ).textContent=
+    dinero(datos.neto);
 
 
   document.getElementById(
     "finPendiente"
-  ).textContent =
-    dinero(calculo.pendiente);
+  ).textContent=
+    dinero(datos.pendiente);
 
 
-  const tbody =
+  const contenedor =
     document.getElementById(
       "tablaGastos"
     );
 
 
-  if(!lote.gastos.length){
+  if(lote.gastos.length===0){
 
-    tbody.innerHTML=`
-
-      <tr>
-
-        <td
-          colspan="4"
-          class="empty"
-        >
-          No hay gastos registrados.
-        </td>
-
-      </tr>
-
-    `;
+    contenedor.innerHTML=
+      "<p class='muted'>No hay gastos.</p>";
 
     return;
 
   }
 
 
-  tbody.innerHTML =
-    lote.gastos.map(
-      gasto=>`
+  contenedor.innerHTML=`
+
+    <table>
+
+      <thead>
 
         <tr>
-
-          <td>
-            ${escapeHTML(
-              gasto.fecha
-            )}
-          </td>
-
-          <td>
-            ${escapeHTML(
-              gasto.descripcion
-            )}
-          </td>
-
-          <td class="money">
-            ${dinero(
-              gasto.valor
-            )}
-          </td>
-
-          <td>
-
-            <button
-              class="btn-danger"
-              onclick="
-                eliminarGasto(
-                  '${gasto.id}'
-                )
-              "
-            >
-              Eliminar
-            </button>
-
-          </td>
-
+          <th>Fecha</th>
+          <th>Descripción</th>
+          <th>Valor</th>
+          <th></th>
         </tr>
 
-      `
-    ).join("");
+      </thead>
+
+      <tbody>
+
+        ${
+          lote.gastos.map(gasto=>`
+
+            <tr>
+
+              <td>
+                ${new Date(gasto.fecha)
+                  .toLocaleDateString("es-CO")}
+              </td>
+
+              <td>
+                ${escapar(gasto.descripcion)}
+              </td>
+
+              <td>
+                ${dinero(gasto.valor)}
+              </td>
+
+              <td>
+
+                <button
+                  class="peligro"
+                  onclick="
+                    eliminarGasto(
+                      '${gasto.id}'
+                    )
+                  ">
+                  Eliminar
+                </button>
+
+              </td>
+
+            </tr>
+
+          `).join("")
+        }
+
+      </tbody>
+
+    </table>
+
+  `;
 
 }
 
 
-async function agregarGasto(){
+/* ================= CREAR GASTO ================= */
 
-  const lote =
-    obtenerLote();
+function crearGasto(){
 
+  const lote=obtenerLote();
 
   if(!lote){
     return;
@@ -3402,23 +2471,24 @@ async function agregarGasto(){
 
 
   const descripcion =
-    document.getElementById(
-      "gastoDescripcion"
-    ).value.trim();
+    document
+      .getElementById("gastoDescripcion")
+      .value
+      .trim();
 
 
   const valor =
     Number(
-      document.getElementById(
-        "gastoValor"
-      ).value
+      document
+        .getElementById("gastoValor")
+        .value
     );
 
 
   if(!descripcion){
 
     alert(
-      "Escribe una descripción."
+      "Ingresa una descripción."
     );
 
     return;
@@ -3426,10 +2496,7 @@ async function agregarGasto(){
   }
 
 
-  if(
-    !valor ||
-    valor<=0
-  ){
+  if(!valor || valor<=0){
 
     alert(
       "Ingresa un valor válido."
@@ -3442,41 +2509,40 @@ async function agregarGasto(){
 
   lote.gastos.push({
 
-    id:
-      crearId(),
+    id:crearId(),
 
-    fecha:
-      fechaActual(),
+    fecha:fechaActual(),
 
-    descripcion:
-      descripcion,
+    descripcion,
 
-    valor:
-      valor
+    valor
 
   });
 
 
-  await guardar();
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
 
 
-  document.getElementById(
-    "gastoDescripcion"
-  ).value="";
+  document
+    .getElementById("gastoDescripcion")
+    .value="";
 
-
-  document.getElementById(
-    "gastoValor"
-  ).value="";
+  document
+    .getElementById("gastoValor")
+    .value="";
 
 }
 
 
-async function eliminarGasto(id){
+/* ================= ELIMINAR GASTO ================= */
 
-  const lote =
-    obtenerLote();
+function eliminarGasto(id){
 
+  const lote=obtenerLote();
 
   if(!lote){
     return;
@@ -3485,8 +2551,7 @@ async function eliminarGasto(id){
 
   const indice =
     lote.gastos.findIndex(
-      gasto=>
-        gasto.id===id
+      gasto=>gasto.id===id
     );
 
 
@@ -3500,158 +2565,210 @@ async function eliminarGasto(id){
       "¿Eliminar este gasto?"
     )
   ){
-
     return;
-
   }
 
 
-  lote.gastos.splice(
-    indice,
-    1
-  );
+  lote.gastos.splice(indice,1);
 
 
-  await guardar();
+  guardarLocal();
+
+  actualizarTodo();
+
+  guardarNube();
 
 }
 
 
-/* =====================================================
-   GENERAL — TODOS LOS LOTES
-===================================================== */
+/* ================= INVENTARIO RENDER ================= */
+
+function renderInventario(){
+
+  const lote=obtenerLote();
+
+  if(!lote){
+    return;
+  }
+
+
+  document.getElementById(
+    "inventarioLoteActivo"
+  ).innerHTML=`
+
+    <p>
+      <strong>Lote activo:</strong>
+      ${escapar(lote.nombre)}
+    </p>
+
+  `;
+
+
+  document.getElementById(
+    "invX5"
+  ).textContent=
+    lote.inventario.x5;
+
+
+  document.getElementById(
+    "invX7"
+  ).textContent=
+    lote.inventario.x7;
+
+}
+
+
+/* ================= GENERAL ================= */
 
 function renderGeneral(){
 
   let ventas=0;
-
-  let costos=0;
-
+  let costo=0;
   let gastos=0;
+  let pendiente=0;
+  let pedidos=0;
 
 
-  db.lotes.forEach(
-    lote=>{
+  db.lotes.forEach(lote=>{
 
-      const calculo =
-        calcularLote(lote);
+    const datos =
+      calcularLote(lote);
 
 
-      ventas +=
-        calculo.ventas;
+    ventas += datos.ventas;
+    costo += datos.costo;
+    gastos += datos.gastos;
+    pendiente += datos.pendiente;
 
-      costos +=
-        calculo.costos;
+    /*
+     * Usamos los pedidos realmente pertenecientes
+     * al lote.
+     */
 
-      gastos +=
-        calculo.gastos;
+    pedidos += datos.pedidos;
 
-    }
-  );
+  });
 
 
   const ganancia =
-    ventas-
-    costos-
-    gastos;
+    ventas-costo-gastos;
 
 
   document.getElementById(
-    "generalVentas"
-  ).textContent =
+    "genVentas"
+  ).textContent=
     dinero(ventas);
 
 
   document.getElementById(
-    "generalCostos"
-  ).textContent =
-    dinero(costos);
+    "genCosto"
+  ).textContent=
+    dinero(costo);
 
 
   document.getElementById(
-    "generalGastos"
-  ).textContent =
+    "genGastos"
+  ).textContent=
     dinero(gastos);
 
 
   document.getElementById(
-    "generalGanancia"
-  ).textContent =
+    "genGanancia"
+  ).textContent=
     dinero(ganancia);
 
 
-  const tbody =
-    document.getElementById(
-      "tablaGeneralLotes"
-    );
+  document.getElementById(
+    "genPendiente"
+  ).textContent=
+    dinero(pendiente);
 
 
-  tbody.innerHTML =
-    db.lotes.map(
-      lote=>{
-
-        const calculo =
-          calcularLote(lote);
+  document.getElementById(
+    "genPedidos"
+  ).textContent=
+    pedidos;
 
 
-        const cantidadPedidos =
-          lote.pedidos.filter(
-            pedido=>
-              pedido.loteId===lote.id
-          ).length;
+  document.getElementById(
+    "tablaGeneral"
+  ).innerHTML=`
 
+    <table>
 
-        return `
+      <thead>
 
-          <tr>
+        <tr>
 
-            <td>
-              ${escapeHTML(
-                lote.nombre
-              )}
-            </td>
+          <th>Lote</th>
+          <th>Pedidos</th>
+          <th>Clientes</th>
+          <th>Ventas</th>
+          <th>Costo</th>
+          <th>Gastos</th>
+          <th>Ganancia</th>
 
-            <td class="money">
-              ${dinero(
-                calculo.ventas
-              )}
-            </td>
+        </tr>
 
-            <td class="money">
-              ${dinero(
-                calculo.costos
-              )}
-            </td>
+      </thead>
 
-            <td class="money">
-              ${dinero(
-                calculo.gastos
-              )}
-            </td>
+      <tbody>
 
-            <td class="money">
-              ${dinero(
-                calculo.neto
-              )}
-            </td>
+        ${
+          db.lotes.map(lote=>{
 
-            <td>
-              ${cantidadPedidos}
-            </td>
+            const datos =
+              calcularLote(lote);
 
-          </tr>
+            return `
 
-        `;
+              <tr>
 
-      }
-    ).join("");
+                <td>
+                  ${escapar(lote.nombre)}
+                </td>
+
+                <td>
+                  ${datos.pedidos}
+                </td>
+
+                <td>
+                  ${contarClientesLote(lote)}
+                </td>
+
+                <td>
+                  ${dinero(datos.ventas)}
+                </td>
+
+                <td>
+                  ${dinero(datos.costo)}
+                </td>
+
+                <td>
+                  ${dinero(datos.gastos)}
+                </td>
+
+                <td>
+                  ${dinero(datos.neto)}
+                </td>
+
+              </tr>
+
+            `;
+
+          }).join("")
+        }
+
+      </tbody>
+
+    </table>
+
+  `;
 
 }
 
 
-/* =====================================================
-   ACTUALIZAR TODO
-===================================================== */
+/* ================= ACTUALIZAR TODO ================= */
 
 function actualizarTodo(){
 
@@ -3660,44 +2777,33 @@ function actualizarTodo(){
   }
 
 
-  db =
-    normalizarDB(db);
+  /*
+   * Normalizamos antes de renderizar.
+   * Esto garantiza que las vistas trabajen
+   * con la relación lote → pedido correcta.
+   */
 
-
-  const lote =
-    obtenerLote();
-
-
-  document.getElementById(
-    "loteHeader"
-  ).textContent =
-    lote
-    ?"Lote activo: "+lote.nombre
-    :"Sin lote";
+  db=normalizarDB(db);
 
 
   renderLotes();
 
-  renderInicio();
-
   renderPedidos();
 
-  renderInventario();
-
   renderClientes();
+
+  renderInventario();
 
   renderFinanzas();
 
   renderGeneral();
 
-  actualizarPrecioPedido();
+  renderInicio();
 
 }
 
 
-/* =====================================================
-   EXPORTAR
-===================================================== */
+/* ================= EXPORTAR ================= */
 
 function exportarDatos(){
 
@@ -3719,34 +2825,28 @@ function exportarDatos(){
 
 
   const url =
-    URL.createObjectURL(
-      blob
-    );
+    URL.createObjectURL(blob);
 
 
-  const a =
+  const enlace =
     document.createElement("a");
 
 
-  a.href=url;
+  enlace.href=url;
 
-  a.download =
+  enlace.download=
     "chorizos-admin-backup.json";
 
 
-  a.click();
+  enlace.click();
 
 
-  URL.revokeObjectURL(
-    url
-  );
+  URL.revokeObjectURL(url);
 
 }
 
 
-/* =====================================================
-   IMPORTAR
-===================================================== */
+/* ================= IMPORTAR ================= */
 
 function importarDatos(event){
 
@@ -3763,141 +2863,101 @@ function importarDatos(event){
     new FileReader();
 
 
-  lector.onload =
-    async function(){
+  lector.onload=function(e){
 
-      try{
+    try{
 
-        const datos =
-          JSON.parse(
-            lector.result
-          );
-
-
-        db =
-          normalizarDB(
-            datos
-          );
-
-
-        guardarLocal();
-
-        actualizarTodo();
-
-        await guardarNube();
-
-
-        alert(
-          "Datos importados correctamente."
+      const datos =
+        JSON.parse(
+          e.target.result
         );
 
 
-      }catch(error){
+      db=normalizarDB(datos);
 
-        console.error(error);
+      guardarLocal();
 
-        alert(
-          "El archivo no es válido."
-        );
+      actualizarTodo();
 
-      }
-
-    };
+      guardarNube();
 
 
-  lector.readAsText(
-    archivo
-  );
+      alert(
+        "Datos importados correctamente."
+      );
+
+
+    }catch(error){
+
+      alert(
+        "El archivo no es válido."
+      );
+
+      console.error(error);
+
+    }
+
+  };
+
+
+  lector.readAsText(archivo);
 
 }
 
 
-/* =====================================================
-   REINICIAR
-===================================================== */
+/* ================= REINICIAR ================= */
 
-async function reiniciarAplicacion(){
+function resetearDatos(){
 
-  const confirmar =
-    confirm(
-      "¿ESTÁS SEGURO?\n\n"+
-      "Se eliminarán los datos locales "+
-      "de la aplicación y se creará una "+
-      "base nueva."
-    );
-
-
-  if(!confirmar){
+  if(
+    !confirm(
+      "¿Seguro que quieres borrar TODOS los datos y empezar desde cero?"
+    )
+  ){
     return;
   }
 
 
-  db =
-    crearDBVacia();
+  if(
+    !confirm(
+      "Esta acción no se puede deshacer. ¿Continuar?"
+    )
+  ){
+    return;
+  }
 
+
+  db=crearDBVacia();
 
   guardarLocal();
 
   actualizarTodo();
 
-  await guardarNube();
+  guardarNube();
 
 
   alert(
-    "La aplicación fue reiniciada."
+    "La aplicación se reinició desde cero."
   );
 
 }
 
 
-/* =====================================================
-   INICIO
-===================================================== */
+/* ================= INICIO DE APP ================= */
 
 cargarLocal();
 
-
-if(!db){
-
-  db =
-    crearDBVacia();
-
-  guardarLocal();
-
-}
-
-
 actualizarTodo();
-
 
 iniciarNube();
 
 
-document.getElementById(
-  "pedidoCantidad"
-).addEventListener(
-  "input",
-  actualizarPrecioPedido
-);
-
-
-document.getElementById(
-  "pedidoPack"
-).addEventListener(
-  "change",
-  actualizarPrecioPedido
-);
-
-
 /*
-  Desactivar Service Worker antiguo.
-  Esto evita que una versión anterior
-  siga mostrando código viejo.
-*/
+ * Desactivar Service Worker antiguos para evitar
+ * que una versión vieja de la página siga apareciendo.
+ */
 
-if(
-  "serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
   window.addEventListener(
     "load",
@@ -3912,8 +2972,7 @@ if(
 
 
         for(
-          const registro
-          of registros
+          const registro of registros
         ){
 
           await registro.unregister();
@@ -3924,6 +2983,7 @@ if(
         console.log(
           "Service Worker desactivado."
         );
+
 
       }catch(error){
 
@@ -3938,11 +2998,6 @@ if(
   );
 
 }
-
-
-mostrarSeccion(
-  "inicio"
-);
 
 </script>
 
